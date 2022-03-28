@@ -1,6 +1,6 @@
-# Developer Environment
+# Set up your Developer Environment
 
-This project uses Docker and Visual Studio Code with the Remote Containers extension to provide a consistent repeatable disposable development environment for all of the developer.
+This project contains a `.devcontainer` folder that will set up a Docker environment in Visual Studio Code with the Remote Containers extension to provide a consistent repeatable disposable development environment for all of the developer.
 
 You will need the following software installed:
 
@@ -10,7 +10,7 @@ You will need the following software installed:
 
 All of these can be installed manually by clicking on the links above or you can use a package manager like **Homebrew** on Mac of **Chocolatey** on Windows.
 
-You can read more about creating these environments the my article: [Creating Reproducible Development Environments](https://johnrofrano.medium.com/creating-reproducible-development-environments-fac8d6471f35)
+It is a good idea to add VSCode to your path so that you can invoke it from the command line. To do this, open VSCode and type `Shift+Command+P` on Mac or `Shift+Ctrl+P` on Windows to open the command palette and then search for "shell" and select the option **Shell Command: Install 'code' command in Path**. This will install VSCode in your path.
 
 ## Bring up the development environment
 
@@ -24,4 +24,8 @@ $ code .
 
 Note that there is a period `.` after the `code` command. This tells Visual Studio Code to open the editor and load the current folder of files. Visual Studio Code will prompt you to **Reopen in a Container** and you should push this button. This will take a while the first time as it builds the Docker image and creates a container from it to develop in. After teh first time, this environment should come up almost instantaneously.
 
+If it does not automatically prompt you to open the project in a container, you can select the green icon at the bottom left of your VSCode UI and select: **Remote Containers: Reopen in Container**.
+
 Once the environment is loaded you should be placed at a `bash` prompt in the `/app` folder inside of the development container. This folder is mounted to the current working directory of your repository on your computer. This means that any file you edit while inside of the `/app` folder in the container is actually being edited on your computer. You can then commit your changes to `git` from either inside or outside of the container.
+
+This project uses **Neo4j** which will also be added to your development environment running in a separate container and accessible at `neo4j:7474` from inside the development environment and outside from your web browser at: http://localhost:7474

@@ -1,0 +1,6 @@
+<com.ibm.dgitest.Obj: void setX(int)>/@this	<com.ibm.dgitest.Obj: void setX(int)>/this#_0
+<com.ibm.dgitest.Obj: void setY(int)>/@this	<com.ibm.dgitest.Obj: void setY(int)>/this#_0
+<com.ibm.dgitest.Obj: int getX()>/@this	<com.ibm.dgitest.Obj: int getX()>/this#_0
+<com.ibm.dgitest.Obj: int getY()>/@this	<com.ibm.dgitest.Obj: int getY()>/this#_0
+<com.ibm.dgitest.ReadVal: int getInt()>/@this	<com.ibm.dgitest.ReadVal: int getInt()>/this#_0
+<com.ibm.dgitest.ReadVal: float getFloat()>/@this	<com.ibm.dgitest.ReadVal: float getFloat()>/this#_0

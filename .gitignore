@@ -1,6 +1,16 @@
-# OS Metadata
+# Ignore DB auxiliary files
+demo/**/*.dump
+demo/code2graph-samples/doop-input/*
+demo/code2graph-samples/doop-output/*
+demo/sample-application/
+demo/neo4j-bloom-demo/bloom/*.json
+# demo/tx2graph-samples/**/*
+!demo/sample-application/.gitkeep
+demo/tx2graph-samples/*
+
+# OS Metadata files
 .DS_Store
-Thumbs.db
+.vagrant
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

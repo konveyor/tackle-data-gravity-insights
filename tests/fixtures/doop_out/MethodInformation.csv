@@ -1,0 +1,12 @@
+<com.ibm.dgitest.Obj: void setX(int)>	setX	int	com.ibm.dgitest.Obj	void	(I)V	1
+<com.ibm.dgitest.Obj: void setY(int)>	setY	int	com.ibm.dgitest.Obj	void	(I)V	1
+<com.ibm.dgitest.DGIMain: void main(java.lang.String[])>	main	java.lang.String[]	com.ibm.dgitest.DGIMain	void	([Ljava/lang/String;)V	1
+<com.ibm.dgitest.DGIMain: void input(java.util.List)>	input	java.util.List	com.ibm.dgitest.DGIMain	void	(Ljava/util/List;)V	1
+<com.ibm.dgitest.DGIMain: int add(int,int)>	add	int,int	com.ibm.dgitest.DGIMain	int	(II)I	2
+<com.ibm.dgitest.Obj: void <init>()>	<init>		com.ibm.dgitest.Obj	void	()V	0
+<com.ibm.dgitest.Obj: int getX()>	getX		com.ibm.dgitest.Obj	int	()I	0
+<com.ibm.dgitest.Obj: int getY()>	getY		com.ibm.dgitest.Obj	int	()I	0
+<com.ibm.dgitest.ReadVal: void <init>()>	<init>		com.ibm.dgitest.ReadVal	void	()V	0
+<com.ibm.dgitest.ReadVal: int getInt()>	getInt		com.ibm.dgitest.ReadVal	int	()I	0
+<com.ibm.dgitest.ReadVal: float getFloat()>	getFloat		com.ibm.dgitest.ReadVal	float	()F	0
+<com.ibm.dgitest.DGIMain: void <init>()>	<init>		com.ibm.dgitest.DGIMain	void	()V	0

@@ -1,0 +1,15 @@
+[<<immutable-hcontext>>, <<main-thread>>]	<java.lang.Thread: void <init>(java.lang.ThreadGroup,java.lang.String)>
+[<<immutable-hcontext>>, <<system-thread-group>>]	<java.lang.ThreadGroup: void <init>()>
+[<<immutable-hcontext>>, <<main-thread-group>>]	<java.lang.ThreadGroup: void <init>(java.lang.ThreadGroup,java.lang.String)>
+[<<immutable-context>>, <<immutable-context>>]	<com.ibm.dgitest.DGIMain: void main(java.lang.String[])>
+[<<immutable-context>>, <<immutable-context>>]	<com.ibm.dgitest.DGIMain: void input(java.util.List)>
+[<<immutable-context>>, <<immutable-context>>]	<com.ibm.dgitest.DGIMain: int add(int,int)>
+[<<immutable-context>>, <com.ibm.dgitest.DGIMain: void main(java.lang.String[])>/new com.ibm.dgitest.Obj/0]	<com.ibm.dgitest.Obj: void <init>()>
+[<<immutable-context>>, <com.ibm.dgitest.DGIMain: void main(java.lang.String[])>/new com.ibm.dgitest.Obj/1]	<com.ibm.dgitest.Obj: void <init>()>
+[<<immutable-context>>, <com.ibm.dgitest.DGIMain: void input(java.util.List)>/new com.ibm.dgitest.ReadVal/0]	<com.ibm.dgitest.ReadVal: void <init>()>
+[<<immutable-context>>, <com.ibm.dgitest.DGIMain: void input(java.util.List)>/new com.ibm.dgitest.ReadVal/0]	<com.ibm.dgitest.ReadVal: int getInt()>
+[<<immutable-context>>, <com.ibm.dgitest.DGIMain: void main(java.lang.String[])>/new com.ibm.dgitest.Obj/0]	<java.lang.Object: void <init>()>
+[<<immutable-context>>, <com.ibm.dgitest.DGIMain: void main(java.lang.String[])>/new com.ibm.dgitest.Obj/1]	<java.lang.Object: void <init>()>
+[<<immutable-context>>, <com.ibm.dgitest.DGIMain: void input(java.util.List)>/new com.ibm.dgitest.ReadVal/0]	<java.lang.Object: void <init>()>
+[<com.ibm.dgitest.DGIMain: void input(java.util.List)>/new com.ibm.dgitest.ReadVal/0, <com.ibm.dgitest.ReadVal: int getInt()>/new java.util.Random/0]	<java.util.Random: void <init>()>
+[<<immutable-context>>, <com.ibm.dgitest.DGIMain: void main(java.lang.String[])>/new java.util.ArrayList/0]	<java.util.ArrayList: void <init>()>

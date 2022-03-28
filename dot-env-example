@@ -1,0 +1,9 @@
+# Copy this file to .env to expose these environment variables
+COMPOSE_PROJECT_NAME=dgi
+FLASK_APP=service:app
+PORT=5000
+DATABASE_URI="http://localhost:7474/db/data"
+NEO4J_USERNAME=neo4j
+NEO4J_PASSWORD=test
+NEO4J_AUTH=neo4j/test
+HTTP_SCHEME=http

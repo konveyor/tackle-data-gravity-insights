@@ -1,0 +1,1613 @@
+[
+  {
+    "entry" : {
+      "methods" : [
+        "ca.jrvs.apps.trading.controller.TraderController.putTraderandAccount"
+      ]
+    },
+    "transactions" : [
+      {
+        "txid" : 0,
+        "transaction" : [
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/TraderController, putTraderandAccount(Lca/jrvs/apps/trading/model/dto/Trader;)Lca/jrvs/apps/trading/model/view/TraderAccountView; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/TraderController.java",
+                "position" : "TraderController.java [47:19] -> [47:65]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/RegisterService, createTraderAndAccount(Lca/jrvs/apps/trading/model/dto/Trader;)Lca/jrvs/apps/trading/model/view/TraderAccountView; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/RegisterService.java",
+                "position" : "RegisterService.java [47:12] -> [47:34]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, save(Lca/jrvs/apps/trading/model/dto/Entity;)Lca/jrvs/apps/trading/model/dto/Entity; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [54:16] -> [54:57]"
+              }
+            ],
+            "sql" : "BEGIN"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/TraderController, putTraderandAccount(Lca/jrvs/apps/trading/model/dto/Trader;)Lca/jrvs/apps/trading/model/view/TraderAccountView; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/TraderController.java",
+                "position" : "TraderController.java [47:19] -> [47:65]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/RegisterService, createTraderAndAccount(Lca/jrvs/apps/trading/model/dto/Trader;)Lca/jrvs/apps/trading/model/view/TraderAccountView; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/RegisterService.java",
+                "position" : "RegisterService.java [47:12] -> [47:34]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, save(Lca/jrvs/apps/trading/model/dto/Entity;)Lca/jrvs/apps/trading/model/dto/Entity; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [54:16] -> [54:57]"
+              }
+            ],
+            "sql" : "insert into trader (firstName, id, email, dob, lastName, country) values (?, ?, ?, ?, ?, ?)"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/TraderController, putTraderandAccount(Lca/jrvs/apps/trading/model/dto/Trader;)Lca/jrvs/apps/trading/model/view/TraderAccountView; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/TraderController.java",
+                "position" : "TraderController.java [47:19] -> [47:65]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/RegisterService, createTraderAndAccount(Lca/jrvs/apps/trading/model/dto/Trader;)Lca/jrvs/apps/trading/model/view/TraderAccountView; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/RegisterService.java",
+                "position" : "RegisterService.java [52:12] -> [52:36]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, save(Lca/jrvs/apps/trading/model/dto/Entity;)Lca/jrvs/apps/trading/model/dto/Entity; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [54:16] -> [54:57]"
+              }
+            ],
+            "sql" : "insert into account (id, traderId, amount) values (?, ?, ?)"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry" : {
+      "methods" : [
+        "ca.jrvs.apps.trading.controller.TraderController.deposit"
+      ]
+    },
+    "transactions" : [
+      {
+        "txid" : 0,
+        "transaction" : [
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/TraderController, deposit(Ljava/lang/Integer;Ljava/lang/Double;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/TraderController.java",
+                "position" : "TraderController.java [79:19] -> [79:64]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/FundTransferService, deposit(Ljava/lang/Integer;Ljava/lang/Double;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/FundTransferService.java",
+                "position" : "FundTransferService.java [48:14] -> [48:44]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, existsById(Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [120:15] -> [120:37]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, existsById(Ljava/lang/String;Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [128:22] -> [128:79]"
+              }
+            ],
+            "sql" : "BEGIN"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/TraderController, deposit(Ljava/lang/Integer;Ljava/lang/Double;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/TraderController.java",
+                "position" : "TraderController.java [79:19] -> [79:64]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/FundTransferService, deposit(Ljava/lang/Integer;Ljava/lang/Double;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/FundTransferService.java",
+                "position" : "FundTransferService.java [48:14] -> [48:44]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, existsById(Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [120:15] -> [120:37]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, existsById(Ljava/lang/String;Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [128:22] -> [128:79]"
+              }
+            ],
+            "sql" : "SELECT count(*) FROM trader WHERE id =?"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/TraderController, deposit(Ljava/lang/Integer;Ljava/lang/Double;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/TraderController.java",
+                "position" : "TraderController.java [79:19] -> [79:64]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/FundTransferService, deposit(Ljava/lang/Integer;Ljava/lang/Double;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/FundTransferService.java",
+                "position" : "FundTransferService.java [51:26] -> [51:61]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/AccountDao, findByTraderId(Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/AccountDao.java",
+                "position" : "AccountDao.java [19:15] -> [19:74]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, findById(Ljava/lang/String;Ljava/lang/Object;ZLjava/lang/Class;)Lca/jrvs/apps/trading/model/dto/Entity; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [106:24] -> [108:73]"
+              }
+            ],
+            "sql" : "SELECT * FROM account WHERE trader_id =?"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/TraderController, deposit(Ljava/lang/Integer;Ljava/lang/Double;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/TraderController.java",
+                "position" : "TraderController.java [79:19] -> [79:64]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/FundTransferService, deposit(Ljava/lang/Integer;Ljava/lang/Double;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/FundTransferService.java",
+                "position" : "FundTransferService.java [53:19] -> [53:70]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/AccountDao, updateAccountbyID(Ljava/lang/Double;Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/AccountDao.java",
+                "position" : "AccountDao.java [28:13] -> [28:54]"
+              }
+            ],
+            "sql" : "update account set amount = ? where id = ?"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/TraderController, deposit(Ljava/lang/Integer;Ljava/lang/Double;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/TraderController.java",
+                "position" : "TraderController.java [79:19] -> [79:64]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/FundTransferService, deposit(Ljava/lang/Integer;Ljava/lang/Double;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/FundTransferService.java",
+                "position" : "FundTransferService.java [53:19] -> [53:70]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/AccountDao, updateAccountbyID(Ljava/lang/Double;Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/AccountDao.java",
+                "position" : "AccountDao.java [29:83] -> [29:124]"
+              }
+            ],
+            "sql" : "update account set amount = ? where id = ?"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/TraderController, deposit(Ljava/lang/Integer;Ljava/lang/Double;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/TraderController.java",
+                "position" : "TraderController.java [79:19] -> [79:64]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/FundTransferService, deposit(Ljava/lang/Integer;Ljava/lang/Double;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/FundTransferService.java",
+                "position" : "FundTransferService.java [53:19] -> [53:70]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/AccountDao, updateAccountbyID(Ljava/lang/Double;Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/AccountDao.java",
+                "position" : "AccountDao.java [31:15] -> [31:34]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, findById(Ljava/lang/Object;)Lca/jrvs/apps/trading/model/dto/Entity; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [81:15] -> [81:53]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, findById(Ljava/lang/String;Ljava/lang/Object;ZLjava/lang/Class;)Lca/jrvs/apps/trading/model/dto/Entity; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [106:24] -> [108:73]"
+              }
+            ],
+            "sql" : "SELECT * FROM account WHERE id =?"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/TraderController, deposit(Ljava/lang/Integer;Ljava/lang/Double;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/TraderController.java",
+                "position" : "TraderController.java [79:19] -> [79:64]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/FundTransferService, deposit(Ljava/lang/Integer;Ljava/lang/Double;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/FundTransferService.java",
+                "position" : "null"
+              }
+            ],
+            "sql" : "COMMIT"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry" : {
+      "methods" : [
+        "ca.jrvs.apps.trading.controller.TraderController.withdraw"
+      ]
+    },
+    "transactions" : [
+      {
+        "txid" : 0,
+        "transaction" : [
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/TraderController, withdraw(Ljava/lang/Integer;Ljava/lang/Double;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/TraderController.java",
+                "position" : "TraderController.java [90:19] -> [90:65]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/FundTransferService, withdraw(Ljava/lang/Integer;Ljava/lang/Double;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/FundTransferService.java",
+                "position" : "FundTransferService.java [83:14] -> [83:44]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, existsById(Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [120:15] -> [120:37]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, existsById(Ljava/lang/String;Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [128:22] -> [128:79]"
+              }
+            ],
+            "sql" : "BEGIN"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/TraderController, withdraw(Ljava/lang/Integer;Ljava/lang/Double;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/TraderController.java",
+                "position" : "TraderController.java [90:19] -> [90:65]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/FundTransferService, withdraw(Ljava/lang/Integer;Ljava/lang/Double;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/FundTransferService.java",
+                "position" : "FundTransferService.java [83:14] -> [83:44]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, existsById(Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [120:15] -> [120:37]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, existsById(Ljava/lang/String;Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [128:22] -> [128:79]"
+              }
+            ],
+            "sql" : "SELECT count(*) FROM trader WHERE id =?"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/TraderController, withdraw(Ljava/lang/Integer;Ljava/lang/Double;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/TraderController.java",
+                "position" : "TraderController.java [90:19] -> [90:65]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/FundTransferService, withdraw(Ljava/lang/Integer;Ljava/lang/Double;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/FundTransferService.java",
+                "position" : "FundTransferService.java [86:26] -> [86:61]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/AccountDao, findByTraderId(Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/AccountDao.java",
+                "position" : "AccountDao.java [19:15] -> [19:74]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, findById(Ljava/lang/String;Ljava/lang/Object;ZLjava/lang/Class;)Lca/jrvs/apps/trading/model/dto/Entity; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [106:24] -> [108:73]"
+              }
+            ],
+            "sql" : "SELECT * FROM account WHERE trader_id =?"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/TraderController, withdraw(Ljava/lang/Integer;Ljava/lang/Double;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/TraderController.java",
+                "position" : "TraderController.java [90:19] -> [90:65]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/FundTransferService, withdraw(Ljava/lang/Integer;Ljava/lang/Double;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/FundTransferService.java",
+                "position" : "FundTransferService.java [90:19] -> [90:94]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/AccountDao, updateAccountbyID(Ljava/lang/Double;Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/AccountDao.java",
+                "position" : "AccountDao.java [28:13] -> [28:54]"
+              }
+            ],
+            "sql" : "update account set amount = ? where id = ?"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/TraderController, withdraw(Ljava/lang/Integer;Ljava/lang/Double;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/TraderController.java",
+                "position" : "TraderController.java [90:19] -> [90:65]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/FundTransferService, withdraw(Ljava/lang/Integer;Ljava/lang/Double;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/FundTransferService.java",
+                "position" : "FundTransferService.java [90:19] -> [90:94]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/AccountDao, updateAccountbyID(Ljava/lang/Double;Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/AccountDao.java",
+                "position" : "AccountDao.java [29:83] -> [29:124]"
+              }
+            ],
+            "sql" : "update account set amount = ? where id = ?"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/TraderController, withdraw(Ljava/lang/Integer;Ljava/lang/Double;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/TraderController.java",
+                "position" : "TraderController.java [90:19] -> [90:65]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/FundTransferService, withdraw(Ljava/lang/Integer;Ljava/lang/Double;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/FundTransferService.java",
+                "position" : "FundTransferService.java [90:19] -> [90:94]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/AccountDao, updateAccountbyID(Ljava/lang/Double;Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/AccountDao.java",
+                "position" : "AccountDao.java [31:15] -> [31:34]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, findById(Ljava/lang/Object;)Lca/jrvs/apps/trading/model/dto/Entity; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [81:15] -> [81:53]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, findById(Ljava/lang/String;Ljava/lang/Object;ZLjava/lang/Class;)Lca/jrvs/apps/trading/model/dto/Entity; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [106:24] -> [108:73]"
+              }
+            ],
+            "sql" : "SELECT * FROM account WHERE id =?"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/TraderController, withdraw(Ljava/lang/Integer;Ljava/lang/Double;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/TraderController.java",
+                "position" : "TraderController.java [90:19] -> [90:65]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/FundTransferService, withdraw(Ljava/lang/Integer;Ljava/lang/Double;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/FundTransferService.java",
+                "position" : "null"
+              }
+            ],
+            "sql" : "COMMIT"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry" : {
+      "methods" : [
+        "ca.jrvs.apps.trading.controller.TraderController.deleteTrader"
+      ]
+    },
+    "transactions" : [
+      {
+        "txid" : 0,
+        "transaction" : [
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/TraderController, deleteTrader(Ljava/lang/Integer;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/TraderController.java",
+                "position" : "TraderController.java [36:12] -> [36:54]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/RegisterService, deleteTraderById(Ljava/lang/Integer;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/RegisterService.java",
+                "position" : "RegisterService.java [78:14] -> [78:44]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, existsById(Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [120:15] -> [120:37]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, existsById(Ljava/lang/String;Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [128:22] -> [128:79]"
+              }
+            ],
+            "sql" : "BEGIN"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/TraderController, deleteTrader(Ljava/lang/Integer;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/TraderController.java",
+                "position" : "TraderController.java [36:12] -> [36:54]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/RegisterService, deleteTraderById(Ljava/lang/Integer;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/RegisterService.java",
+                "position" : "RegisterService.java [78:14] -> [78:44]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, existsById(Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [120:15] -> [120:37]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, existsById(Ljava/lang/String;Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [128:22] -> [128:79]"
+              }
+            ],
+            "sql" : "SELECT count(*) FROM trader WHERE id =?"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/TraderController, deleteTrader(Ljava/lang/Integer;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/TraderController.java",
+                "position" : "TraderController.java [36:12] -> [36:54]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/RegisterService, deleteTraderById(Ljava/lang/Integer;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/RegisterService.java",
+                "position" : "RegisterService.java [81:26] -> [81:61]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/AccountDao, findByTraderId(Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/AccountDao.java",
+                "position" : "AccountDao.java [19:15] -> [19:74]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, findById(Ljava/lang/String;Ljava/lang/Object;ZLjava/lang/Class;)Lca/jrvs/apps/trading/model/dto/Entity; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [106:24] -> [108:73]"
+              }
+            ],
+            "sql" : "SELECT * FROM account WHERE trader_id =?"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/TraderController, deleteTrader(Ljava/lang/Integer;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/TraderController.java",
+                "position" : "TraderController.java [36:12] -> [36:54]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/RegisterService, deleteTraderById(Ljava/lang/Integer;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/RegisterService.java",
+                "position" : "RegisterService.java [91:8] -> [91:59]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/SecurityOrderDao, deletebyAccountId(Ljava/lang/Integer;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/SecurityOrderDao.java",
+                "position" : "SecurityOrderDao.java [18:15] -> [18:56]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, deleteById(Ljava/lang/String;Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [74:22] -> [74:56]"
+              }
+            ],
+            "sql" : "DELETE FROM security_order WHERE account_id =?"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/TraderController, deleteTrader(Ljava/lang/Integer;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/TraderController.java",
+                "position" : "TraderController.java [36:12] -> [36:54]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/RegisterService, deleteTraderById(Ljava/lang/Integer;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/RegisterService.java",
+                "position" : "RegisterService.java [92:8] -> [92:46]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, deleteById(Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [66:15] -> [66:37]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, deleteById(Ljava/lang/String;Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [74:22] -> [74:56]"
+              }
+            ],
+            "sql" : "DELETE FROM account WHERE id =?"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/TraderController, deleteTrader(Ljava/lang/Integer;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/TraderController.java",
+                "position" : "TraderController.java [36:12] -> [36:54]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/RegisterService, deleteTraderById(Ljava/lang/Integer;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/RegisterService.java",
+                "position" : "RegisterService.java [93:8] -> [93:38]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, deleteById(Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [66:15] -> [66:37]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, deleteById(Ljava/lang/String;Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [74:22] -> [74:56]"
+              }
+            ],
+            "sql" : "DELETE FROM trader WHERE id =?"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry" : {
+      "methods" : [
+        "ca.jrvs.apps.trading.controller.TraderController.createTraderandAccount"
+      ]
+    },
+    "transactions" : [
+      {
+        "txid" : 0,
+        "transaction" : [
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/TraderController, createTraderandAccount(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lca/jrvs/apps/trading/model/view/TraderAccountView; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/TraderController.java",
+                "position" : "TraderController.java [68:19] -> [68:65]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/RegisterService, createTraderAndAccount(Lca/jrvs/apps/trading/model/dto/Trader;)Lca/jrvs/apps/trading/model/view/TraderAccountView; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/RegisterService.java",
+                "position" : "RegisterService.java [47:12] -> [47:34]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, save(Lca/jrvs/apps/trading/model/dto/Entity;)Lca/jrvs/apps/trading/model/dto/Entity; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [54:16] -> [54:57]"
+              }
+            ],
+            "sql" : "BEGIN"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/TraderController, createTraderandAccount(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lca/jrvs/apps/trading/model/view/TraderAccountView; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/TraderController.java",
+                "position" : "TraderController.java [68:19] -> [68:65]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/RegisterService, createTraderAndAccount(Lca/jrvs/apps/trading/model/dto/Trader;)Lca/jrvs/apps/trading/model/view/TraderAccountView; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/RegisterService.java",
+                "position" : "RegisterService.java [47:12] -> [47:34]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, save(Lca/jrvs/apps/trading/model/dto/Entity;)Lca/jrvs/apps/trading/model/dto/Entity; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [54:16] -> [54:57]"
+              }
+            ],
+            "sql" : "insert into trader (firstName, id, email, dob, lastName, country) values (?, ?, ?, ?, ?, ?)"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/TraderController, createTraderandAccount(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lca/jrvs/apps/trading/model/view/TraderAccountView; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/TraderController.java",
+                "position" : "TraderController.java [68:19] -> [68:65]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/RegisterService, createTraderAndAccount(Lca/jrvs/apps/trading/model/dto/Trader;)Lca/jrvs/apps/trading/model/view/TraderAccountView; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/RegisterService.java",
+                "position" : "RegisterService.java [52:12] -> [52:36]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, save(Lca/jrvs/apps/trading/model/dto/Entity;)Lca/jrvs/apps/trading/model/dto/Entity; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [54:16] -> [54:57]"
+              }
+            ],
+            "sql" : "insert into account (id, traderId, amount) values (?, ?, ?)"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry" : {
+      "methods" : [
+        "ca.jrvs.apps.trading.controller.DashboardController.getPortfolio"
+      ]
+    },
+    "transactions" : [
+      {
+        "txid" : 0,
+        "transaction" : [
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/DashboardController, getPortfolio(Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/view/PortfolioView; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/DashboardController.java",
+                "position" : "DashboardController.java [26:19] -> [26:70]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/DashboardService, getProfileViewByTraderId(Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/view/PortfolioView; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/DashboardService.java",
+                "position" : "DashboardService.java [81:29] -> [81:59]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, existsById(Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [120:15] -> [120:37]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, existsById(Ljava/lang/String;Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [128:22] -> [128:79]"
+              }
+            ],
+            "sql" : "BEGIN"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/DashboardController, getPortfolio(Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/view/PortfolioView; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/DashboardController.java",
+                "position" : "DashboardController.java [26:19] -> [26:70]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/DashboardService, getProfileViewByTraderId(Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/view/PortfolioView; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/DashboardService.java",
+                "position" : "DashboardService.java [81:29] -> [81:59]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, existsById(Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [120:15] -> [120:37]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, existsById(Ljava/lang/String;Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [128:22] -> [128:79]"
+              }
+            ],
+            "sql" : "SELECT count(*) FROM trader WHERE id =?"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/DashboardController, getPortfolio(Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/view/PortfolioView; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/DashboardController.java",
+                "position" : "DashboardController.java [26:19] -> [26:70]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/DashboardService, getProfileViewByTraderId(Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/view/PortfolioView; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/DashboardService.java",
+                "position" : "DashboardService.java [84:26] -> [84:61]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/AccountDao, findByTraderId(Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/AccountDao.java",
+                "position" : "AccountDao.java [19:15] -> [19:74]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, findById(Ljava/lang/String;Ljava/lang/Object;ZLjava/lang/Class;)Lca/jrvs/apps/trading/model/dto/Entity; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [106:24] -> [108:73]"
+              }
+            ],
+            "sql" : "SELECT * FROM account WHERE trader_id =?"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/DashboardController, getPortfolio(Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/view/PortfolioView; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/DashboardController.java",
+                "position" : "DashboardController.java [26:19] -> [26:70]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/DashboardService, getProfileViewByTraderId(Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/view/PortfolioView; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/DashboardService.java",
+                "position" : "DashboardService.java [89:26] -> [89:65]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, findById(Ljava/lang/Object;)Lca/jrvs/apps/trading/model/dto/Entity; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [81:15] -> [81:53]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, findById(Ljava/lang/String;Ljava/lang/Object;ZLjava/lang/Class;)Lca/jrvs/apps/trading/model/dto/Entity; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [106:24] -> [108:73]"
+              }
+            ],
+            "sql" : "SELECT * FROM quote WHERE ticker =?"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/DashboardController, getPortfolio(Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/view/PortfolioView; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/DashboardController.java",
+                "position" : "DashboardController.java [26:19] -> [26:70]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/DashboardService, getProfileViewByTraderId(Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/view/PortfolioView; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/DashboardService.java",
+                "position" : "null"
+              }
+            ],
+            "sql" : "COMMIT"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry" : {
+      "methods" : [
+        "ca.jrvs.apps.trading.controller.DashboardController.getProfile"
+      ]
+    },
+    "transactions" : [
+      {
+        "txid" : 0,
+        "transaction" : [
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/DashboardController, getProfile(Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/view/TraderAccountView; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/DashboardController.java",
+                "position" : "DashboardController.java [37:19] -> [37:62]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/DashboardService, getTraderAccount(Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/view/TraderAccountView; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/DashboardService.java",
+                "position" : "DashboardService.java [48:29] -> [48:59]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, existsById(Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [120:15] -> [120:37]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, existsById(Ljava/lang/String;Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [128:22] -> [128:79]"
+              }
+            ],
+            "sql" : "BEGIN"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/DashboardController, getProfile(Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/view/TraderAccountView; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/DashboardController.java",
+                "position" : "DashboardController.java [37:19] -> [37:62]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/DashboardService, getTraderAccount(Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/view/TraderAccountView; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/DashboardService.java",
+                "position" : "DashboardService.java [48:29] -> [48:59]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, existsById(Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [120:15] -> [120:37]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, existsById(Ljava/lang/String;Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [128:22] -> [128:79]"
+              }
+            ],
+            "sql" : "SELECT count(*) FROM trader WHERE id =?"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/DashboardController, getProfile(Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/view/TraderAccountView; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/DashboardController.java",
+                "position" : "DashboardController.java [37:19] -> [37:62]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/DashboardService, getTraderAccount(Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/view/TraderAccountView; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/DashboardService.java",
+                "position" : "DashboardService.java [53:21] -> [53:49]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, findById(Ljava/lang/Object;)Lca/jrvs/apps/trading/model/dto/Entity; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [81:15] -> [81:53]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, findById(Ljava/lang/String;Ljava/lang/Object;ZLjava/lang/Class;)Lca/jrvs/apps/trading/model/dto/Entity; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [106:24] -> [108:73]"
+              }
+            ],
+            "sql" : "SELECT * FROM trader WHERE id =?"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/DashboardController, getProfile(Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/view/TraderAccountView; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/DashboardController.java",
+                "position" : "DashboardController.java [37:19] -> [37:62]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/DashboardService, getTraderAccount(Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/view/TraderAccountView; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/DashboardService.java",
+                "position" : "DashboardService.java [54:22] -> [54:57]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/AccountDao, findByTraderId(Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/AccountDao.java",
+                "position" : "AccountDao.java [19:15] -> [19:74]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, findById(Ljava/lang/String;Ljava/lang/Object;ZLjava/lang/Class;)Lca/jrvs/apps/trading/model/dto/Entity; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [106:24] -> [108:73]"
+              }
+            ],
+            "sql" : "SELECT * FROM account WHERE trader_id =?"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/DashboardController, getProfile(Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/view/TraderAccountView; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/DashboardController.java",
+                "position" : "DashboardController.java [37:19] -> [37:62]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/DashboardService, getTraderAccount(Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/view/TraderAccountView; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/DashboardService.java",
+                "position" : "null"
+              }
+            ],
+            "sql" : "COMMIT"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry" : {
+      "methods" : [
+        "ca.jrvs.apps.trading.controller.QuoteController.getDailyList"
+      ]
+    },
+    "transactions" : [ ]
+  },
+  {
+    "entry" : {
+      "methods" : [
+        "ca.jrvs.apps.trading.controller.QuoteController.putQuote"
+      ]
+    },
+    "transactions" : [
+      {
+        "txid" : 0,
+        "transaction" : [
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/QuoteController, putQuote(Lca/jrvs/apps/trading/model/dto/Quote;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/QuoteController.java",
+                "position" : "QuoteController.java [48:12] -> [48:61]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/QuoteDao, update(Ljava/util/List;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/QuoteDao.java",
+                "position" : "QuoteDao.java [38:12] -> [38:41]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, deleteById(Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [66:15] -> [66:37]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, deleteById(Ljava/lang/String;Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [74:22] -> [74:56]"
+              }
+            ],
+            "sql" : "BEGIN"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/QuoteController, putQuote(Lca/jrvs/apps/trading/model/dto/Quote;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/QuoteController.java",
+                "position" : "QuoteController.java [48:12] -> [48:61]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/QuoteDao, update(Ljava/util/List;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/QuoteDao.java",
+                "position" : "QuoteDao.java [38:12] -> [38:41]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, deleteById(Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [66:15] -> [66:37]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, deleteById(Ljava/lang/String;Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [74:22] -> [74:56]"
+              }
+            ],
+            "sql" : "DELETE FROM quote WHERE ticker =?"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/QuoteController, putQuote(Lca/jrvs/apps/trading/model/dto/Quote;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/QuoteController.java",
+                "position" : "QuoteController.java [48:12] -> [48:61]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/QuoteDao, update(Ljava/util/List;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/QuoteDao.java",
+                "position" : "QuoteDao.java [39:12] -> [39:23]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, save(Lca/jrvs/apps/trading/model/dto/Entity;)Lca/jrvs/apps/trading/model/dto/Entity; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [54:16] -> [54:57]"
+              }
+            ],
+            "sql" : "insert into quote (askPrice, askSize, id, bidPrice, bidSize, ticker, lastPrice) values (?, ?, ?, ?, ?, ?, ?)"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry" : {
+      "methods" : [
+        "ca.jrvs.apps.trading.controller.QuoteController.updateMarketData"
+      ]
+    },
+    "transactions" : [
+      {
+        "txid" : 0,
+        "transaction" : [
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/QuoteController, updateMarketData()V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/QuoteController.java",
+                "position" : "QuoteController.java [38:12] -> [38:43]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/QuoteService, updateMarketData()V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/QuoteService.java",
+                "position" : "QuoteService.java [115:16] -> [115:43]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, deleteById(Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [66:15] -> [66:37]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, deleteById(Ljava/lang/String;Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [74:22] -> [74:56]"
+              }
+            ],
+            "sql" : "BEGIN"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/QuoteController, updateMarketData()V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/QuoteController.java",
+                "position" : "QuoteController.java [38:12] -> [38:43]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/QuoteService, updateMarketData()V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/QuoteService.java",
+                "position" : "QuoteService.java [115:16] -> [115:43]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, deleteById(Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [66:15] -> [66:37]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, deleteById(Ljava/lang/String;Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [74:22] -> [74:56]"
+              }
+            ],
+            "sql" : "DELETE FROM quote WHERE ticker =?"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/QuoteController, updateMarketData()V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/QuoteController.java",
+                "position" : "QuoteController.java [38:12] -> [38:43]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/QuoteService, updateMarketData()V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/QuoteService.java",
+                "position" : "QuoteService.java [116:16] -> [116:33]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/QuoteService, initQuote(Ljava/lang/String;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/QuoteService.java",
+                "position" : "QuoteService.java [90:8] -> [90:53]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/QuoteService, initQuotes(Ljava/util/List;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/QuoteService.java",
+                "position" : "QuoteService.java [66:16] -> [66:43]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, existsById(Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [120:15] -> [120:37]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, existsById(Ljava/lang/String;Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [128:22] -> [128:79]"
+              }
+            ],
+            "sql" : "SELECT count(*) FROM quote WHERE ticker =?"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/QuoteController, updateMarketData()V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/QuoteController.java",
+                "position" : "QuoteController.java [38:12] -> [38:43]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/QuoteService, updateMarketData()V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/QuoteService.java",
+                "position" : "QuoteService.java [116:16] -> [116:33]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/QuoteService, initQuote(Ljava/lang/String;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/QuoteService.java",
+                "position" : "QuoteService.java [90:8] -> [90:53]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/QuoteService, initQuotes(Ljava/util/List;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/QuoteService.java",
+                "position" : "QuoteService.java [74:16] -> [74:63]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, save(Lca/jrvs/apps/trading/model/dto/Entity;)Lca/jrvs/apps/trading/model/dto/Entity; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [54:16] -> [54:57]"
+              }
+            ],
+            "sql" : "insert into quote (askPrice, askSize, id, bidPrice, bidSize, ticker, lastPrice) values (?, ?, ?, ?, ?, ?, ?)"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/QuoteController, updateMarketData()V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/QuoteController.java",
+                "position" : "QuoteController.java [38:12] -> [38:43]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/QuoteService, updateMarketData()V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/QuoteService.java",
+                "position" : "null"
+              }
+            ],
+            "sql" : "COMMIT"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry" : {
+      "methods" : [
+        "ca.jrvs.apps.trading.controller.QuoteController.getQuote"
+      ]
+    },
+    "transactions" : [ ]
+  },
+  {
+    "entry" : {
+      "methods" : [
+        "ca.jrvs.apps.trading.controller.QuoteController.getBatchQuote"
+      ]
+    },
+    "transactions" : [ ]
+  },
+  {
+    "entry" : {
+      "methods" : [
+        "ca.jrvs.apps.trading.controller.QuoteController.createQuote"
+      ]
+    },
+    "transactions" : [
+      {
+        "txid" : 0,
+        "transaction" : [
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/QuoteController, createQuote(Ljava/lang/String;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/QuoteController.java",
+                "position" : "QuoteController.java [58:12] -> [58:44]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/QuoteService, initQuote(Ljava/lang/String;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/QuoteService.java",
+                "position" : "QuoteService.java [90:8] -> [90:53]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/QuoteService, initQuotes(Ljava/util/List;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/QuoteService.java",
+                "position" : "QuoteService.java [66:16] -> [66:43]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, existsById(Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [120:15] -> [120:37]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, existsById(Ljava/lang/String;Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [128:22] -> [128:79]"
+              }
+            ],
+            "sql" : "BEGIN"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/QuoteController, createQuote(Ljava/lang/String;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/QuoteController.java",
+                "position" : "QuoteController.java [58:12] -> [58:44]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/QuoteService, initQuote(Ljava/lang/String;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/QuoteService.java",
+                "position" : "QuoteService.java [90:8] -> [90:53]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/QuoteService, initQuotes(Ljava/util/List;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/QuoteService.java",
+                "position" : "QuoteService.java [66:16] -> [66:43]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, existsById(Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [120:15] -> [120:37]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, existsById(Ljava/lang/String;Ljava/lang/Object;)Z >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [128:22] -> [128:79]"
+              }
+            ],
+            "sql" : "SELECT count(*) FROM quote WHERE ticker =?"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/QuoteController, createQuote(Ljava/lang/String;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/QuoteController.java",
+                "position" : "QuoteController.java [58:12] -> [58:44]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/QuoteService, initQuote(Ljava/lang/String;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/QuoteService.java",
+                "position" : "QuoteService.java [90:8] -> [90:53]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/QuoteService, initQuotes(Ljava/util/List;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/QuoteService.java",
+                "position" : "QuoteService.java [74:16] -> [74:63]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, save(Lca/jrvs/apps/trading/model/dto/Entity;)Lca/jrvs/apps/trading/model/dto/Entity; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [54:16] -> [54:57]"
+              }
+            ],
+            "sql" : "insert into quote (askPrice, askSize, id, bidPrice, bidSize, ticker, lastPrice) values (?, ?, ?, ?, ?, ?, ?)"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/QuoteController, createQuote(Ljava/lang/String;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/QuoteController.java",
+                "position" : "QuoteController.java [58:12] -> [58:44]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/QuoteService, initQuote(Ljava/lang/String;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/QuoteService.java",
+                "position" : "null"
+              }
+            ],
+            "sql" : "COMMIT"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry" : {
+      "methods" : [
+        "ca.jrvs.apps.trading.controller.OrderController.putOrder"
+      ]
+    },
+    "transactions" : [
+      {
+        "txid" : 0,
+        "transaction" : [
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/OrderController, putOrder(Lca/jrvs/apps/trading/model/dto/MarketOrderDto;)Lca/jrvs/apps/trading/model/dto/SecurityOrder; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/OrderController.java",
+                "position" : "OrderController.java [29:19] -> [29:87]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/OrderService, executeMarketOrder(Ljava/util/List;)Lca/jrvs/apps/trading/model/dto/SecurityOrder; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/OrderService.java",
+                "position" : "OrderService.java [69:28] -> [69:67]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, findById(Ljava/lang/Object;)Lca/jrvs/apps/trading/model/dto/Entity; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [81:15] -> [81:53]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, findById(Ljava/lang/String;Ljava/lang/Object;ZLjava/lang/Class;)Lca/jrvs/apps/trading/model/dto/Entity; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [106:24] -> [108:73]"
+              }
+            ],
+            "sql" : "BEGIN"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/OrderController, putOrder(Lca/jrvs/apps/trading/model/dto/MarketOrderDto;)Lca/jrvs/apps/trading/model/dto/SecurityOrder; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/OrderController.java",
+                "position" : "OrderController.java [29:19] -> [29:87]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/OrderService, executeMarketOrder(Ljava/util/List;)Lca/jrvs/apps/trading/model/dto/SecurityOrder; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/OrderService.java",
+                "position" : "OrderService.java [69:28] -> [69:67]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, findById(Ljava/lang/Object;)Lca/jrvs/apps/trading/model/dto/Entity; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [81:15] -> [81:53]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, findById(Ljava/lang/String;Ljava/lang/Object;ZLjava/lang/Class;)Lca/jrvs/apps/trading/model/dto/Entity; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [106:24] -> [108:73]"
+              }
+            ],
+            "sql" : "SELECT * FROM quote WHERE ticker =?"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/OrderController, putOrder(Lca/jrvs/apps/trading/model/dto/MarketOrderDto;)Lca/jrvs/apps/trading/model/dto/SecurityOrder; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/OrderController.java",
+                "position" : "OrderController.java [29:19] -> [29:87]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/OrderService, executeMarketOrder(Ljava/util/List;)Lca/jrvs/apps/trading/model/dto/SecurityOrder; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/OrderService.java",
+                "position" : "OrderService.java [71:26] -> [71:70]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, findById(Ljava/lang/Object;)Lca/jrvs/apps/trading/model/dto/Entity; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [81:15] -> [81:53]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, findById(Ljava/lang/String;Ljava/lang/Object;ZLjava/lang/Class;)Lca/jrvs/apps/trading/model/dto/Entity; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [106:24] -> [108:73]"
+              }
+            ],
+            "sql" : "SELECT * FROM account WHERE id =?"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/OrderController, putOrder(Lca/jrvs/apps/trading/model/dto/MarketOrderDto;)Lca/jrvs/apps/trading/model/dto/SecurityOrder; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/OrderController.java",
+                "position" : "OrderController.java [29:19] -> [29:87]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/OrderService, executeMarketOrder(Ljava/util/List;)Lca/jrvs/apps/trading/model/dto/SecurityOrder; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/OrderService.java",
+                "position" : "OrderService.java [77:16] -> [77:62]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/OrderService, buy(Ljava/lang/Double;Ljava/lang/Double;Lca/jrvs/apps/trading/model/dto/SecurityOrder;Lca/jrvs/apps/trading/model/dto/MarketOrderDto;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/OrderService.java",
+                "position" : "OrderService.java [96:12] -> [96:88]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/AccountDao, updateAccountbyID(Ljava/lang/Double;Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/AccountDao.java",
+                "position" : "AccountDao.java [28:13] -> [28:54]"
+              }
+            ],
+            "sql" : "update account set amount = ? where id = ?"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/OrderController, putOrder(Lca/jrvs/apps/trading/model/dto/MarketOrderDto;)Lca/jrvs/apps/trading/model/dto/SecurityOrder; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/OrderController.java",
+                "position" : "OrderController.java [29:19] -> [29:87]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/OrderService, executeMarketOrder(Ljava/util/List;)Lca/jrvs/apps/trading/model/dto/SecurityOrder; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/OrderService.java",
+                "position" : "OrderService.java [77:16] -> [77:62]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/OrderService, buy(Ljava/lang/Double;Ljava/lang/Double;Lca/jrvs/apps/trading/model/dto/SecurityOrder;Lca/jrvs/apps/trading/model/dto/MarketOrderDto;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/OrderService.java",
+                "position" : "OrderService.java [96:12] -> [96:88]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/AccountDao, updateAccountbyID(Ljava/lang/Double;Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/AccountDao.java",
+                "position" : "AccountDao.java [29:83] -> [29:124]"
+              }
+            ],
+            "sql" : "update account set amount = ? where id = ?"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/OrderController, putOrder(Lca/jrvs/apps/trading/model/dto/MarketOrderDto;)Lca/jrvs/apps/trading/model/dto/SecurityOrder; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/OrderController.java",
+                "position" : "OrderController.java [29:19] -> [29:87]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/OrderService, executeMarketOrder(Ljava/util/List;)Lca/jrvs/apps/trading/model/dto/SecurityOrder; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/OrderService.java",
+                "position" : "OrderService.java [77:16] -> [77:62]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/OrderService, buy(Ljava/lang/Double;Ljava/lang/Double;Lca/jrvs/apps/trading/model/dto/SecurityOrder;Lca/jrvs/apps/trading/model/dto/MarketOrderDto;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/OrderService.java",
+                "position" : "OrderService.java [96:12] -> [96:88]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/AccountDao, updateAccountbyID(Ljava/lang/Double;Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/AccountDao.java",
+                "position" : "AccountDao.java [31:15] -> [31:34]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, findById(Ljava/lang/Object;)Lca/jrvs/apps/trading/model/dto/Entity; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [81:15] -> [81:53]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, findById(Ljava/lang/String;Ljava/lang/Object;ZLjava/lang/Class;)Lca/jrvs/apps/trading/model/dto/Entity; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [106:24] -> [108:73]"
+              }
+            ],
+            "sql" : "SELECT * FROM account WHERE id =?"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/OrderController, putOrder(Lca/jrvs/apps/trading/model/dto/MarketOrderDto;)Lca/jrvs/apps/trading/model/dto/SecurityOrder; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/OrderController.java",
+                "position" : "OrderController.java [29:19] -> [29:87]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/OrderService, executeMarketOrder(Ljava/util/List;)Lca/jrvs/apps/trading/model/dto/SecurityOrder; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/OrderService.java",
+                "position" : "OrderService.java [80:16] -> [80:63]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/OrderService, sell(Ljava/lang/Double;Ljava/lang/Double;Lca/jrvs/apps/trading/model/dto/SecurityOrder;Lca/jrvs/apps/trading/model/dto/MarketOrderDto;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/OrderService.java",
+                "position" : "OrderService.java [103:19] -> [103:89]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/PositionDao, getPosition(Ljava/lang/Integer;Ljava/lang/String;)Ljava/lang/Long; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/PositionDao.java",
+                "position" : "PositionDao.java [26:15] -> [26:71]"
+              }
+            ],
+            "sql" : "select position from position where account_id=? and ticker=?"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/OrderController, putOrder(Lca/jrvs/apps/trading/model/dto/MarketOrderDto;)Lca/jrvs/apps/trading/model/dto/SecurityOrder; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/OrderController.java",
+                "position" : "OrderController.java [29:19] -> [29:87]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/OrderService, executeMarketOrder(Ljava/util/List;)Lca/jrvs/apps/trading/model/dto/SecurityOrder; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/OrderService.java",
+                "position" : "OrderService.java [80:16] -> [80:63]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/OrderService, sell(Ljava/lang/Double;Ljava/lang/Double;Lca/jrvs/apps/trading/model/dto/SecurityOrder;Lca/jrvs/apps/trading/model/dto/MarketOrderDto;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/OrderService.java",
+                "position" : "OrderService.java [110:12] -> [110:88]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/AccountDao, updateAccountbyID(Ljava/lang/Double;Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/AccountDao.java",
+                "position" : "AccountDao.java [28:13] -> [28:54]"
+              }
+            ],
+            "sql" : "update account set amount = ? where id = ?"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/OrderController, putOrder(Lca/jrvs/apps/trading/model/dto/MarketOrderDto;)Lca/jrvs/apps/trading/model/dto/SecurityOrder; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/OrderController.java",
+                "position" : "OrderController.java [29:19] -> [29:87]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/OrderService, executeMarketOrder(Ljava/util/List;)Lca/jrvs/apps/trading/model/dto/SecurityOrder; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/OrderService.java",
+                "position" : "OrderService.java [80:16] -> [80:63]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/OrderService, sell(Ljava/lang/Double;Ljava/lang/Double;Lca/jrvs/apps/trading/model/dto/SecurityOrder;Lca/jrvs/apps/trading/model/dto/MarketOrderDto;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/OrderService.java",
+                "position" : "OrderService.java [110:12] -> [110:88]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/AccountDao, updateAccountbyID(Ljava/lang/Double;Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/AccountDao.java",
+                "position" : "AccountDao.java [29:83] -> [29:124]"
+              }
+            ],
+            "sql" : "update account set amount = ? where id = ?"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/OrderController, putOrder(Lca/jrvs/apps/trading/model/dto/MarketOrderDto;)Lca/jrvs/apps/trading/model/dto/SecurityOrder; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/OrderController.java",
+                "position" : "OrderController.java [29:19] -> [29:87]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/OrderService, executeMarketOrder(Ljava/util/List;)Lca/jrvs/apps/trading/model/dto/SecurityOrder; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/OrderService.java",
+                "position" : "OrderService.java [80:16] -> [80:63]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/OrderService, sell(Ljava/lang/Double;Ljava/lang/Double;Lca/jrvs/apps/trading/model/dto/SecurityOrder;Lca/jrvs/apps/trading/model/dto/MarketOrderDto;)V >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/OrderService.java",
+                "position" : "OrderService.java [110:12] -> [110:88]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/AccountDao, updateAccountbyID(Ljava/lang/Double;Ljava/lang/Integer;)Lca/jrvs/apps/trading/model/dto/Account; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/AccountDao.java",
+                "position" : "AccountDao.java [31:15] -> [31:34]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, findById(Ljava/lang/Object;)Lca/jrvs/apps/trading/model/dto/Entity; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [81:15] -> [81:53]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, findById(Ljava/lang/String;Ljava/lang/Object;ZLjava/lang/Class;)Lca/jrvs/apps/trading/model/dto/Entity; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [106:24] -> [108:73]"
+              }
+            ],
+            "sql" : "SELECT * FROM account WHERE id =?"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/OrderController, putOrder(Lca/jrvs/apps/trading/model/dto/MarketOrderDto;)Lca/jrvs/apps/trading/model/dto/SecurityOrder; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/OrderController.java",
+                "position" : "OrderController.java [29:19] -> [29:87]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/OrderService, executeMarketOrder(Ljava/util/List;)Lca/jrvs/apps/trading/model/dto/SecurityOrder; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/OrderService.java",
+                "position" : "OrderService.java [83:39] -> [83:75]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/dao/JdbcCrudDao, save(Lca/jrvs/apps/trading/model/dto/Entity;)Lca/jrvs/apps/trading/model/dto/Entity; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/dao/JdbcCrudDao.java",
+                "position" : "JdbcCrudDao.java [54:16] -> [54:57]"
+              }
+            ],
+            "sql" : "insert into security_order (notes, accountId, id, size, status, ticker, price) values (?, ?, ?, ?, ?, ?, ?)"
+          },
+          {
+            "stacktrace" : [
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/controller/OrderController, putOrder(Lca/jrvs/apps/trading/model/dto/MarketOrderDto;)Lca/jrvs/apps/trading/model/dto/SecurityOrder; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/controller/OrderController.java",
+                "position" : "OrderController.java [29:19] -> [29:87]"
+              },
+              {
+                "method" : "<src-method: < Source, Lca/jrvs/apps/trading/service/OrderService, executeMarketOrder(Ljava/util/List;)Lca/jrvs/apps/trading/model/dto/SecurityOrder; >>",
+                "file" : "/app/src/main/java/ca/jrvs/apps/trading/service/OrderService.java",
+                "position" : "null"
+              }
+            ],
+            "sql" : "COMMIT"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry" : {
+      "methods" : [
+        "ca.jrvs.apps.trading.controller.AppController.health"
+      ]
+    },
+    "transactions" : [ ]
+  }
+]

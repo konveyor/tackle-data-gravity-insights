@@ -1,0 +1,2 @@
+[<<immutable-context>>, <<immutable-context>>]	<com.ibm.dgitest.DGIMain: int add(int,int)>	[<<immutable-context>>, <<immutable-context>>]	<com.ibm.dgitest.DGIMain: void main(java.lang.String[])>
+[<<immutable-context>>, <<immutable-context>>]	<com.ibm.dgitest.ReadVal: int getInt()>	[<<immutable-context>>, <com.ibm.dgitest.DGIMain: void input(java.util.List)>/new com.ibm.dgitest.ReadVal/0]	<com.ibm.dgitest.DGIMain: void input(java.util.List)>

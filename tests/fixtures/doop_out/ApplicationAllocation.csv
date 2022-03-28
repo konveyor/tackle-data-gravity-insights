@@ -1,0 +1,6 @@
+<com.ibm.dgitest.ReadVal: int getInt()>/new java.util.Random/0	com.ibm.dgitest.ReadVal
+<com.ibm.dgitest.ReadVal: float getFloat()>/new java.util.Random/0	com.ibm.dgitest.ReadVal
+<com.ibm.dgitest.DGIMain: void main(java.lang.String[])>/new java.util.ArrayList/0	com.ibm.dgitest.DGIMain
+<com.ibm.dgitest.DGIMain: void main(java.lang.String[])>/new com.ibm.dgitest.Obj/0	com.ibm.dgitest.DGIMain
+<com.ibm.dgitest.DGIMain: void main(java.lang.String[])>/new com.ibm.dgitest.Obj/1	com.ibm.dgitest.DGIMain
+<com.ibm.dgitest.DGIMain: void input(java.util.List)>/new com.ibm.dgitest.ReadVal/0	com.ibm.dgitest.DGIMain

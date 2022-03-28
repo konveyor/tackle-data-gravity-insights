@@ -1,0 +1,6 @@
+# .coveragerc
+[run]
+source=dgi
+
+[report]
+show_missing = True

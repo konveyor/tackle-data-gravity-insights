@@ -11,13 +11,15 @@ assignees: ''
 **I need**   
 **So that**   
 
-#### Details & Assumptions
+### Details & Assumptions
+
 * ...
 
-#### Acceptance Criteria
+### Acceptance Criteria
 
 ```gherkin
 Given [some initial state]
 When [some event]
 Then [some measurable outcome]
 ```
+

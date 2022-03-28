@@ -1,0 +1,16 @@
+<thread-group-init>/0	<java.lang.ThreadGroup: void <init>()>
+<thread-group-init>/0	<java.lang.ThreadGroup: void <init>(java.lang.ThreadGroup,java.lang.String)>
+<main-thread-init>/0	<java.lang.Thread: void <init>(java.lang.ThreadGroup,java.lang.String)>
+<com.ibm.dgitest.DGIMain: void main(java.lang.String[])>/com.ibm.dgitest.DGIMain.add/0	<com.ibm.dgitest.DGIMain: int add(int,int)>
+<com.ibm.dgitest.DGIMain: void input(java.util.List)>/com.ibm.dgitest.ReadVal.getInt/0	<com.ibm.dgitest.ReadVal: int getInt()>
+<com.ibm.dgitest.DGIMain: void input(java.util.List)>/com.ibm.dgitest.ReadVal.getInt/1	<com.ibm.dgitest.ReadVal: int getInt()>
+<com.ibm.dgitest.DGIMain: void input(java.util.List)>/com.ibm.dgitest.ReadVal.getInt/2	<com.ibm.dgitest.ReadVal: int getInt()>
+<com.ibm.dgitest.DGIMain: void input(java.util.List)>/com.ibm.dgitest.ReadVal.getInt/3	<com.ibm.dgitest.ReadVal: int getInt()>
+<com.ibm.dgitest.Obj: void <init>()>/java.lang.Object.<init>/0	<java.lang.Object: void <init>()>
+<com.ibm.dgitest.ReadVal: void <init>()>/java.lang.Object.<init>/0	<java.lang.Object: void <init>()>
+<com.ibm.dgitest.ReadVal: int getInt()>/java.util.Random.<init>/0	<java.util.Random: void <init>()>
+<com.ibm.dgitest.DGIMain: void main(java.lang.String[])>/java.util.ArrayList.<init>/0	<java.util.ArrayList: void <init>()>
+<com.ibm.dgitest.DGIMain: void main(java.lang.String[])>/com.ibm.dgitest.Obj.<init>/0	<com.ibm.dgitest.Obj: void <init>()>
+<com.ibm.dgitest.DGIMain: void main(java.lang.String[])>/com.ibm.dgitest.Obj.<init>/1	<com.ibm.dgitest.Obj: void <init>()>
+<com.ibm.dgitest.DGIMain: void input(java.util.List)>/com.ibm.dgitest.ReadVal.<init>/0	<com.ibm.dgitest.ReadVal: void <init>()>
+<com.ibm.dgitest.DGIMain: void main(java.lang.String[])>/com.ibm.dgitest.DGIMain.input/0	<com.ibm.dgitest.DGIMain: void input(java.util.List)>

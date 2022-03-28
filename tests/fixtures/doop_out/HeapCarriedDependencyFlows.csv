@@ -1,0 +1,1 @@
+[<<immutable-context>>, <com.ibm.dgitest.DGIMain: void input(java.util.List)>/new com.ibm.dgitest.ReadVal/0]	<com.ibm.dgitest.DGIMain: void input(java.util.List)>/new com.ibm.dgitest.ReadVal/0	<com.ibm.dgitest.ReadVal: int getInt()>	<com.ibm.dgitest.ReadVal: int getInt()>

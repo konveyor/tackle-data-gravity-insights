@@ -1,0 +1,23 @@
+# WARNING: Here be dragons!
+# Leave the following unchanged unless:
+  # 1. You have renamed DOOP facts files manually;
+  # 2. You you have a different fact files to read from.
+  # 3. You are adding a new feature and you want to add additional files to read from.
+
+HEAP_DEPENDENCY_FILE: "HeapCarriedDependencyFlows.csv"
+METHOD_CONTEXTS_FILE: "MethodReachableContext.csv"
+METHOD_INFORMATION_FILE: "MethodInformation.csv"
+DATA_DEPENDENCY_FILE: "DependentInstructionsBetweenMethods.csv"
+CALL_DEPENDENCY_FILE: "CallDependency.csv"
+RETURN_DEPENDENCY_FILE: "ReturnDependency.csv"
+JEE:
+  SERVLET:
+    GenericServlet: "GenericServlet.csv"
+    WebServlet: "WebServlet.csv"
+    ServletFilter: "ServletFilterClass.csv"
+  BEANS:    
+    EJBTransactionBean: "EJBTransactionBean.csv"
+    SessionBean: "SessionBean.csv"
+    SingletonBean: "SingletonBean.csv"
+    StatefulBean: "StatefulBean.csv"
+    StatelessBean: "StatelessBean.csv"
