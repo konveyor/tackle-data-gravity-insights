@@ -34,9 +34,9 @@ setup(
     ],
     extras_require = {
         "dev": [
-            "nose==1.3.7", 
-            "pinocchio==0.4.3", 
-            "coverage==6.3.2", 
+            "nose==1.3.7",
+            "pinocchio==0.4.3",
+            "coverage==6.3.2",
             "pylint==2.13",
             "py2neo==2021.2.3",
             "tox==3.24.5",

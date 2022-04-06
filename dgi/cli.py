@@ -69,10 +69,10 @@ def cli(ctx, abstraction, quiet, clear):
 @cli.command()
 @click.option("--input", "-i", type=click.Path(exists=True), required=True, help="The SQL/DDL file to load into the graph")
 @click.option("--output", "-o", required=False, help="The JSON file to write the schema to")
-@click.option("--validate", "-v", help="Validate file if OK but don't populate graph", is_flag=True, hidden=True)
+@click.option("--validate", "-val", help="Validate file if OK but don't populate graph", is_flag=True, hidden=True)
 @click.pass_context
 def s2g(ctx, input, output, validate):
-    """This command parses SQL schema DLL into a graph"""
+    """This command parses SQL schema DDL into a graph"""
 
     # Read the DDL file
     click.echo(f"Reading: {input}")
