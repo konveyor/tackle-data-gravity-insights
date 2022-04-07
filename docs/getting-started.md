@@ -69,7 +69,7 @@ This is a demonstration of the usage of DGI. For this, we'll use [daytrader7](ht
     # Download and extract the demo application
     wget -c https://github.com/WASdev/sample.daytrader7/archive/refs/tags/v1.4.tar.gz -O - | tar -xvz -C demo/sample-application
     # Now build the application
-    mvn --file=demo/sample-application/sample.daytrader7-1.4/pom.xml install
+    docker run --rm -v $(pwd)/demo/sample-application/sample.daytrader7-1.4:/build maven:3.8.4-openjdk-8-slim mvn --file=/build/pom.xml install
     ```
 
     This will create an EAR file called `daytrader-ee7-1.0-SNAPSHOT.ear` in `demo/sample-application/sample.daytrader7-1.4/daytrader-ee7/target` directory.
