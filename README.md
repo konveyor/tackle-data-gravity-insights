@@ -1,6 +1,7 @@
 # Tackle Data Gravity Insights
 
 [![PyPI version](https://badge.fury.io/py/tackle-dgi.svg)](https://badge.fury.io/py/tackle-dgi)
+[![Build Status](https://github.com/konveyor/tackle-data-gravity-insights/actions/workflows/ci-build.yml/badge.svg)](https://github.com/konveyor/tackle-data-gravity-insights/actions)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 Tackle Data Gravity Insights is a new way to gain insights into your monolithic application code so that you can better refactor it into domain driven microservices. It takes a wholistic approach to application modernization and refactoring by triangulating between code, and, data, and transactional boundaries.
