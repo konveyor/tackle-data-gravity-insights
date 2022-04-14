@@ -1,5 +1,6 @@
 # Tackle Data Gravity Insights
 
+[![Build Status](https://github.com/konveyor/tackle-data-gravity-insights/actions/workflows/ci-build.yml/badge.svg)](https://github.com/konveyor/tackle-data-gravity-insights/actions)
 [![PyPI version](https://badge.fury.io/py/tackle-dgi.svg)](https://badge.fury.io/py/tackle-dgi)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 

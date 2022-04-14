@@ -1,0 +1,53 @@
+name: CI Build
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+    - '**.md'
+    - docs/
+
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+    - '**.md'
+    - docs/
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    # use a known build environment
+    container: python:3.9-slim
+
+    # Required services    
+    services:
+      neo4j:
+        image: neo4j
+        env:
+          NEO4J_USERNAME: neo4j
+          NEO4J_PASSWORD: test
+          NEO4J_AUTH: neo4j/test          
+        ports:
+          - 7474:7474
+          - 7687:7687
+
+    # Steps for the build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip wheel
+          pip install -e .[dev]
+
+      - name: Run unit tests with nose
+        run: nosetests
+        env:
+          NEO4J_BOLT_URL: "bolt://neo4j:test@neo4j:7687"
+
+      # - name: Upload code coverage
+      #   uses: codecov/codecov-action@v2 
+      #   with:
+      #     version: "v0.1.13"
