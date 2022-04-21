@@ -29,8 +29,7 @@ from py2neo import Graph
 ######################################################################
 
 
-NEO4J_BOLT_URL = os.getenv("NEO4J_BOLT_URL")
-
+NEO4J_BOLT_URL = os.getenv("NEO4J_BOLT_URL", "bolt://neo4j:dgi@neo4j:7687")
 
 class TestS2GCLI(unittest.TestCase):
     """Test Cases for c2g command"""
