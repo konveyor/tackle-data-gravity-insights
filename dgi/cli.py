@@ -60,12 +60,14 @@ def cli(ctx, abstraction, quiet, clear):
     ctx.obj['abstraction'] = abstraction
     ctx.obj['verbose'] = not quiet
     ctx.obj['clear'] = clear
+    # Configure Neo4J
+    config.DATABASE_URL = os.getenv("NEO4J_BOLT_URL", "bolt://neo4j:dgi@localhost:7687")
+    config.ENCRYPTED_CONNECTION = False
+
 
 ######################################################################
 # schema2graph - Populates the graph from an SQL schema DDL
 ######################################################################
-
-
 @cli.command()
 @click.option("--input", "-i", type=click.Path(exists=True), required=True, help="The SQL/DDL file to load into the graph")
 @click.option("--output", "-o", required=False, help="The JSON file to write the schema to")
@@ -114,12 +116,6 @@ def tx2g(ctx, input, validate):
 
     if ctx.obj["verbose"]:
         click.echo("Verbose mode: ON")
-
-    # ------------------
-    # Configure NeoModel
-    # ------------------
-    config.DATABASE_URL = os.environ.get("NEO4J_BOLT_URL")
-    config.ENCRYPTED_CONNECTION = False
 
     # -------------------------
     # Set logging configuration
@@ -200,12 +196,6 @@ def c2g(ctx, input, validate):
 
     # Add the input dir to configuration.
     usr_cfg.set_config(key="GRAPH_FACTS_DIR", val=input)
-
-    # ---------------
-    # Configure Neo4J
-    # ---------------
-    config.DATABASE_URL = os.environ.get("NEO4J_BOLT_URL")
-    config.ENCRYPTED_CONNECTION = False
 
     # ---------------
     # Build the graph
