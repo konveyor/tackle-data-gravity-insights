@@ -63,6 +63,11 @@ def cli(ctx, abstraction, quiet, clear):
     # Configure Neo4J
     config.DATABASE_URL = os.getenv("NEO4J_BOLT_URL", "bolt://neo4j:dgi@localhost:7687")
     config.ENCRYPTED_CONNECTION = False
+    # Set logging configuration
+    loglevel = logging.WARNING
+    if (ctx.obj["verbose"]):
+        loglevel = logging.INFO
+    logging.basicConfig(level=loglevel, format="[%(levelname)s] %(message)s")
 
 
 ######################################################################
@@ -117,14 +122,6 @@ def tx2g(ctx, input, validate):
     if ctx.obj["verbose"]:
         click.echo("Verbose mode: ON")
 
-    # -------------------------
-    # Set logging configuration
-    # -------------------------
-    loglevel = logging.WARNING
-    if (ctx.obj["verbose"]):
-        loglevel = logging.INFO
-    logging.basicConfig(level=loglevel, format="[%(levelname)s] %(message)s")
-
     class_transaction_loader = ClassTransactionLoader()
     method_transaction_loader = MethodTransactionLoader()
 
@@ -178,14 +175,6 @@ def c2g(ctx, input, validate):
 
     if ctx.obj["verbose"]:
         click.echo("Verbose mode: ON")
-
-    # -------------------------
-    # Set logging configuration
-    # -------------------------
-    loglevel = logging.WARNING
-    if (ctx.obj["verbose"]):
-        loglevel = logging.INFO
-    logging.basicConfig(level=loglevel, format="[%(levelname)s] %(message)s")
 
     # -------------------------
     # Initialize configurations
