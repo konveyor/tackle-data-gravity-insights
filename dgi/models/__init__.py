@@ -14,8 +14,4 @@
 # limitations under the License.
 ################################################################################
 
-import os
-from neomodel import config
 from .entities import ClassNode, MethodNode, SQLTable, SQLColumn
-
-config.DATABASE_URL = os.environ["NEO4J_BOLT_URL"]

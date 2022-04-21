@@ -64,7 +64,7 @@ class TestS2GCLI(unittest.TestCase):
     def test_abstraction_level_is_class(self):
         """Test --abstraction set to 'class'"""
         result = self.runner.invoke(
-            cli, ["--abstraction=class", "c2g", "--input=tests/fixtures/doop_out", "--validate"])
+            cli, ["--abstraction=class", "c2g", "--input=tests/fixtures/doop_out"])
         assert "abstraction level is class" in result.output
         self.assertEqual(result.exit_code, 0)
 

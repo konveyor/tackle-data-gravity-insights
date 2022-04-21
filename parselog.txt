@@ -1,0 +1,449 @@
+abstract_graph_builder.py:  93:Clear flag detected... Deleting pre-existing nodes.
+addressing.py: 185:[#0000]  C: <RESOLVE> neo4j:7687
+__init__.py:1194:[#0000]  C: <OPEN> 172.20.0.2:7687
+__init__.py:1257:[#EBE8]  C: <MAGIC> 0x6060B017
+__init__.py:1258:[#EBE8]  C: <HANDSHAKE> 0x00030304 0x00000104 0x00000004 0x00000003
+__init__.py:1290:[#EBE8]  S: <HANDSHAKE> 0x00000304
+ _bolt4.py: 401:[#EBE8]  C: HELLO {'user_agent': 'neo4j-python/4.3.6 Python/3.9.12-final-0 (linux)', 'scheme': 'basic', 'principal': 'neo4j', 'credentials': '*******'}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'server': 'Neo4j/4.4.5', 'connection_id': 'bolt-55', 'hints': {}}
+ _bolt4.py: 163:[#EBE8]  C: RUN ' MATCH ((classnode:ClassNode)) RETURN classnode' {} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['classnode']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJLZA=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN 'MATCH (self) WHERE id(self)=$self OPTIONAL MATCH (self)-[r]-() DELETE r, self' {'self': 58} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 1, 'fields': []}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJLpA=', 'stats': {'nodes-deleted': 1, 'relationships-deleted': 5}, 'type': 'w', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN 'MATCH (self) WHERE id(self)=$self OPTIONAL MATCH (self)-[r]-() DELETE r, self' {'self': 59} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 1, 'fields': []}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJL5A=', 'stats': {'nodes-deleted': 1, 'relationships-deleted': 3}, 'type': 'w', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN 'MATCH (self) WHERE id(self)=$self OPTIONAL MATCH (self)-[r]-() DELETE r, self' {'self': 60} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 1, 'fields': []}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJMJA=', 'stats': {'nodes-deleted': 1}, 'type': 'w', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN 'MATCH (self) WHERE id(self)=$self OPTIONAL MATCH (self)-[r]-() DELETE r, self' {'self': 61} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 1, 'fields': []}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJMZA=', 'stats': {'nodes-deleted': 1, 'relationships-deleted': 2}, 'type': 'w', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN 'MATCH (self) WHERE id(self)=$self OPTIONAL MATCH (self)-[r]-() DELETE r, self' {'self': 62} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 2, 'fields': []}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJMpA=', 'stats': {'nodes-deleted': 1}, 'type': 'w', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN 'MATCH (self) WHERE id(self)=$self OPTIONAL MATCH (self)-[r]-() DELETE r, self' {'self': 63} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': []}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJM5A=', 'stats': {'nodes-deleted': 1}, 'type': 'w', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+class_graph_builder.py: 167:Populating heap carried dependencies edges
+ _bolt4.py: 163:[#EBE8]  C: RUN ' MATCH ((classnode:ClassNode)) WHERE classnode.node_short_name = $classnode_node_short_name_1 RETURN classnode LIMIT 2' {'classnode_node_short_name_1': 'ReadVal'} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['classnode']}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJM5A=', 'type': 'r', 't_last': 1, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN 'CREATE (n:ClassNode $create_params) RETURN n' {'create_params': {'node_id': '1cbecfce4ea44f23920c3859132b3085', 'node_class': 'com.ibm.dgitest.ReadVal', 'node_short_name': 'ReadVal', 'node_is_entrypoint': False}} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 1, 'fields': ['n']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJNJA=', 'stats': {'labels-added': 1, 'nodes-created': 1, 'properties-set': 4}, 'type': 'rw', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN ' MATCH ((classnode:ClassNode)) WHERE classnode.node_short_name = $classnode_node_short_name_1 RETURN classnode LIMIT 2' {'classnode_node_short_name_1': 'ReadVal'} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['classnode']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJNJA=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+class_graph_builder.py: 201:Populating dataflow edges
+ _bolt4.py: 163:[#EBE8]  C: RUN ' MATCH ((classnode:ClassNode)) WHERE classnode.node_short_name = $classnode_node_short_name_1 RETURN classnode LIMIT 2' {'classnode_node_short_name_1': 'DGIMain'} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['classnode']}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJNJA=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN 'CREATE (n:ClassNode $create_params) RETURN n' {'create_params': {'node_id': '437c7d312d9744f4aa58e19efe23d119', 'node_class': 'com.ibm.dgitest.DGIMain', 'node_short_name': 'DGIMain', 'node_is_entrypoint': False}} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 1, 'fields': ['n']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJNZA=', 'stats': {'labels-added': 1, 'nodes-created': 1, 'properties-set': 4}, 'type': 'rw', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN ' MATCH ((classnode:ClassNode)) WHERE classnode.node_short_name = $classnode_node_short_name_1 RETURN classnode LIMIT 2' {'classnode_node_short_name_1': 'DGIMain'} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['classnode']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJNZA=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN ' MATCH ((classnode:ClassNode)) WHERE classnode.node_short_name = $classnode_node_short_name_1 RETURN classnode LIMIT 2' {'classnode_node_short_name_1': 'DGIMain'} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 1, 'fields': ['classnode']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJNZA=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN ' MATCH ((classnode:ClassNode)) WHERE classnode.node_short_name = $classnode_node_short_name_1 RETURN classnode LIMIT 2' {'classnode_node_short_name_1': 'DGIMain'} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['classnode']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJNZA=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN ' MATCH ((classnode:ClassNode)) WHERE classnode.node_short_name = $classnode_node_short_name_1 RETURN classnode LIMIT 2' {'classnode_node_short_name_1': 'DGIMain'} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['classnode']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJNZA=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN ' MATCH ((classnode:ClassNode)) WHERE classnode.node_short_name = $classnode_node_short_name_1 RETURN classnode LIMIT 2' {'classnode_node_short_name_1': 'DGIMain'} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['classnode']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJNZA=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN ' MATCH ((classnode:ClassNode)) WHERE classnode.node_short_name = $classnode_node_short_name_1 RETURN classnode LIMIT 2' {'classnode_node_short_name_1': 'ReadVal'} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['classnode']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJNZA=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN ' MATCH ((classnode:ClassNode)) WHERE classnode.node_short_name = $classnode_node_short_name_1 RETURN classnode LIMIT 2' {'classnode_node_short_name_1': 'DGIMain'} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['classnode']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJNZA=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN 'MATCH (us)<-[r:`DATA_DEPENDENCY`]-(them) WHERE id(them)=$them and id(us)=$self RETURN r LIMIT 1' {'them': 65, 'self': 64} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['r']}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJNZA=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN 'MATCH (them), (us) WHERE id(them)=$them and id(us)=$self MERGE(us)<-[r:`DATA_DEPENDENCY` {pmethod: $pmethod, nmethod: $nmethod, weight: $weight, context: $context}]-(them) RETURN r' {'pmethod': '"getInt"', 'nmethod': '"input"', 'weight': 1, 'context': ['{"class": null, "method": "<<immutable-context>>", "type": null, "object": null, "instance": 0}', '{"class": null, "method": "<<immutable-context>>", "type": null, "object": null, "instance": 0}'], 'them': 64, 'self': 65} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['r']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJNpA=', 'stats': {'relationships-created': 1, 'properties-set': 4}, 'type': 'rw', 't_last': 0, 'db': 'neo4j', 'notifications': [{'severity': 'WARNING', 'description': 'If a part of a query contains multiple disconnected patterns, this will build a cartesian product between all those parts. This may produce a large amount of data and slow down query processing. While occasionally intended, it may often be possible to reformulate the query that avoids the use of this cross product, perhaps by adding a relationship between the different parts or by using OPTIONAL MATCH (identifier is: (us))', 'code': 'Neo.ClientNotification.Statement.CartesianProductWarning', 'position': {'column': 1, 'offset': 0, 'line': 1}, 'title': 'This query builds a cartesian product between disconnected patterns.'}]}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+class_graph_builder.py: 233:Populating call-return dependencies edges
+ _bolt4.py: 163:[#EBE8]  C: RUN ' MATCH ((classnode:ClassNode)) WHERE classnode.node_short_name = $classnode_node_short_name_1 RETURN classnode LIMIT 2' {'classnode_node_short_name_1': 'DGIMain'} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['classnode']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJNpA=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN ' MATCH ((classnode:ClassNode)) WHERE classnode.node_short_name = $classnode_node_short_name_1 RETURN classnode LIMIT 2' {'classnode_node_short_name_1': 'DGIMain'} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 1, 'fields': ['classnode']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJNpA=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN ' MATCH ((classnode:ClassNode)) WHERE classnode.node_short_name = $classnode_node_short_name_1 RETURN classnode LIMIT 2' {'classnode_node_short_name_1': 'DGIMain'} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['classnode']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJNpA=', 'type': 'r', 't_last': 1, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN ' MATCH ((classnode:ClassNode)) WHERE classnode.node_short_name = $classnode_node_short_name_1 RETURN classnode LIMIT 2' {'classnode_node_short_name_1': 'DGIMain'} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['classnode']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJNpA=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN ' MATCH ((classnode:ClassNode)) WHERE classnode.node_short_name = $classnode_node_short_name_1 RETURN classnode LIMIT 2' {'classnode_node_short_name_1': 'DGIMain'} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['classnode']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJNpA=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN ' MATCH ((classnode:ClassNode)) WHERE classnode.node_short_name = $classnode_node_short_name_1 RETURN classnode LIMIT 2' {'classnode_node_short_name_1': 'ArrayList'} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['classnode']}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJNpA=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN 'CREATE (n:ClassNode $create_params) RETURN n' {'create_params': {'node_id': 'f41d7a1d3a3044a1bcb734961fb3cb81', 'node_class': 'java.util.ArrayList', 'node_short_name': 'ArrayList', 'node_is_entrypoint': False}} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['n']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJN5A=', 'stats': {'labels-added': 1, 'nodes-created': 1, 'properties-set': 4}, 'type': 'rw', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN 'MATCH (us)<-[r:`CALL_RETURN_DEPENDENCY`]-(them) WHERE id(them)=$them and id(us)=$self RETURN r LIMIT 1' {'them': 66, 'self': 65} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 1, 'fields': ['r']}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJN5A=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN 'MATCH (them), (us) WHERE id(them)=$them and id(us)=$self MERGE(us)<-[r:`CALL_RETURN_DEPENDENCY` {pmethod: $pmethod, nmethod: $nmethod, weight: $weight, pcontext: $pcontext, ncontext: $ncontext}]-(them) RETURN r' {'pmethod': '"main"', 'nmethod': '"<init>"', 'weight': 1, 'pcontext': '[{"class": null, "method": "<<immutable-context>>", "type": null, "object": null, "instance": 0}, {"class": "com.ibm.dgitest.DGIMain", "method": "main", "type": "void", "object": "new java.util.ArrayList", "instance": 0}]', 'ncontext': '[{"class": null, "method": "<<immutable-context>>", "type": null, "object": null, "instance": 0}, {"class": null, "method": "<<immutable-context>>", "type": null, "object": null, "instance": 0}]', 'them': 65, 'self': 66} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 1, 'fields': ['r']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJOJA=', 'stats': {'relationships-created': 1, 'properties-set': 5}, 'type': 'rw', 't_last': 0, 'db': 'neo4j', 'notifications': [{'severity': 'WARNING', 'description': 'If a part of a query contains multiple disconnected patterns, this will build a cartesian product between all those parts. This may produce a large amount of data and slow down query processing. While occasionally intended, it may often be possible to reformulate the query that avoids the use of this cross product, perhaps by adding a relationship between the different parts or by using OPTIONAL MATCH (identifier is: (us))', 'code': 'Neo.ClientNotification.Statement.CartesianProductWarning', 'position': {'column': 1, 'offset': 0, 'line': 1}, 'title': 'This query builds a cartesian product between disconnected patterns.'}]}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN ' MATCH ((classnode:ClassNode)) WHERE classnode.node_short_name = $classnode_node_short_name_1 RETURN classnode LIMIT 2' {'classnode_node_short_name_1': 'DGIMain'} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['classnode']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJOJA=', 'type': 'r', 't_last': 1, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN ' MATCH ((classnode:ClassNode)) WHERE classnode.node_short_name = $classnode_node_short_name_1 RETURN classnode LIMIT 2' {'classnode_node_short_name_1': 'Obj'} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['classnode']}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJOJA=', 'type': 'r', 't_last': 1, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN 'CREATE (n:ClassNode $create_params) RETURN n' {'create_params': {'node_id': 'c050e6dd7c6645cd81a3ca7299518eee', 'node_class': 'com.ibm.dgitest.Obj', 'node_short_name': 'Obj', 'node_is_entrypoint': False}} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['n']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJOZA=', 'stats': {'labels-added': 1, 'nodes-created': 1, 'properties-set': 4}, 'type': 'rw', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN 'MATCH (us)<-[r:`CALL_RETURN_DEPENDENCY`]-(them) WHERE id(them)=$them and id(us)=$self RETURN r LIMIT 1' {'them': 67, 'self': 65} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 1, 'fields': ['r']}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJOZA=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN 'MATCH (them), (us) WHERE id(them)=$them and id(us)=$self MERGE(us)<-[r:`CALL_RETURN_DEPENDENCY` {pmethod: $pmethod, nmethod: $nmethod, weight: $weight, pcontext: $pcontext, ncontext: $ncontext}]-(them) RETURN r' {'pmethod': '"main"', 'nmethod': '"<init>"', 'weight': 1, 'pcontext': '[{"class": null, "method": "<<immutable-context>>", "type": null, "object": null, "instance": 0}, {"class": "com.ibm.dgitest.DGIMain", "method": "main", "type": "void", "object": "new com.ibm.dgitest.Obj", "instance": 0}]', 'ncontext': '[{"class": null, "method": "<<immutable-context>>", "type": null, "object": null, "instance": 0}, {"class": null, "method": "<<immutable-context>>", "type": null, "object": null, "instance": 0}]', 'them': 65, 'self': 67} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['r']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJOpA=', 'stats': {'relationships-created': 1, 'properties-set': 5}, 'type': 'rw', 't_last': 0, 'db': 'neo4j', 'notifications': [{'severity': 'WARNING', 'description': 'If a part of a query contains multiple disconnected patterns, this will build a cartesian product between all those parts. This may produce a large amount of data and slow down query processing. While occasionally intended, it may often be possible to reformulate the query that avoids the use of this cross product, perhaps by adding a relationship between the different parts or by using OPTIONAL MATCH (identifier is: (us))', 'code': 'Neo.ClientNotification.Statement.CartesianProductWarning', 'position': {'column': 1, 'offset': 0, 'line': 1}, 'title': 'This query builds a cartesian product between disconnected patterns.'}]}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN ' MATCH ((classnode:ClassNode)) WHERE classnode.node_short_name = $classnode_node_short_name_1 RETURN classnode LIMIT 2' {'classnode_node_short_name_1': 'Obj'} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 1, 'fields': ['classnode']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJOpA=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN ' MATCH ((classnode:ClassNode)) WHERE classnode.node_short_name = $classnode_node_short_name_1 RETURN classnode LIMIT 2' {'classnode_node_short_name_1': 'Object'} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['classnode']}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJOpA=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN 'CREATE (n:ClassNode $create_params) RETURN n' {'create_params': {'node_id': '640ad2ade5184743bfc52aee5cbdff93', 'node_class': 'java.lang.Object', 'node_short_name': 'Object', 'node_is_entrypoint': False}} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['n']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJO5A=', 'stats': {'labels-added': 1, 'nodes-created': 1, 'properties-set': 4}, 'type': 'rw', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN 'MATCH (us)<-[r:`CALL_RETURN_DEPENDENCY`]-(them) WHERE id(them)=$them and id(us)=$self RETURN r LIMIT 1' {'them': 68, 'self': 67} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 1, 'fields': ['r']}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJO5A=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN 'MATCH (them), (us) WHERE id(them)=$them and id(us)=$self MERGE(us)<-[r:`CALL_RETURN_DEPENDENCY` {pmethod: $pmethod, nmethod: $nmethod, weight: $weight, pcontext: $pcontext, ncontext: $ncontext}]-(them) RETURN r' {'pmethod': '"<init>"', 'nmethod': '"<init>"', 'weight': 1, 'pcontext': '[{"class": null, "method": "<<immutable-context>>", "type": null, "object": null, "instance": 0}, {"class": "com.ibm.dgitest.DGIMain", "method": "main", "type": "void", "object": "new com.ibm.dgitest.Obj", "instance": 0}]', 'ncontext': '[{"class": null, "method": "<<immutable-context>>", "type": null, "object": null, "instance": 0}, {"class": "com.ibm.dgitest.DGIMain", "method": "main", "type": "void", "object": "new com.ibm.dgitest.Obj", "instance": 0}]', 'them': 67, 'self': 68} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['r']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJPJA=', 'stats': {'relationships-created': 1, 'properties-set': 5}, 'type': 'rw', 't_last': 0, 'db': 'neo4j', 'notifications': [{'severity': 'WARNING', 'description': 'If a part of a query contains multiple disconnected patterns, this will build a cartesian product between all those parts. This may produce a large amount of data and slow down query processing. While occasionally intended, it may often be possible to reformulate the query that avoids the use of this cross product, perhaps by adding a relationship between the different parts or by using OPTIONAL MATCH (identifier is: (us))', 'code': 'Neo.ClientNotification.Statement.CartesianProductWarning', 'position': {'column': 1, 'offset': 0, 'line': 1}, 'title': 'This query builds a cartesian product between disconnected patterns.'}]}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN ' MATCH ((classnode:ClassNode)) WHERE classnode.node_short_name = $classnode_node_short_name_1 RETURN classnode LIMIT 2' {'classnode_node_short_name_1': 'DGIMain'} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['classnode']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJPJA=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN ' MATCH ((classnode:ClassNode)) WHERE classnode.node_short_name = $classnode_node_short_name_1 RETURN classnode LIMIT 2' {'classnode_node_short_name_1': 'Obj'} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['classnode']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJPJA=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN 'MATCH (us)<-[r:`CALL_RETURN_DEPENDENCY`]-(them) WHERE id(them)=$them and id(us)=$self RETURN r LIMIT 1' {'them': 67, 'self': 65} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['r']}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJPJA=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN 'MATCH (them), (us) WHERE id(them)=$them and id(us)=$self MERGE(us)<-[r:`CALL_RETURN_DEPENDENCY` {pmethod: $pmethod, nmethod: $nmethod, weight: $weight, pcontext: $pcontext, ncontext: $ncontext}]-(them) RETURN r' {'pmethod': '"main"', 'nmethod': '"<init>"', 'weight': 1, 'pcontext': '[{"class": null, "method": "<<immutable-context>>", "type": null, "object": null, "instance": 0}, {"class": "com.ibm.dgitest.DGIMain", "method": "main", "type": "void", "object": "new com.ibm.dgitest.Obj", "instance": 1}]', 'ncontext': '[{"class": null, "method": "<<immutable-context>>", "type": null, "object": null, "instance": 0}, {"class": null, "method": "<<immutable-context>>", "type": null, "object": null, "instance": 0}]', 'them': 65, 'self': 67} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['r']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJPZA=', 'stats': {'relationships-created': 1, 'properties-set': 5}, 'type': 'rw', 't_last': 0, 'db': 'neo4j', 'notifications': [{'severity': 'WARNING', 'description': 'If a part of a query contains multiple disconnected patterns, this will build a cartesian product between all those parts. This may produce a large amount of data and slow down query processing. While occasionally intended, it may often be possible to reformulate the query that avoids the use of this cross product, perhaps by adding a relationship between the different parts or by using OPTIONAL MATCH (identifier is: (us))', 'code': 'Neo.ClientNotification.Statement.CartesianProductWarning', 'position': {'column': 1, 'offset': 0, 'line': 1}, 'title': 'This query builds a cartesian product between disconnected patterns.'}]}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN ' MATCH ((classnode:ClassNode)) WHERE classnode.node_short_name = $classnode_node_short_name_1 RETURN classnode LIMIT 2' {'classnode_node_short_name_1': 'Obj'} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 1, 'fields': ['classnode']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJPZA=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN ' MATCH ((classnode:ClassNode)) WHERE classnode.node_short_name = $classnode_node_short_name_1 RETURN classnode LIMIT 2' {'classnode_node_short_name_1': 'Object'} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 1, 'fields': ['classnode']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJPZA=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN 'MATCH (us)<-[r:`CALL_RETURN_DEPENDENCY`]-(them) WHERE id(them)=$them and id(us)=$self RETURN r LIMIT 1' {'them': 68, 'self': 67} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['r']}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJPZA=', 'type': 'r', 't_last': 1, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN 'MATCH (them), (us) WHERE id(them)=$them and id(us)=$self MERGE(us)<-[r:`CALL_RETURN_DEPENDENCY` {pmethod: $pmethod, nmethod: $nmethod, weight: $weight, pcontext: $pcontext, ncontext: $ncontext}]-(them) RETURN r' {'pmethod': '"<init>"', 'nmethod': '"<init>"', 'weight': 1, 'pcontext': '[{"class": null, "method": "<<immutable-context>>", "type": null, "object": null, "instance": 0}, {"class": "com.ibm.dgitest.DGIMain", "method": "main", "type": "void", "object": "new com.ibm.dgitest.Obj", "instance": 1}]', 'ncontext': '[{"class": null, "method": "<<immutable-context>>", "type": null, "object": null, "instance": 0}, {"class": "com.ibm.dgitest.DGIMain", "method": "main", "type": "void", "object": "new com.ibm.dgitest.Obj", "instance": 1}]', 'them': 67, 'self': 68} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['r']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJPpA=', 'stats': {'relationships-created': 1, 'properties-set': 5}, 'type': 'rw', 't_last': 0, 'db': 'neo4j', 'notifications': [{'severity': 'WARNING', 'description': 'If a part of a query contains multiple disconnected patterns, this will build a cartesian product between all those parts. This may produce a large amount of data and slow down query processing. While occasionally intended, it may often be possible to reformulate the query that avoids the use of this cross product, perhaps by adding a relationship between the different parts or by using OPTIONAL MATCH (identifier is: (us))', 'code': 'Neo.ClientNotification.Statement.CartesianProductWarning', 'position': {'column': 1, 'offset': 0, 'line': 1}, 'title': 'This query builds a cartesian product between disconnected patterns.'}]}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN ' MATCH ((classnode:ClassNode)) WHERE classnode.node_short_name = $classnode_node_short_name_1 RETURN classnode LIMIT 2' {'classnode_node_short_name_1': 'DGIMain'} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['classnode']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJPpA=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN ' MATCH ((classnode:ClassNode)) WHERE classnode.node_short_name = $classnode_node_short_name_1 RETURN classnode LIMIT 2' {'classnode_node_short_name_1': 'ReadVal'} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['classnode']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJPpA=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN 'MATCH (us)<-[r:`CALL_RETURN_DEPENDENCY`]-(them) WHERE id(them)=$them and id(us)=$self RETURN r LIMIT 1' {'them': 64, 'self': 65} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['r']}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJPpA=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN 'MATCH (them), (us) WHERE id(them)=$them and id(us)=$self MERGE(us)<-[r:`CALL_RETURN_DEPENDENCY` {pmethod: $pmethod, nmethod: $nmethod, weight: $weight, pcontext: $pcontext, ncontext: $ncontext}]-(them) RETURN r' {'pmethod': '"input"', 'nmethod': '"<init>"', 'weight': 1, 'pcontext': '[{"class": null, "method": "<<immutable-context>>", "type": null, "object": null, "instance": 0}, {"class": "com.ibm.dgitest.DGIMain", "method": "input", "type": "void", "object": "new com.ibm.dgitest.ReadVal", "instance": 0}]', 'ncontext': '[{"class": null, "method": "<<immutable-context>>", "type": null, "object": null, "instance": 0}, {"class": null, "method": "<<immutable-context>>", "type": null, "object": null, "instance": 0}]', 'them': 65, 'self': 64} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 1, 'fields': ['r']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJP5A=', 'stats': {'relationships-created': 1, 'properties-set': 5}, 'type': 'rw', 't_last': 0, 'db': 'neo4j', 'notifications': [{'severity': 'WARNING', 'description': 'If a part of a query contains multiple disconnected patterns, this will build a cartesian product between all those parts. This may produce a large amount of data and slow down query processing. While occasionally intended, it may often be possible to reformulate the query that avoids the use of this cross product, perhaps by adding a relationship between the different parts or by using OPTIONAL MATCH (identifier is: (us))', 'code': 'Neo.ClientNotification.Statement.CartesianProductWarning', 'position': {'column': 1, 'offset': 0, 'line': 1}, 'title': 'This query builds a cartesian product between disconnected patterns.'}]}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN ' MATCH ((classnode:ClassNode)) WHERE classnode.node_short_name = $classnode_node_short_name_1 RETURN classnode LIMIT 2' {'classnode_node_short_name_1': 'DGIMain'} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 1, 'fields': ['classnode']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJP5A=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN ' MATCH ((classnode:ClassNode)) WHERE classnode.node_short_name = $classnode_node_short_name_1 RETURN classnode LIMIT 2' {'classnode_node_short_name_1': 'ReadVal'} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['classnode']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJP5A=', 'type': 'r', 't_last': 1, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN 'MATCH (us)<-[r:`CALL_RETURN_DEPENDENCY`]-(them) WHERE id(them)=$them and id(us)=$self RETURN r LIMIT 1' {'them': 64, 'self': 65} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 1, 'fields': ['r']}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJP5A=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN 'MATCH (them), (us) WHERE id(them)=$them and id(us)=$self MERGE(us)<-[r:`CALL_RETURN_DEPENDENCY` {pmethod: $pmethod, nmethod: $nmethod, weight: $weight, pcontext: $pcontext, ncontext: $ncontext}]-(them) RETURN r' {'pmethod': '"input"', 'nmethod': '"getInt"', 'weight': 1, 'pcontext': '[{"class": null, "method": "<<immutable-context>>", "type": null, "object": null, "instance": 0}, {"class": "com.ibm.dgitest.DGIMain", "method": "input", "type": "void", "object": "new com.ibm.dgitest.ReadVal", "instance": 0}]', 'ncontext': '[{"class": null, "method": "<<immutable-context>>", "type": null, "object": null, "instance": 0}, {"class": null, "method": "<<immutable-context>>", "type": null, "object": null, "instance": 0}]', 'them': 65, 'self': 64} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['r']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJQJA=', 'stats': {'relationships-created': 1, 'properties-set': 5}, 'type': 'rw', 't_last': 1, 'db': 'neo4j', 'notifications': [{'severity': 'WARNING', 'description': 'If a part of a query contains multiple disconnected patterns, this will build a cartesian product between all those parts. This may produce a large amount of data and slow down query processing. While occasionally intended, it may often be possible to reformulate the query that avoids the use of this cross product, perhaps by adding a relationship between the different parts or by using OPTIONAL MATCH (identifier is: (us))', 'code': 'Neo.ClientNotification.Statement.CartesianProductWarning', 'position': {'column': 1, 'offset': 0, 'line': 1}, 'title': 'This query builds a cartesian product between disconnected patterns.'}]}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN ' MATCH ((classnode:ClassNode)) WHERE classnode.node_short_name = $classnode_node_short_name_1 RETURN classnode LIMIT 2' {'classnode_node_short_name_1': 'ReadVal'} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['classnode']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJQJA=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN ' MATCH ((classnode:ClassNode)) WHERE classnode.node_short_name = $classnode_node_short_name_1 RETURN classnode LIMIT 2' {'classnode_node_short_name_1': 'Object'} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['classnode']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJQJA=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN 'MATCH (us)<-[r:`CALL_RETURN_DEPENDENCY`]-(them) WHERE id(them)=$them and id(us)=$self RETURN r LIMIT 1' {'them': 68, 'self': 64} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['r']}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJQJA=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN 'MATCH (them), (us) WHERE id(them)=$them and id(us)=$self MERGE(us)<-[r:`CALL_RETURN_DEPENDENCY` {pmethod: $pmethod, nmethod: $nmethod, weight: $weight, pcontext: $pcontext, ncontext: $ncontext}]-(them) RETURN r' {'pmethod': '"<init>"', 'nmethod': '"<init>"', 'weight': 1, 'pcontext': '[{"class": null, "method": "<<immutable-context>>", "type": null, "object": null, "instance": 0}, {"class": "com.ibm.dgitest.DGIMain", "method": "input", "type": "void", "object": "new com.ibm.dgitest.ReadVal", "instance": 0}]', 'ncontext': '[{"class": null, "method": "<<immutable-context>>", "type": null, "object": null, "instance": 0}, {"class": "com.ibm.dgitest.DGIMain", "method": "input", "type": "void", "object": "new com.ibm.dgitest.ReadVal", "instance": 0}]', 'them': 64, 'self': 68} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['r']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJQZA=', 'stats': {'relationships-created': 1, 'properties-set': 5}, 'type': 'rw', 't_last': 0, 'db': 'neo4j', 'notifications': [{'severity': 'WARNING', 'description': 'If a part of a query contains multiple disconnected patterns, this will build a cartesian product between all those parts. This may produce a large amount of data and slow down query processing. While occasionally intended, it may often be possible to reformulate the query that avoids the use of this cross product, perhaps by adding a relationship between the different parts or by using OPTIONAL MATCH (identifier is: (us))', 'code': 'Neo.ClientNotification.Statement.CartesianProductWarning', 'position': {'column': 1, 'offset': 0, 'line': 1}, 'title': 'This query builds a cartesian product between disconnected patterns.'}]}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN ' MATCH ((classnode:ClassNode)) WHERE classnode.node_short_name = $classnode_node_short_name_1 RETURN classnode LIMIT 2' {'classnode_node_short_name_1': 'ReadVal'} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 1, 'fields': ['classnode']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJQZA=', 'type': 'r', 't_last': 0, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN ' MATCH ((classnode:ClassNode)) WHERE classnode.node_short_name = $classnode_node_short_name_1 RETURN classnode LIMIT 2' {'classnode_node_short_name_1': 'Random'} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['classnode']}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJQZA=', 'type': 'r', 't_last': 1, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN 'CREATE (n:ClassNode $create_params) RETURN n' {'create_params': {'node_id': '6d624deada5a43169cb1a1364322d51e', 'node_class': 'java.util.Random', 'node_short_name': 'Random', 'node_is_entrypoint': False}} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['n']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJQpA=', 'stats': {'labels-added': 1, 'nodes-created': 1, 'properties-set': 4}, 'type': 'rw', 't_last': 1, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN 'MATCH (us)<-[r:`CALL_RETURN_DEPENDENCY`]-(them) WHERE id(them)=$them and id(us)=$self RETURN r LIMIT 1' {'them': 69, 'self': 64} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['r']}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJQpA=', 'type': 'r', 't_last': 1, 'db': 'neo4j'}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}
+ _bolt4.py: 163:[#EBE8]  C: RUN 'MATCH (them), (us) WHERE id(them)=$them and id(us)=$self MERGE(us)<-[r:`CALL_RETURN_DEPENDENCY` {pmethod: $pmethod, nmethod: $nmethod, weight: $weight, pcontext: $pcontext, ncontext: $ncontext}]-(them) RETURN r' {'pmethod': '"getInt"', 'nmethod': '"<init>"', 'weight': 1, 'pcontext': '[{"class": "com.ibm.dgitest.DGIMain", "method": "input", "type": "void", "object": "new com.ibm.dgitest.ReadVal", "instance": 0}, {"class": "com.ibm.dgitest.ReadVal", "method": "getInt", "type": "int", "object": "new java.util.Random", "instance": 0}]', 'ncontext': '[{"class": null, "method": "<<immutable-context>>", "type": null, "object": null, "instance": 0}, {"class": "com.ibm.dgitest.DGIMain", "method": "input", "type": "void", "object": "new com.ibm.dgitest.ReadVal", "instance": 0}]', 'them': 64, 'self': 69} {}
+ _bolt4.py: 181:[#EBE8]  C: PULL {'n': 1000}
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'t_first': 0, 'fields': ['r']}
+ _bolt4.py: 254:[#EBE8]  S: RECORD * 1
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {'bookmark': 'FB:kcwQDnqN5J0IQHCpg/OqOkdUaMkJQ5A=', 'stats': {'relationships-created': 1, 'properties-set': 5}, 'type': 'rw', 't_last': 1, 'db': 'neo4j', 'notifications': [{'severity': 'WARNING', 'description': 'If a part of a query contains multiple disconnected patterns, this will build a cartesian product between all those parts. This may produce a large amount of data and slow down query processing. While occasionally intended, it may often be possible to reformulate the query that avoids the use of this cross product, perhaps by adding a relationship between the different parts or by using OPTIONAL MATCH (identifier is: (us))', 'code': 'Neo.ClientNotification.Statement.CartesianProductWarning', 'position': {'column': 1, 'offset': 0, 'line': 1}, 'title': 'This query builds a cartesian product between disconnected patterns.'}]}
+ _bolt4.py: 227:[#EBE8]  C: RESET
+ _bolt4.py: 263:[#EBE8]  S: SUCCESS {}

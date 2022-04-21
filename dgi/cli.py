@@ -50,16 +50,19 @@ from .code2graph.utils.parse_config import Config
 
 
 @click.group()
+@click.option("--neo4j-bolt", "-n", envvar="NEO4J_BOLT_URL", default="bolt://neo4j:test@localhost:7687", help="Neo4j Bolt URL")
 @click.option("--abstraction", "-a", default="class", help="The level of abstraction to use when building the graph. Valid options are: class, method, or full.", show_default=True)
 @click.option("--quiet/--verbose", "-q/-v", required=False, help="Be more quiet/verbose", default=False, is_flag=True, show_default=True)
 @click.option("--clear/--dont-clear", "-c/-dnc", help="Clear (or don't clear) graph before loading", default=True, is_flag=True, show_default=True)
 @click.pass_context
-def cli(ctx, abstraction, quiet, clear):
+def cli(ctx, abstraction, quiet, clear, neo4j_bolt):
     """Tackle Data Gravity Insights"""
     ctx.ensure_object(dict)
     ctx.obj['abstraction'] = abstraction
     ctx.obj['verbose'] = not quiet
     ctx.obj['clear'] = clear
+    ctx.obj['bolt'] = neo4j_bolt
+
 
 ######################################################################
 # schema2graph - Populates the graph from an SQL schema DDL
@@ -73,6 +76,12 @@ def cli(ctx, abstraction, quiet, clear):
 @click.pass_context
 def s2g(ctx, input, output, validate):
     """This command parses SQL schema DDL into a graph"""
+
+    # ---------------
+    # Configure Neo4J
+    # ---------------
+    config.DATABASE_URL = ctx.obj["bolt"]
+    config.ENCRYPTED_CONNECTION = False
 
     # Read the DDL file
     click.echo(f"Reading: {input}")
@@ -118,7 +127,7 @@ def tx2g(ctx, input, validate):
     # ------------------
     # Configure NeoModel
     # ------------------
-    config.DATABASE_URL = os.environ.get("NEO4J_BOLT_URL")
+    config.DATABASE_URL = ctx.obj["bolt"]
     config.ENCRYPTED_CONNECTION = False
 
     # -------------------------
@@ -204,7 +213,7 @@ def c2g(ctx, input, validate):
     # ---------------
     # Configure Neo4J
     # ---------------
-    config.DATABASE_URL = os.environ.get("NEO4J_BOLT_URL")
+    config.DATABASE_URL = ctx.obj["bolt"]
     config.ENCRYPTED_CONNECTION = False
 
     # ---------------
