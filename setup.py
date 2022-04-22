@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='tackle-dgi',
-    version='0.0.3',
+    version='0.0.4',
     url="https://github.com/konveyor/tackle-data-gravity-insights",
     author="IBM",
     description="Konveyor Tackle Data Gravity Insights",
