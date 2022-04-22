@@ -17,13 +17,13 @@ This guide will get you started using the various commands for data Gravity Insi
     docker run -d --name neo4j \
         -p 7474:7474 \
         -p 7687:7687 \
-        -e NEO4J_AUTH="neo4j/test" \
+        -e NEO4J_AUTH="neo4j/tackle" \
         neo4j
     ```
   
   - We set an environment variable to let `dgi` know where to find this neo4j container.
     ```bash
-    export NEO4J_BOLT_URL="bolt://neo4j:test@localhost:7687"    
+    export NEO4J_BOLT_URL="bolt://neo4j:tackle@localhost:7687"    
     ```
 
   - You can now use the `dgi` command to load information about your application into the graph database. We start with `dgi --help`. This should produce:
@@ -218,7 +218,7 @@ In order to explore the neo4j graph, visit [http://localhost:7474/browser/](http
   
 * Under username, enter: `neo4j`
 
-* Under password, enter: `test`
+* Under password, enter: `tackle`
   
 This should bring you to the browser page where you can explore the DGI graph.
 

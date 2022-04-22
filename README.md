@@ -30,10 +30,10 @@ You will need an instance of Neo4j to store the graphs that `dgi` creates. You c
 docker run -d --name neo4j \
     -p 7474:7474 \
     -p 7687:7687 \
-    -e NEO4J_AUTH="neo4j/test" \
+    -e NEO4J_AUTH="neo4j/tackle" \
     neo4j
 
-export NEO4J_BOLT_URL="bolt://neo4j:test@localhost:7687"    
+export NEO4J_BOLT_URL="bolt://neo4j:tackle@localhost:7687"    
 ```
 
 You can now use the `dgi` command to load information about your application into the graph database.

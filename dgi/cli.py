@@ -19,24 +19,17 @@ Tackle Data Gravity Insights
 
 Command Line Interface (CLI) for Tackle Data Gravity Insights
 """
-from argparse import ArgumentError
-from email.policy import default
 import os
 import sys
-import yaml
 import json
-import yaml
 import click
 import logging
 import importlib.resources
 
-from tqdm import tqdm
-from collections import OrderedDict
 from neomodel import config
 from simple_ddl_parser import parse_from_file
 from neomodel import config
-from pathlib import Path
-from collections import namedtuple
+
 # Import our packages
 from .schema2graph import schema_loader
 from .code2graph import ClassGraphBuilder, MethodGraphBuilder
@@ -47,8 +40,6 @@ from .code2graph.utils.parse_config import Config
 ######################################################################
 # cli - Grouping for sub commands
 ######################################################################
-
-
 @click.group()
 @click.option("--abstraction", "-a", default="class", help="The level of abstraction to use when building the graph. Valid options are: class, method, or full.", show_default=True)
 @click.option("--quiet/--verbose", "-q/-v", required=False, help="Be more quiet/verbose", default=False, is_flag=True, show_default=True)
@@ -60,9 +51,11 @@ def cli(ctx, abstraction, quiet, clear):
     ctx.obj['abstraction'] = abstraction
     ctx.obj['verbose'] = not quiet
     ctx.obj['clear'] = clear
+
     # Configure Neo4J
-    config.DATABASE_URL = os.getenv("NEO4J_BOLT_URL", "bolt://neo4j:dgi@localhost:7687")
+    config.DATABASE_URL = os.getenv("NEO4J_BOLT_URL", "bolt://neo4j:tackle@localhost:7687")
     config.ENCRYPTED_CONNECTION = False
+
     # Set logging configuration
     loglevel = logging.WARNING
     if (ctx.obj["verbose"]):

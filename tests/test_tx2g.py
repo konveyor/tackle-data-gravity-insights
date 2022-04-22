@@ -32,7 +32,7 @@ import logging
 ######################################################################
 
 
-NEO4J_BOLT_URL = os.getenv("NEO4J_BOLT_URL", "bolt://neo4j:dgi@neo4j:7687")
+NEO4J_BOLT_URL = os.getenv("NEO4J_BOLT_URL", "bolt://neo4j:tackle@neo4j:7687")
 
 loglevel = logging.CRITICAL
 logging.basicConfig(level=loglevel)

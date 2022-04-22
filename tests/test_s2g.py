@@ -27,7 +27,7 @@ from dgi.cli import cli
 
 logging.disable(logging.CRITICAL)
 
-NEO4J_BOLT_URL = os.getenv("NEO4J_BOLT_URL", "bolt://neo4j:dgi@neo4j:7687")
+NEO4J_BOLT_URL = os.getenv("NEO4J_BOLT_URL", "bolt://neo4j:tackle@neo4j:7687")
 
 ######################################################################
 #  S 2 G   C L I   T E S T   C A S E S

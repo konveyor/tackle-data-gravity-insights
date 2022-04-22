@@ -11,13 +11,10 @@ services:
     # privileged: true
     volumes:
       - ..:/app
-      - ~/.ssh/:/home/vscode/.ssh/   
     command: "sleep infinity"
     environment:
       FLASK_APP: service:app
-      NEO4J_USERNAME: neo4j
-      NEO4J_PASSWORD: test
-      NEO4J_BOLT_URL: "bolt://neo4j:test@neo4j:7687"
+      NEO4J_BOLT_URL: "bolt://neo4j:tackle@neo4j:7687"
       GRAPH_FACTS_DIR: /app/doop-data/output
     networks:
       - dev
@@ -34,8 +31,8 @@ services:
       - 7687:7687
     environment:
       NEO4J_USERNAME: neo4j
-      NEO4J_PASSWORD: test
-      NEO4J_AUTH: neo4j/test
+      NEO4J_PASSWORD: tackle
+      NEO4J_AUTH: neo4j/tackle
       NEO4J_apoc_import_file_enabled: "true"
       NEO4J_apoc_export_file_enabled: "true"
       NEO4J_dbms_security_procedures_whitelist: gds.*, apoc.*
