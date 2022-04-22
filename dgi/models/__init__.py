@@ -14,5 +14,4 @@
 # limitations under the License.
 ################################################################################
 
-import os
 from .entities import ClassNode, MethodNode, SQLTable, SQLColumn

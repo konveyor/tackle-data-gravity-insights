@@ -41,16 +41,18 @@ from .code2graph.utils.parse_config import Config
 # cli - Grouping for sub commands
 ######################################################################
 @click.group()
+@click.option("--neo4j-bolt", "-n", envvar="NEO4J_BOLT_URL", default="bolt://neo4j:tackle@localhost:7687", help="Neo4j Bolt URL")
 @click.option("--abstraction", "-a", default="class", help="The level of abstraction to use when building the graph. Valid options are: class, method, or full.", show_default=True)
 @click.option("--quiet/--verbose", "-q/-v", required=False, help="Be more quiet/verbose", default=False, is_flag=True, show_default=True)
 @click.option("--clear/--dont-clear", "-c/-dnc", help="Clear (or don't clear) graph before loading", default=True, is_flag=True, show_default=True)
 @click.pass_context
-def cli(ctx, abstraction, quiet, clear):
+def cli(ctx, abstraction, quiet, clear, neo4j_bolt):
     """Tackle Data Gravity Insights"""
     ctx.ensure_object(dict)
     ctx.obj['abstraction'] = abstraction
     ctx.obj['verbose'] = not quiet
     ctx.obj['clear'] = clear
+    ctx.obj['bolt'] = neo4j_bolt
 
     # Configure Neo4J
     config.DATABASE_URL = os.getenv("NEO4J_BOLT_URL", "bolt://neo4j:tackle@localhost:7687")
