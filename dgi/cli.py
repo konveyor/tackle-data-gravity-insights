@@ -55,7 +55,7 @@ def cli(ctx, abstraction, quiet, clear, neo4j_bolt):
     ctx.obj['bolt'] = neo4j_bolt
 
     # Configure Neo4J
-    config.DATABASE_URL = os.getenv("NEO4J_BOLT_URL", "bolt://neo4j:tackle@localhost:7687")
+    config.DATABASE_URL = ctx.obj["bolt"]
     config.ENCRYPTED_CONNECTION = False
 
     # Set logging configuration
