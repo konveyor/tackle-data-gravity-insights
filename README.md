@@ -39,26 +39,27 @@ export NEO4J_BOLT_URL="bolt://neo4j:tackle@localhost:7687"
 You can now use the `dgi` command to load information about your application into the graph database.
 
 ```man
-$ gdi --help
+dgi --help
 
 Usage: dgi [OPTIONS] COMMAND [ARGS]...
 
-    Tackle Data Gravity Insights
+  Tackle Data Gravity Insights
 
 Options:
-    -a, --abstraction TEXT          The level of abstraction to use when
-                                    building the graph. Valid options are:
-                                    class, method, or full.  [default: class]
-    -q, --quiet / -v, --verbose     Be more quiet/verbose  [default: verbose]
-    -c, --clear / -dnc, --dont-clear
-                                    Clear (or don't clear) graph before loading
-                                    [default: clear]
-    --help                          Show this message and exit.
+  -n, --neo4j-bolt TEXT           Neo4j Bolt URL
+  -a, --abstraction TEXT          The level of abstraction to use when
+                                  building the graph. Valid options are:
+                                  class, method, or full.  [default: class]
+  -q, --quiet / -v, --verbose     Be more quiet/verbose  [default: verbose]
+  -c, --clear / -dnc, --dont-clear
+                                  Clear (or don't clear) graph before loading
+                                  [default: clear]
+  --help                          Show this message and exit.
 
 Commands:
-    c2g   This command loads Code dependencies into the graph
-    s2g   This command parses SQL schema DLL into a graph
-    tx2g  This command loads DiVA database transactions into a graph
+  c2g   This command loads Code dependencies into the graph
+  s2g   This command parses SQL schema DDL into a graph
+  tx2g  This command loads DiVA database transactions into a graph
 ```
 
 ## Contributing
