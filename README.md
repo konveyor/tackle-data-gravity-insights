@@ -65,5 +65,5 @@ Commands:
 
 To contribute to this project you will need to set up your development environment and set up some files. These are the steps:
 
-1. [Set up your Developer Environment](docs/development.md)
-1. [Getting Started](docs/getting-started.md)
+1. [Set up your Developer Environment](https://github.com/konveyor/tackle-data-gravity-insights/tree/main/docs/development.md)
+1. [Getting Started](https://github.com/konveyor/tackle-data-gravity-insights/tree/main/docs/getting-started.md)
