@@ -26,12 +26,13 @@ from click.testing import CliRunner
 from dgi.cli import cli
 from py2neo import Graph
 import logging
+
 ######################################################################
 #  T X 2 G   C L I   T E S T   C A S E S
 ######################################################################
 
 
-NEO4J_BOLT_URL = os.getenv("NEO4J_BOLT_URL")
+NEO4J_BOLT_URL = os.getenv("NEO4J_BOLT_URL", "bolt://neo4j:tackle@neo4j:7687")
 
 loglevel = logging.CRITICAL
 logging.basicConfig(level=loglevel)

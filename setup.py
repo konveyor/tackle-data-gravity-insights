@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='tackle-dgi',
-    version='0.0.3',
+    version='0.0.4',
     url="https://github.com/konveyor/tackle-data-gravity-insights",
     author="IBM",
     description="Konveyor Tackle Data Gravity Insights",
@@ -16,7 +16,7 @@ setup(
     install_requires=[
         'Click>=8.0.4',
         'neomodel>=4.0.8',
-        'simple-ddl-parser>=0.25.0',
+        'simple-ddl-parser==0.25.0',
         'PyYAML>=6.0',
         'ipdb>=0.13.9',
         'pandas>=1.4.1',

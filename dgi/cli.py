@@ -19,24 +19,17 @@ Tackle Data Gravity Insights
 
 Command Line Interface (CLI) for Tackle Data Gravity Insights
 """
-from argparse import ArgumentError
-from email.policy import default
 import os
 import sys
-import yaml
 import json
-import yaml
 import click
 import logging
 import importlib.resources
 
-from tqdm import tqdm
-from collections import OrderedDict
 from neomodel import config
 from simple_ddl_parser import parse_from_file
 from neomodel import config
-from pathlib import Path
-from collections import namedtuple
+
 # Import our packages
 from .schema2graph import schema_loader
 from .code2graph import ClassGraphBuilder, MethodGraphBuilder
@@ -47,10 +40,8 @@ from .code2graph.utils.parse_config import Config
 ######################################################################
 # cli - Grouping for sub commands
 ######################################################################
-
-
 @click.group()
-@click.option("--neo4j-bolt", "-n", envvar="NEO4J_BOLT_URL", default="bolt://neo4j:test@localhost:7687", help="Neo4j Bolt URL")
+@click.option("--neo4j-bolt", "-n", envvar="NEO4J_BOLT_URL", default="bolt://neo4j:tackle@localhost:7687", help="Neo4j Bolt URL")
 @click.option("--abstraction", "-a", default="class", help="The level of abstraction to use when building the graph. Valid options are: class, method, or full.", show_default=True)
 @click.option("--quiet/--verbose", "-q/-v", required=False, help="Be more quiet/verbose", default=False, is_flag=True, show_default=True)
 @click.option("--clear/--dont-clear", "-c/-dnc", help="Clear (or don't clear) graph before loading", default=True, is_flag=True, show_default=True)
@@ -63,12 +54,20 @@ def cli(ctx, abstraction, quiet, clear, neo4j_bolt):
     ctx.obj['clear'] = clear
     ctx.obj['bolt'] = neo4j_bolt
 
+    # Configure Neo4J
+    config.DATABASE_URL = ctx.obj["bolt"]
+    config.ENCRYPTED_CONNECTION = False
+
+    # Set logging configuration
+    loglevel = logging.WARNING
+    if (ctx.obj["verbose"]):
+        loglevel = logging.INFO
+    logging.basicConfig(level=loglevel, format="[%(levelname)s] %(message)s")
+
 
 ######################################################################
 # schema2graph - Populates the graph from an SQL schema DDL
 ######################################################################
-
-
 @cli.command()
 @click.option("--input", "-i", type=click.Path(exists=True), required=True, help="The SQL/DDL file to load into the graph")
 @click.option("--output", "-o", required=False, help="The JSON file to write the schema to")
@@ -76,12 +75,6 @@ def cli(ctx, abstraction, quiet, clear, neo4j_bolt):
 @click.pass_context
 def s2g(ctx, input, output, validate):
     """This command parses SQL schema DDL into a graph"""
-
-    # ---------------
-    # Configure Neo4J
-    # ---------------
-    config.DATABASE_URL = ctx.obj["bolt"]
-    config.ENCRYPTED_CONNECTION = False
 
     # Read the DDL file
     click.echo(f"Reading: {input}")
@@ -123,20 +116,6 @@ def tx2g(ctx, input, validate):
 
     if ctx.obj["verbose"]:
         click.echo("Verbose mode: ON")
-
-    # ------------------
-    # Configure NeoModel
-    # ------------------
-    config.DATABASE_URL = ctx.obj["bolt"]
-    config.ENCRYPTED_CONNECTION = False
-
-    # -------------------------
-    # Set logging configuration
-    # -------------------------
-    loglevel = logging.WARNING
-    if (ctx.obj["verbose"]):
-        loglevel = logging.INFO
-    logging.basicConfig(level=loglevel, format="[%(levelname)s] %(message)s")
 
     class_transaction_loader = ClassTransactionLoader()
     method_transaction_loader = MethodTransactionLoader()
@@ -193,14 +172,6 @@ def c2g(ctx, input, validate):
         click.echo("Verbose mode: ON")
 
     # -------------------------
-    # Set logging configuration
-    # -------------------------
-    loglevel = logging.WARNING
-    if (ctx.obj["verbose"]):
-        loglevel = logging.INFO
-    logging.basicConfig(level=loglevel, format="[%(levelname)s] %(message)s")
-
-    # -------------------------
     # Initialize configurations
     # -------------------------
     proj_root = importlib.resources.files('dgi.code2graph')
@@ -209,12 +180,6 @@ def c2g(ctx, input, validate):
 
     # Add the input dir to configuration.
     usr_cfg.set_config(key="GRAPH_FACTS_DIR", val=input)
-
-    # ---------------
-    # Configure Neo4J
-    # ---------------
-    config.DATABASE_URL = ctx.obj["bolt"]
-    config.ENCRYPTED_CONNECTION = False
 
     # ---------------
     # Build the graph
