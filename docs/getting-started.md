@@ -10,6 +10,10 @@ This guide will get you started using the various commands for data Gravity Insi
     ```bash
     pip install tackle-dgi
     ```
+  - Requirements: This project requires the following softwares/packages to be installed on the machine.
+
+       - [Docker Desktop](https://www.docker.com/products/docker-desktop)
+       - [wget](https://pypi.org/project/wget/)
 
   - You will need an instance of Neo4j to store the graphs that `dgi` creates. You can start one up in a docker container.
 
@@ -54,16 +58,7 @@ This guide will get you started using the various commands for data Gravity Insi
 
 This is a demonstration of the usage of DGI. For this, we'll use [daytrader7](https://github.com/WASdev/sample.daytrader7) as an example. Feel free to follow along with your own application and your personal directories. But, keep track of the _directories_ where the application _source code_ and the _built jar/war/ear_ reside and replace them appropriately below.
 
-1. To get started, clone this repo and save the repository root as `$DGI_ROOT`:
-
-    ```sh
-    git clone https://github.com/konveyor/tackle-data-gravity-insights.git
-    cd tackle-data-gravity-insights
-    ```
-
-    > This repository comes with a `demo` folder to work through an example app.
-
-1. Let's download a copy of our sample application and build it. 
+1. Let's download a copy of our sample application and build it.
   
     ```sh
     # Download and extract the demo application
@@ -74,7 +69,7 @@ This is a demonstration of the usage of DGI. For this, we'll use [daytrader7](ht
 
     This will create an EAR file called `daytrader-ee7-1.0-SNAPSHOT.ear` in `demo/sample-application/sample.daytrader7-1.4/daytrader-ee7/target` directory.
 
-2.  For convenience, let's put the generated `daytrader-ee7-1.0-SNAPSHOT.ear` in the `demo/code2graph-samples/doop-input` folder
+2. For convenience, let's put the generated `daytrader-ee7-1.0-SNAPSHOT.ear` in the `demo/code2graph-samples/doop-input` folder
   
     ```sh
     cp demo/sample-application/sample.daytrader7-1.4/daytrader-ee7/target/daytrader-ee7-1.0-SNAPSHOT.ear demo/code2graph-samples/doop-input
@@ -89,6 +84,7 @@ In this step, we'll run code2graph to populate the graph with various static cod
   ```sh
   docker run -it --rm -v $(pwd)/demo/code2graph-samples/doop-input:/root/doop-data/input -v $(pwd)/demo/code2graph-samples/doop-output:/root/doop-data/output quay.io/rkrsn/doop-main:latest rundoop
   ```
+
    - Running DOOP may roughly takes 5-6 mins
 
    - We used the `demo/code2graph-samples/doop-input/` folder from Step (2.2) above to store the the compiled jars, wars, and ears
@@ -200,15 +196,7 @@ We'll save the graph generated so far locally for further analysis. This enables
    docker compose --project-directory=.devcontainer run neo4j bin/neo4j-admin dump --to=/data/DGI.dump
    ```
 
-3. Finally, we'll restart the neo4j container and save the DB dump locally (in `demo/neo4j-bloom-demo/data` 
-
-
-   ```sh
-   docker compose --project-directory=.devcontainer restart neo4j
-   docker cp neo4j:/data/DGI.dump $(pwd)/demo/neo4j-bloom-demo/data/DGI__$(date '+%d%m%y_%H%M').dump 
-   ```
-   
-   In the `demo/neo4j-bloom-demo/data` folder you'll now find a `DGI_<timestamp>.dump` file, which has the entire DB with code2graph, schema2graph, and tx2graph.
+   You'll now find a `DGI.dump` file, which has the entire DB with code2graph, schema2graph, and tx2graph.
 
 ## Using Neo4J Desktop explore the graph
 
@@ -221,4 +209,3 @@ In order to explore the neo4j graph, visit [http://localhost:7474/browser/](http
 * Under password, enter: `tackle`
   
 This should bring you to the browser page where you can explore the DGI graph.
-
