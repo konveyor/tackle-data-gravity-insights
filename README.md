@@ -8,11 +8,11 @@ Tackle Data Gravity Insights is a new way to gain insights into your monolithic 
 
 Application modernization is a complex topic with refactoring being the most complicated undertaking. Current tools only look at the application source code or only at the runtime traces when refactoring. This, however, yields a myopic view that doesn't take into account data relationships and transactional scopes. This project hopes to join the three views of application, data, and transactions into a 3D view of the all of the application relationships so that you can easily discover application domains of interest and refactor them into microservices. Accordingly, DGI consists of three key components:
 
-**1. Call-/Control-/Data-dependency Analysis (code2graph):** This is a source code analysis component that extracts various static code interaction features pertating to object/dataflow depdendecies and thir respective lifecycle information. It presents this information in a graphical format with Classes as _nodes_ and their dataflow, call-return, and heap-dependency interactions _edges_. For more details, see [here](./docs/code2graph.md).
+**1. Call-/Control-/Data-dependency Analysis (code2graph):** This is a source code analysis component that extracts various static code interaction features pertaining to object/dataflow dependencies and their respective lifecycle information. It presents this information in a graphical format with Classes as _nodes_ and their dataflow, call-return, and heap-dependency interactions _edges_.
 
-**2. Schema:** This component of DGI infers the schema of the underlying databases used in the application. It presents this information in a graphical format with database tables and columns as _nodes_ and their relationships (e.g., foreign key, etc.) as _edges_. For more details, see [docs/Schema.md](here).
+**2. Schema:** This component of DGI infers the schema of the underlying databases used in the application. It presents this information in a graphical format with database tables and columns as _nodes_ and their relationships (e.g., foreign key, etc.) as _edges_.
 
-**3. Transactions to graph (tx2graph):** This component of DGI leverages [Tackle-DiVA](https://github.com/konveyor/tackle-diva) to perform a data-centric application analysis. It imports a set of target application source files (*.java/xml) and provides following analysis result files. It presents this information in a graphical format with database tables and classes as _nodes_ and their transcational relationships as _edges_. For more details, see [here](./docs/tx2graph.md).
+**3. Transactions to graph (tx2graph):** This component of DGI leverages [Tackle-DiVA](https://github.com/konveyor/tackle-diva) to perform a data-centric application analysis. It imports a set of target application source files (*.java/xml) and provides following analysis result files. It presents this information in a graphical format with database tables and classes as _nodes_ and their transactional relationships as _edges_.
 
 ## Installation
 
@@ -62,9 +62,20 @@ Commands:
   tx2g  This command loads DiVA database transactions into a graph
 ```
 
+## Demo
+
+This is a demonstration of the usage of DGI
+
+1. [Demonstration](https://github.com/konveyor/tackle-data-gravity-insights/tree/main/docs/demo.md)
+
+## Running DGI
+
+To run this project please refer to the steps in the getting started guide
+
+1. [Getting Started](https://github.com/konveyor/tackle-data-gravity-insights/tree/main/docs/getting-started.md)
+
 ## Contributing
 
-To contribute to this project you will need to set up your development environment and set up some files. These are the steps:
+To contribute to this project you will need to set up your development environment and set up some files. The steps are in the following file:
 
 1. [Set up your Developer Environment](https://github.com/konveyor/tackle-data-gravity-insights/tree/main/docs/development.md)
-1. [Getting Started](https://github.com/konveyor/tackle-data-gravity-insights/tree/main/docs/getting-started.md)
