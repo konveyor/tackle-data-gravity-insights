@@ -66,7 +66,7 @@ Commands:
 
 This is a demonstration of the usage of DGI
 
-1. [Demonstration](https://github.com/konveyor/tackle-data-gravity-insights/tree/main/docs/docs/demo.md)
+1. [Demonstration](https://github.com/divsan93/tackle-data-gravity-insights/blob/update-docs/docs/demo.md)
 
 ## Running DGI
 
