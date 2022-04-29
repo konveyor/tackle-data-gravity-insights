@@ -45,7 +45,7 @@ class MethodTransactionLoader(AbstactTransactionLoader):
         try:
             node = MethodNode.nodes.get(node_method=method_signature)
         except DoesNotExist:
-            node = MethodNode(node_method=method_signature, node_class=class_name,
+            node = MethodNode(node_method=method_signature, node_class=class_name, node_class_name=class_short_name,
                               node_name=method_name, node_short_name=class_short_name).save()
 
         return node
