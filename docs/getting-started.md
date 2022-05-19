@@ -1,100 +1,154 @@
 # Getting Started Guide
 
-This guide will get you started using the various commands for data Gravity Insights. Before attempting these steps, make sure that you have read [Set up your Development Environment](development.md)
+This guide will get you started using the various commands for Data Gravity Insights (DGI). If you would like to contribute to the project you can [Set up your Development Environment](development.md). Regular users can just follow the steps below:
 
+## Prerequisites
 
-## 1. Installation
+If this is your first time using Tackle Data Gravity Insights you must first install some prerequisite software. Here are  the instructions to install the [Prerequisites](/docs/prerequisites.md)
 
-  - Tackle Data Gravity Insights is written in Python and can be installed using the Python package manager `pip`.
+## Step 1. Install Data Gravity Insights CLI
 
-    ```bash
-    pip install tackle-dgi
-    ```
-  - Requirements: This project requires the following softwares/packages to be installed on the machine.
+There are two ways to install the `dgi` command line interface:
 
-       - [Docker Desktop](https://www.docker.com/products/docker-desktop)
-       - [wget](https://pypi.org/project/wget/)
+### Install DGI CLI system wide
 
-  - You will need an instance of Neo4j to store the graphs that `dgi` creates. You can start one up in a docker container.
+You can install `dgi` globally into your system packages as root with:
 
-    ```bash
-    docker run -d --name neo4j \
-        -p 7474:7474 \
-        -p 7687:7687 \
-        -e NEO4J_AUTH="neo4j/tackle" \
-        neo4j
-    ```
-  
-  - We set an environment variable to let `dgi` know where to find this neo4j container.
-    ```bash
-    export NEO4J_BOLT_URL="bolt://neo4j:tackle@localhost:7687"    
-    ```
+```bash
+sudo pip install tackle-dgi
+```
 
-  - You can now use the `dgi` command to load information about your application into the graph database. We start with `dgi --help`. This should produce:
+This will make the `dgi` command globally available. You can then run it from anywhere on your computer.
 
-    ```man
-    Usage: dgi [OPTIONS] COMMAND [ARGS]...
+### Install DGI CLI locally
 
-      Tackle Data Gravity Insights
+If you do not want to install it system wide you can install `dgi` locally with:
 
-    Options:
-      -a, --abstraction TEXT          The level of abstraction to use when
-                                      building the graph. Valid options are:
-                                      class, method, or full.  [default: class]
-      -q, --quiet / -v, --verbose     Be more quiet/verbose  [default: verbose]
-      -c, --clear / -dnc, --dont-clear
-                                      Clear (or don't clear) graph before loading
-                                      [default: clear]
-      --help                          Show this message and exit.
+```bash
+pip install tackle-dgi
+```
 
-    Commands:
-      c2g   This command loads Code dependencies into the graph
-      s2g   This command parses SQL schema DLL into a graph
-      tx2g  This command loads DiVA database transactions into a graph
+This will install the `dgi` command locally under your home folder in a hidden folder called: `~/.local/bin`. If you choose this approach, you must add this folder to your `PATH` with:
 
-    ```
+```bash
+export PATH=$PATH:$HOME/.local/bin
+```
 
-## 2. Setting up a Sample Application to analyze
+### Run Neo4J Community Edition container
+
+You will need an instance of Neo4j to store the graphs that `dgi` creates. You can start one up in a container using `docker` or `podman` (to use `podman` just substitute `podman` for `docker` in the command below).
+
+  ```bash
+  docker run -d --name neo4j \
+      -p 7474:7474 \
+      -p 7687:7687 \
+      -e NEO4J_AUTH="neo4j/tackle" \
+      docker.io/neo4j:latest
+  ```
+
+You must set an environment variable to let `dgi` know where to find this neo4j container.
+
+```bash
+export NEO4J_BOLT_URL="bolt://neo4j:tackle@localhost:7687"    
+```
+
+### Installation complete
+
+You can now use the `dgi` command to load information about your application into the graph database. We start with `dgi --help`. This should produce:
+
+```man
+$ dgi --help
+Usage: dgi [OPTIONS] COMMAND [ARGS]...
+
+  Tackle Data Gravity Insights
+
+Options:
+  -n, --neo4j-bolt TEXT           Neo4j Bolt URL
+  -a, --abstraction TEXT          The level of abstraction to use when
+                                  building the graph. Valid options are:
+                                  class, method, or full.  [default: class]
+  -q, --quiet / -v, --verbose     Be more quiet/verbose  [default: verbose]
+  -c, --clear / -dnc, --dont-clear
+                                  Clear (or don't clear) graph before loading
+                                  [default: clear]
+  --help                          Show this message and exit.
+
+Commands:
+  c2g   This command loads Code dependencies into the graph
+  s2g   This command parses SQL schema DDL into a graph
+  tx2g  This command loads DiVA database transactions into a graph
+```
+
+## Step 2. Setting up a Sample Application to analyze
 
 This is a demonstration of the usage of DGI. For this, we'll use [daytrader7](https://github.com/WASdev/sample.daytrader7) as an example. Feel free to follow along with your own application and your personal directories. But, keep track of the _directories_ where the application _source code_ and the _built jar/war/ear_ reside and replace them appropriately below.
 
-1. Let's download a copy of our sample application and build it.
+Let's download a copy of our sample application and build it. If you already have your own application ear file you can skip this step.
   
-    ```sh
-    # Download and extract the demo application
-    wget -c https://github.com/WASdev/sample.daytrader7/archive/refs/tags/v1.4.tar.gz -O - | tar -xvz -C demo/sample-application
-    # Now build the application
-    docker run --rm -v $(pwd)/demo/sample-application/sample.daytrader7-1.4:/build maven:3.8.4-openjdk-8-slim mvn --file=/build/pom.xml install
+1. First let's create a folder called `demo` and change into it to extract the code to:
+
+    ```bash
+    mkdir demo
+    cd demo
     ```
 
-    This will create an EAR file called `daytrader-ee7-1.0-SNAPSHOT.ear` in `demo/sample-application/sample.daytrader7-1.4/daytrader-ee7/target` directory.
+2. If you have your own Java application, you can skip this step. If you want to use the DayTrader7 demo, you must load and extract the demo DayTrader7 application using `wget` (if you don't have `wget` you can install it here: [install wget](https://pypi.org/project/wget/)):
 
-2. For convenience, let's put the generated `daytrader-ee7-1.0-SNAPSHOT.ear` in the `demo/code2graph-samples/doop-input` folder
-  
-    ```sh
-    cp demo/sample-application/sample.daytrader7-1.4/daytrader-ee7/target/daytrader-ee7-1.0-SNAPSHOT.ear demo/code2graph-samples/doop-input
+    ```bash
+    wget -c https://github.com/WASdev/sample.daytrader7/archive/refs/tags/v1.4.tar.gz -O - | tar -xvz -C .
     ```
 
-## 3. Running code2graph
+3. Now build the application
+
+    ```bash
+    docker run --rm -v $(pwd)/sample.daytrader7-1.4:/build docker.io/maven:3.8.4-openjdk-8-slim mvn --file=/build/pom.xml install
+    ```
+
+    This will create an EAR file called `daytrader-ee7-1.0-SNAPSHOT.ear` in `sample.daytrader7-1.4/daytrader-ee7/target` directory.
+
+## Step 3. Run code2graph
 
 In this step, we'll run code2graph to populate the graph with various static code interaction features pertaining to object/dataflow dependencies and their respective lifecycle information.
 
-1) First, we'll run [DOOP](https://bitbucket.org/yanniss/doop/src/master/) to process the compiled `*.jar` files. For ease of use, DOOP has been pre-compiled and hosted as a docker container in quay.io/rkrsn/doop-main. We'll use that for this demo. 
+Code2graph uses the output from a tool called [DOOP](https://bitbucket.org/yanniss/doop/src/master/). 
 
-  ```sh
-  docker run -it --rm -v $(pwd)/demo/code2graph-samples/doop-input:/root/doop-data/input -v $(pwd)/demo/code2graph-samples/doop-output:/root/doop-data/output quay.io/rkrsn/doop-main:latest rundoop
-  ```
-
-   - Running DOOP may roughly takes 5-6 mins
-
-   - We used the `demo/code2graph-samples/doop-input/` folder from Step (2.2) above to store the the compiled jars, wars, and ears
+1. First let's prepare an input and output folders for `doop` called `doop-input` and `doop-output` respectively and copy the generated `daytrader-ee7-1.0-SNAPSHOT.ear` file in the `doop-input` folder. You should already be in the `demo` folder from the previous steps before making these directories:
   
-  - We used a new folder `demo/code2graph-samples/doop-output` to save all the information (formatted as *.csv files) gathered from DOOP.
+    ```bash
+    mkdir doop-input
+    mkdir doop-output
+    cp sample.daytrader7-1.4/daytrader-ee7/target/daytrader-ee7-1.0-SNAPSHOT.ear doop-input
+    ```
 
-2) After gathering the data with DOOP, we'll now run code2graph to synthesize DOOP output into a graph stored on neo4j. 
+    _Note: if you are using your own application ear file, copy it into the `doop-input` folder_
+
+    Just to double check, you should see the DayTrader ear or your ear file in the `doop-input` folder:
+
+    ```bash
+    $ ls doop-input/
+    daytrader-ee7-1.0-SNAPSHOT.ear
+    ```
+
+2. Next, we'll run DOOP to process the compiled `*.jar` files. 
+
+    For ease of use, DOOP has been pre-compiled and hosted as a docker image at `quay.io/rkrsn/doop-main`. We'll use that for this demo.
+
+    ```bash
+    docker run -it --rm -v $(pwd)/doop-input:/root/doop-data/input -v $(pwd)/doop-output:/root/doop-data/output quay.io/rkrsn/doop-main:latest rundoop
+    ```
+
+    _Note: Running DOOP may roughly takes 5-6 mins_
+
+    Let's review what we have done so far:
+
+      - We used the `doop-input/` folder to store the the compiled jars, wars, and ears
+
+      - We used a new folder `doop-output` to save all the information (formatted as *.csv files) gathered from DOOP.
+
+3. After gathering the data with DOOP, we'll now run code2graph to synthesize DOOP output into a graph stored on neo4j. 
   
-  - The syntax for code2graph can be see with `dgi c2g --help`. Below:
-    
+    The syntax for code2graph can be see with `dgi c2g --help`. Below:
+
     ```sh
     $ dgi c2g
     
@@ -107,11 +161,13 @@ In this step, we'll run code2graph to populate the graph with various static cod
       --help                 Show this message and exit.
     ```
 
-  - We'll run code2graph by pointing it to the doop generated facts from step 1. above:
+   We'll run code2graph by pointing it to the doop generated facts from the step above:
   
     ```sh
-    dgi --abstraction [class|method|full] [--clear] [--verbose] c2g --input=demo/code2graph-samples/doop-output
+    dgi --abstraction class --clear --verbose c2g --input=doop-output
     ```
+    
+    Note that we could have passed in [class|method|full] as the abstraction. If you decide to run with the `method` or `full` level of abstraction, make sure you use the same abstraction level when running with `tx2g` as well.
 
     After successful completion, you should see:
 
@@ -131,34 +187,34 @@ In this step, we'll run code2graph to populate the graph with various static cod
     [INFO] Built data dependency graph successfully
     ```
 
-## 4. Running schema2graph
+## Step 4. Running schema2graph
 
-1) To run scheme to graph, use `dgi [OPTIONS] s2g --input=<path/to/ddl>`. For this demo, we have a sample DDL for daytrader at `demo/schema2graph-samples/daytrader-orcale.ddl`, let us use that:
+To run scheme to graph, use `dgi [OPTIONS] s2g --input=<path/to/ddl>`. For this demo, we have a sample DDL for daytrader at `demo/schema2graph-samples/daytrader-orcale.ddl`, let us use that:
 
-    ```sh
-    dgi --clear --verbose s2g --input=demo/schema2graph-samples/daytrader-orcale.ddl
-    ```
-    
-    This should give us:
+```sh
+dgi --clear --verbose s2g --input=demo/schema2graph-samples/daytrader-orcale.ddl
+```
 
-    ```sh
-    Clearing graph...
-    Building Graph...
-    Processing schema tables:
-    100%|██████████| 12/12 [00:00<00:00, 69.40it/s]
-    0it [00:00, ?it/s]
-    Processing foreign keys:
-    Graph build complete
-    ```
+This should give us:
 
-## 5. Populating Database Transactions with DiVA
+```sh
+Clearing graph...
+Building Graph...
+Processing schema tables:
+100%|██████████| 12/12 [00:00<00:00, 69.40it/s]
+0it [00:00, ?it/s]
+Processing foreign keys:
+Graph build complete
+```
+
+## Step 5. Populating Database Transactions with DiVA
 
 Here we'll first use [Tackle-DiVA](https://github.com/konveyor/tackle-diva) to infer transaction traces from the source code. DiVA is available as a docker image, so we just need to run DiVA by pointing to the source code directory and the desired output directory (for which we'll user the demo folder again). 
 
 1. Run the following command to get the transaction traces from DiVA:
 
     ```bash
-    docker run --rm -v $(pwd)/demo/sample-application/sample.daytrader7-1.4:/app -v $(pwd)/demo/tx2graph-samples:/diva-distribution/output quay.io/konveyor/tackle-diva
+    docker run --rm -v $(pwd)/demo/sample.daytrader7-1.4:/app -v $(pwd)/demo/tx2graph-samples:/diva-distribution/output quay.io/konveyor/tackle-diva
     ```
 
     This should output 6 files in the `demo/tx2graph-samples` folder. One of these will be a json file called `transaction.json` with all the transactions. 
@@ -180,7 +236,7 @@ Here we'll first use [Tackle-DiVA](https://github.com/konveyor/tackle-diva) to i
    Graph build complete
    ```
 
-## 6. (Optional) Creating an offline dump of the neo4j DGI graph
+## Step 6. (Optional) Creating an offline dump of the neo4j DGI graph
 
 We'll save the graph generated so far locally for further analysis. This enables us to use a free version of Neo4J Bloom to interact with the graph.
 
