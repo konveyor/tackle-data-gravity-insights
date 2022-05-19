@@ -192,7 +192,7 @@ Code2graph uses the output from a tool called [DOOP](https://bitbucket.org/yanni
 To run scheme to graph, use `dgi [OPTIONS] s2g --input=<path/to/ddl>`. For this demo, we have a sample DDL for daytrader at `demo/schema2graph-samples/daytrader-orcale.ddl`, let us use that:
 
 ```sh
-dgi --clear --verbose s2g --input=demo/schema2graph-samples/daytrader-orcale.ddl
+dgi --clear --verbose s2g --input=./sample.daytrader7-1.4/daytrader-ee7-web/src/main/webapp/dbscripts/oracle/Table.ddl
 ```
 
 This should give us:
@@ -214,19 +214,20 @@ Here we'll first use [Tackle-DiVA](https://github.com/konveyor/tackle-diva) to i
 1. Run the following command to get the transaction traces from DiVA:
 
     ```bash
-    docker run --rm -v $(pwd)/demo/sample.daytrader7-1.4:/app -v $(pwd)/demo/tx2graph-samples:/diva-distribution/output quay.io/konveyor/tackle-diva
+    mkdir tx2graph-output
+    docker run --rm -v $(pwd)/sample.daytrader7-1.4:/app -v $(pwd)/tx2graph-output:/diva-distribution/output quay.io/konveyor/tackle-diva
     ```
 
-    This should output 6 files in the `demo/tx2graph-samples` folder. One of these will be a json file called `transaction.json` with all the transactions. 
+    This should output 6 files in the `./tx2graph-output` folder. One of these will be a json file called `transaction.json` with all the transactions.
 
-2. We'll now run DGI's `tx2g` command to populate the graph with SQL tables, transaction data, and their relationships to the code. 
-   
+2. We'll now run DGI's `tx2g` command to populate the graph with SQL tables, transaction data, and their relationships to the code.
+
    ```sh
-   dgi --abstraction class --clear --verbose tx2g --input=demo/tx2graph-samples/transaction.json
+   dgi --abstraction class --clear --verbose tx2g --input=./tx2graph-output/transaction.json
    ```
 
    After a successful run, you'll see:
-   
+
    ```sh
    Verbose mode: ON
    [INFO] Clear flag detected... Deleting pre-existing SQLTable nodes.
