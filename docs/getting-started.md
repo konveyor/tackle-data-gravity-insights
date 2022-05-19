@@ -42,6 +42,7 @@ You will need an instance of Neo4j to store the graphs that `dgi` creates. You c
   docker run -d --name neo4j \
       -p 7474:7474 \
       -p 7687:7687 \
+      -v neo4j:/data \
       -e NEO4J_AUTH="neo4j/tackle" \
       docker.io/neo4j:latest
   ```
@@ -241,19 +242,25 @@ Here we'll first use [Tackle-DiVA](https://github.com/konveyor/tackle-diva) to i
 
 We'll save the graph generated so far locally for further analysis. This enables us to use a free version of Neo4J Bloom to interact with the graph.
 
-1. First we stop the neo4j container
-   
+1. First we stop the neo4j container becasue the data can't be backup while Neo4J is running.
+
    ```sh
-   docker compose --project-directory=.devcontainer stop neo4j
-   ```
-   
-2. Then, we'll use `neo4j-admin` to dump the DB.
-   
-   ```sh
-   docker compose --project-directory=.devcontainer run neo4j bin/neo4j-admin dump --to=/data/DGI.dump
+   docker stop neo4j
    ```
 
-   You'll now find a `DGI.dump` file, which has the entire DB with code2graph, schema2graph, and tx2graph.
+2. Then, we'll use `neo4j-admin` command to dump the DB.
+
+   ```sh
+   docker run --rm -v neo4j:/data -v $(pwd):/var/dump neo4j bin/neo4j-admin dump --to=/var/dump/DGI.dump
+   ```
+
+   You'll now find a `DGI.dump` file, which has the entire DB with code2graph, schema2graph, and tx2graph in your current folder.
+
+3. If you want to continue to use `dgi` with Neo4J don't forget to restart Neo4J:
+
+   ```sh
+   docker start neo4j
+   ```
 
 ## Using Neo4J Desktop explore the graph
 
