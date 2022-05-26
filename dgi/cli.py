@@ -41,7 +41,7 @@ from .code2graph.utils.parse_config import Config
 # cli - Grouping for sub commands
 ######################################################################
 @click.group()
-@click.option("--neo4j-bolt", "-n", envvar="NEO4J_BOLT_URL", default="bolt://neo4j:test@localhost:7687", help="Neo4j Bolt URL")
+@click.option("--neo4j-bolt", "-n", envvar="NEO4J_BOLT_URL", default="bolt://neo4j:tackle@localhost:7687", help="Neo4j Bolt URL")
 @click.option("--quiet", "-q", required=False, help="Be more quiet", default=False, is_flag=True, show_default=True)
 @click.option("--validate", "-v", help="Validate but don't populate graph", is_flag=True, hidden=True)
 @click.option("--clear", "-c", help="Clear graph before loading", default=True, is_flag=True, show_default=True)
