@@ -79,13 +79,13 @@ class TestS2GCLI(unittest.TestCase):
 
     def test_validate_only(self):
         """Test validating the a good file """
-        result = self.runner.invoke(cli, ["s2g", "--validate", "--input", "tests/fixtures/test-schema.ddl"])
+        result = self.runner.invoke(cli, ["--validate", "s2g", "--input", "tests/fixtures/test-schema.ddl"])
         self.assertEqual(result.exit_code, 0)
         assert "File [tests/fixtures/test-schema.ddl] validated." in result.output
 
     def test_output_file(self):
         """Test writing output file """
-        result = self.runner.invoke(cli, ["s2g", "--validate", "--input", "tests/fixtures/test-schema.ddl", "--output", "test.json"])
+        result = self.runner.invoke(cli, ["--validate","s2g","--input", "tests/fixtures/test-schema.ddl", "--output", "test.json"])
         self.assertEqual(result.exit_code, 0)
         assert "Writing: test.json" in result.output
         os.remove("test.json")

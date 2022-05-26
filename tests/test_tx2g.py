@@ -80,7 +80,7 @@ class TestTX2GCLI(unittest.TestCase):
     def test_verbose_mode(self):
         """Test verbose mode on """
         result = self.runner.invoke(
-            cli, ["--verbose", "tx2g", "--validate", "--input", "tests/fixtures/daytrader_transaction.json"])
+            cli, ["--validate", "tx2g", "--input", "tests/fixtures/daytrader_transaction.json"])
         self.assertEqual(result.exit_code, 0)
         assert "Verbose mode: ON" in result.output
 
@@ -99,27 +99,27 @@ class TestTX2GCLI(unittest.TestCase):
     def test_abstraction_level_is_class(self):
         """Test --abstraction set to 'class'"""
         result = self.runner.invoke(
-            cli, ["--abstraction=class", "tx2g", "--input=tests/fixtures/daytrader_transaction.json", "--validate"])
+            cli, ["--validate", "tx2g", "--abstraction=class", "--input=tests/fixtures/daytrader_transaction.json"])
         assert "abstraction level is class" in result.output
         self.assertEqual(result.exit_code, 0)
 
     def test_abstraction_level_is_method(self):
         """Test --abstraction set to 'method'"""
         result = self.runner.invoke(
-            cli, ["--abstraction=method", "tx2g", "--input=tests/fixtures/daytrader_transaction.json", "--validate"])
+            cli, ["--validate", "tx2g", "--abstraction=method", "--input=tests/fixtures/daytrader_transaction.json"])
         assert "abstraction level is method" in result.output
         self.assertEqual(result.exit_code, 0)
 
     def test_abstraction_level_is_full(self):
         """Test --abstraction set to 'full'"""
         result = self.runner.invoke(
-            cli, ["--abstraction=full", "tx2g", "--input=tests/fixtures/daytrader_transaction.json", "--validate"])
+            cli, ["--validate", "tx2g", "--abstraction=full", "--input=tests/fixtures/daytrader_transaction.json"])
         assert "abstraction level is full" in result.output
         self.assertEqual(result.exit_code, 0)
 
     def test_abstraction_level_is_wrong(self):
         """Test raise exception when --abstraction set to 'gobbledygook'"""
         result = self.runner.invoke(
-            cli, ["--abstraction=gobbledygook", "tx2g", "--input=tests/fixtures/daytrader_transaction.json", "--validate"])
-        assert "Not a valid abstraction level" in result.output
+            cli, ["--validate", "tx2g", "--abstraction=gobbledygook", "--input=tests/fixtures/daytrader_transaction.json"])
+        assert "Invalid value for '--abstraction' / '-a': 'gobbledygook' is not one of 'class', 'method', 'full'." in result.output
         self.assertEqual(result.exit_code, 2)
