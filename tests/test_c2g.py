@@ -63,27 +63,27 @@ class TestS2GCLI(unittest.TestCase):
     def test_abstraction_level_is_class(self):
         """Test --abstraction set to 'class'"""
         result = self.runner.invoke(
-            cli, ["--abstraction=class", "c2g", "--input=tests/fixtures/doop_out", "--validate"])
+            cli, ["--validate", "c2g", "--abstraction=class",  "--input=tests/fixtures/doop_out"])
         assert "abstraction level is class" in result.output
         self.assertEqual(result.exit_code, 0)
 
     def test_abstraction_level_is_method(self):
         """Test --abstraction set to 'method'"""
         result = self.runner.invoke(
-            cli, ["--abstraction=method", "c2g", "--input=tests/fixtures/doop_out", "--validate"])
+            cli, ["--validate", "c2g", "--abstraction=method",  "--input=tests/fixtures/doop_out"])
         assert "abstraction level is method" in result.output
         self.assertEqual(result.exit_code, 0)
 
     def test_abstraction_level_is_full(self):
         """Test --abstraction set to 'full'"""
         result = self.runner.invoke(
-            cli, ["--abstraction=full", "c2g", "--input=tests/fixtures/doop_out", "--validate"])
+            cli, ["--validate", "c2g", "--abstraction=full", "--input=tests/fixtures/doop_out"])
         assert "abstraction level is full" in result.output
         self.assertEqual(result.exit_code, 0)
 
     def test_abstraction_level_is_wrong(self):
         """Test raise exception when --abstraction set to 'gobbledygook'"""
         result = self.runner.invoke(
-            cli, ["--abstraction=gobbledygook", "c2g", "--input=tests/fixtures/doop_out", "--validate"])
-        assert "Not a valid abstraction level" in result.output
+            cli, ["--validate", "c2g", "--abstraction=gobbledygook", "--input=tests/fixtures/doop_out"])
+        assert "Invalid value for '--abstraction' / '-a': 'gobbledygook' is not one of 'class', 'method', 'full'." in result.output
         self.assertEqual(result.exit_code, 2)
