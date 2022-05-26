@@ -41,15 +41,15 @@ from .code2graph.utils.parse_config import Config
 # cli - Grouping for sub commands
 ######################################################################
 @click.group()
-@click.option("--neo4j-bolt", "-n", envvar="NEO4J_BOLT_URL", default="bolt://neo4j:tackle@localhost:7687", help="Neo4j Bolt URL")
-@click.option("--abstraction", "-a", default="class", help="The level of abstraction to use when building the graph. Valid options are: class, method, or full.", show_default=True)
-@click.option("--quiet/--verbose", "-q/-v", required=False, help="Be more quiet/verbose", default=False, is_flag=True, show_default=True)
-@click.option("--clear/--dont-clear", "-c/-dnc", help="Clear (or don't clear) graph before loading", default=True, is_flag=True, show_default=True)
+@click.option("--neo4j-bolt", "-n", envvar="NEO4J_BOLT_URL", default="bolt://neo4j:test@localhost:7687", help="Neo4j Bolt URL")
+@click.option("--quiet", "-q", required=False, help="Be more quiet", default=False, is_flag=True, show_default=True)
+@click.option("--validate", "-v", help="Validate but don't populate graph", is_flag=True, hidden=True)
+@click.option("--clear", "-c", help="Clear graph before loading", default=True, is_flag=True, show_default=True)
 @click.pass_context
-def cli(ctx, abstraction, quiet, clear, neo4j_bolt):
+def cli(ctx, validate, quiet, clear, neo4j_bolt):
     """Tackle Data Gravity Insights"""
     ctx.ensure_object(dict)
-    ctx.obj['abstraction'] = abstraction
+    ctx.obj['validate'] = validate
     ctx.obj['verbose'] = not quiet
     ctx.obj['clear'] = clear
     ctx.obj['bolt'] = neo4j_bolt
@@ -71,9 +71,8 @@ def cli(ctx, abstraction, quiet, clear, neo4j_bolt):
 @cli.command()
 @click.option("--input", "-i", type=click.Path(exists=True), required=True, help="The SQL/DDL file to load into the graph")
 @click.option("--output", "-o", required=False, help="The JSON file to write the schema to")
-@click.option("--validate", "-val", help="Validate file if OK but don't populate graph", is_flag=True, hidden=True)
 @click.pass_context
-def s2g(ctx, input, output, validate):
+def s2g(ctx, input, output):
     """This command parses SQL schema DDL into a graph"""
 
     # Read the DDL file
@@ -91,7 +90,7 @@ def s2g(ctx, input, output, validate):
             contents = json.dumps(result, indent=4)
             f.write(contents)
 
-    if validate:
+    if ctx.obj['validate']:
         click.echo(f"File [{input}] validated.")
         exit(0)
 
@@ -109,9 +108,9 @@ def s2g(ctx, input, output, validate):
 ######################################################################
 @cli.command()
 @click.option("--input", "-i", type=click.Path(exists=True), required=True, help="DiVA Transaction JSON file")
-@click.option("--validate", help="Testing mode, the graph won't be built.", is_flag=True, hidden=True)
+@click.option("--abstraction", "-a", type=click.Choice(["class","method","full"]), default="class", help="The level of abstraction to use when building the graph", show_default=True)
 @click.pass_context
-def tx2g(ctx, input, validate):
+def tx2g(ctx, input,abstraction):
     """This command loads DiVA database transactions into a graph"""
 
     if ctx.obj["verbose"]:
@@ -120,10 +119,10 @@ def tx2g(ctx, input, validate):
     class_transaction_loader = ClassTransactionLoader()
     method_transaction_loader = MethodTransactionLoader()
 
-    if ctx.obj["abstraction"].lower() == "full":
-        if validate:
+    if abstraction.lower() == "full":
+        if ctx.obj['validate']:
             click.echo("Validate mode: abstraction level is {}".format(
-                ctx.obj["abstraction"].lower()))
+                abstraction.lower()))
             sys.exit()
 
         class_transaction_loader.load_transactions(
@@ -132,18 +131,18 @@ def tx2g(ctx, input, validate):
         # Otherwise, we'll use the table nodes created above
         method_transaction_loader.load_transactions(input, clear=False)
 
-    elif ctx.obj["abstraction"].lower() == "class":
-        if validate:
+    elif abstraction.lower() == "class":
+        if ctx.obj['validate']:
             click.echo("Validate mode: abstraction level is {}".format(
-                ctx.obj["abstraction"].lower()))
+                abstraction.lower()))
             sys.exit()
         class_transaction_loader.load_transactions(
             input, clear=ctx.obj['clear'])
 
-    elif ctx.obj["abstraction"].lower() == "method":
-        if validate:
+    elif abstraction.lower() == "method":
+        if ctx.obj['validate']:
             click.echo("Validate mode: abstraction level is {}".format(
-                ctx.obj["abstraction"].lower()))
+                abstraction.lower()))
             sys.exit()
 
         method_transaction_loader.load_transactions(
@@ -161,9 +160,9 @@ def tx2g(ctx, input, validate):
 ######################################################################
 @cli.command()
 @click.option("--input", "-i", type=click.Path(exists=True, resolve_path=True, file_okay=False), required=True, help="DOOP output facts directory.")
-@click.option("--validate", help="Testing mode, the graph won't be built.", is_flag=True, hidden=True)
+@click.option("--abstraction", "-a", type=click.Choice(["class","method","full"]), default="class", help="The level of abstraction to use when building the graph", show_default=True)
 @click.pass_context
-def c2g(ctx, input, validate):
+def c2g(ctx, input,abstraction):
     """This command loads Code dependencies into the graph"""
 
     click.echo("code2graph generator started...")
@@ -190,27 +189,27 @@ def c2g(ctx, input, validate):
     class_g_builder = ClassGraphBuilder(usr_cfg)
     method_g_builder = MethodGraphBuilder(usr_cfg)
 
-    if ctx.obj["abstraction"].lower() == "full":
-        if validate:
+    if abstraction.lower() == "full":
+        if ctx.obj['validate']:
             click.echo("Validate mode: abstraction level is {}".format(
-                ctx.obj["abstraction"].lower()))
+                abstraction.lower()))
             sys.exit()
         class_g_builder.build_ddg(clear=ctx.obj['clear'])
         # We don't want to clear the table node twice.
         # Otherwise, we'll use the table nodes created above
         method_g_builder.build_ddg(clear=ctx.obj['clear'])
 
-    elif ctx.obj["abstraction"].lower() == "class":
-        if validate:
+    elif abstraction.lower() == "class":
+        if ctx.obj['validate']:
             click.echo("Validate mode: abstraction level is {}".format(
-                ctx.obj["abstraction"].lower()))
+                abstraction.lower()))
             sys.exit()
         class_g_builder.build_ddg(clear=ctx.obj['clear'])
 
-    elif ctx.obj["abstraction"].lower() == "method":
-        if validate:
+    elif abstraction.lower() == "method":
+        if ctx.obj['validate']:
             click.echo("Validate mode: abstraction level is {}".format(
-                ctx.obj["abstraction"].lower()))
+                abstraction.lower()))
             sys.exit()
         method_g_builder.build_ddg(clear=ctx.obj['clear'])
 
