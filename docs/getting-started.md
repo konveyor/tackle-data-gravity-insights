@@ -58,21 +58,15 @@ export NEO4J_BOLT_URL="bolt://neo4j:tackle@localhost:7687"
 You can now use the `dgi` command to load information about your application into the graph database. We start with `dgi --help`. This should produce:
 
 ```man
-$ dgi --help
 Usage: dgi [OPTIONS] COMMAND [ARGS]...
 
   Tackle Data Gravity Insights
 
 Options:
-  -n, --neo4j-bolt TEXT           Neo4j Bolt URL
-  -a, --abstraction TEXT          The level of abstraction to use when
-                                  building the graph. Valid options are:
-                                  class, method, or full.  [default: class]
-  -q, --quiet / -v, --verbose     Be more quiet/verbose  [default: verbose]
-  -c, --clear / -dnc, --dont-clear
-                                  Clear (or don't clear) graph before loading
-                                  [default: clear]
-  --help                          Show this message and exit.
+  -n, --neo4j-bolt TEXT  Neo4j Bolt URL
+  -q, --quiet            Be more quiet
+  -c, --clear            Clear graph before loading  [default: True]
+  --help                 Show this message and exit.
 
 Commands:
   c2g   This command loads Code dependencies into the graph
@@ -155,17 +149,20 @@ Code2graph uses the output from a tool called [DOOP](https://bitbucket.org/yanni
     
     Usage: dgi c2g [OPTIONS]
 
-    This command loads Code dependencies into the graph
+      This command loads Code dependencies into the graph
 
     Options:
-      -i, --input DIRECTORY  DOOP output facts directory.  [required]
-      --help                 Show this message and exit.
+      -i, --input DIRECTORY           DOOP output facts directory.  [required]
+      -a, --abstraction [class|method|full]
+                                      The level of abstraction to use when
+                                      building the graph  [default: class]
+      --help                          Show this message and exit.
     ```
 
    We'll run code2graph by pointing it to the doop generated facts from the step above:
   
     ```sh
-    dgi --abstraction class --clear --verbose c2g --input=doop-output
+    dgi --clear c2g --abstraction=class --input=doop-output
     ```
     
     Note that we could have passed in [class|method|full] as the abstraction. If you decide to run with the `method` or `full` level of abstraction, make sure you use the same abstraction level when running with `tx2g` as well.
@@ -173,19 +170,18 @@ Code2graph uses the output from a tool called [DOOP](https://bitbucket.org/yanni
     After successful completion, you should see:
 
     ```bash
-    ❯ dgi --clear --abstraction class --clear --verbose c2g --input=demo/code2graph-samples/doop-output
-    Graph generator started...
+    $ dgi --clear c2g --abstraction=class --input=doop-output
+    code2graph generator started...
     Verbose mode: ON
     Building Graph...
-    [INFO] Clear flag detected... Deleting pre-existing ClassNodes nodes.
     [INFO] Populating heap carried dependencies edges
-    100%|██████████| 7122/7122 [00:30<00:00, 234.78it/s]
+    100%|█████████████████████| 7138/7138 [01:37<00:00, 72.92it/s]
     [INFO] Populating dataflow edges
-    100%|██████████| 5022/5022 [00:08<00:00, 562.53it/s]
+    100%|█████████████████████| 5022/5022 [01:31<00:00, 54.99it/s]
     [INFO] Populating call-return dependencies edges
-    100%|██████████| 7052/7052 [00:14<00:00, 489.56it/s]
-    Graph build complete
-    [INFO] Built data dependency graph successfully
+    100%|█████████████████████| 7052/7052 [02:26<00:00, 48.30it/s]
+    [INFO] Populating entrypoints
+    code2graph build complete
     ```
 
 ## Step 4. Running schema2graph
@@ -193,7 +189,7 @@ Code2graph uses the output from a tool called [DOOP](https://bitbucket.org/yanni
 To run scheme to graph, use `dgi [OPTIONS] s2g --input=<path/to/ddl>`. For this demo, we have a sample DDL for daytrader at `demo/schema2graph-samples/daytrader-orcale.ddl`, let us use that:
 
 ```sh
-dgi --clear --verbose s2g --input=./sample.daytrader7-1.4/daytrader-ee7-web/src/main/webapp/dbscripts/oracle/Table.ddl
+dgi --clear s2g --input=./sample.daytrader7-1.4/daytrader-ee7-web/src/main/webapp/dbscripts/oracle/Table.ddl
 ```
 
 This should give us:
@@ -202,7 +198,7 @@ This should give us:
 Clearing graph...
 Building Graph...
 Processing schema tables:
-100%|██████████| 12/12 [00:00<00:00, 69.40it/s]
+100%|████████████████████| 12/12 [00:00<00:00, 69.40it/s]
 0it [00:00, ?it/s]
 Processing foreign keys:
 Graph build complete
@@ -224,7 +220,7 @@ Here we'll first use [Tackle-DiVA](https://github.com/konveyor/tackle-diva) to i
 2. We'll now run DGI's `tx2g` command to populate the graph with SQL tables, transaction data, and their relationships to the code.
 
    ```sh
-   dgi --abstraction class --clear --verbose tx2g --input=./tx2graph-output/transaction.json
+   dgi --clear tx2g --input=./tx2graph-output/transaction.json
    ```
 
    After a successful run, you'll see:
@@ -234,7 +230,7 @@ Here we'll first use [Tackle-DiVA](https://github.com/konveyor/tackle-diva) to i
    [INFO] Clear flag detected... Deleting pre-existing SQLTable nodes.
    Building Graph...
    [INFO] Populating transactions
-   100%|██████████| 158/158 [00:01<00:00, 125.73it/s]
+   100%|████████████████████| 158/158 [00:01<00:00, 125.73it/s]
    Graph build complete
    ```
 
@@ -242,7 +238,7 @@ Here we'll first use [Tackle-DiVA](https://github.com/konveyor/tackle-diva) to i
 
 We'll save the graph generated so far locally for further analysis. This enables us to use a free version of Neo4J Bloom to interact with the graph.
 
-1. First we stop the neo4j container becasue the data can't be backup while Neo4J is running.
+1. First we stop the neo4j container because the data can't be backup while Neo4J is running.
 
    ```sh
    docker stop neo4j
