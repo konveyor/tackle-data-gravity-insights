@@ -1,0 +1,695 @@
+<style type="text/css" media="screen">
+/*
+.nodes-image {
+	margin:-100;
+}
+*/	
+@import url("//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css");
+
+.imageblock .content img, .image img {max-width: 900px;max-height: 300px;}
+.deck h3, .deck h4 {display: block !important;margin-bottom:8px;margin-top:5px;}
+.listingblock {margin:8px;}
+.pull-bottom {position:relative;bottom:1em;}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note:before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip:before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning:before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution:before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important:before{content:"\f06a";color:#bf0000}
+.admonitionblock.note.speaker { display:none; }
+</style>
+<style type="text/css" media="screen">
+/* #editor.maximize-editor .CodeMirror-code { font-size:24px; line-height:26px; } */
+</style>
+<article class="guide" ng-controller="AdLibDataController">
+  <carousel class="deck container-fluid">
+    <!--slide class="row-fluid">
+      <div class="col-sm-3">
+        <h3>DGI Demo Guide</h3>
+        <p class="lead">Information</p>
+			<!dl>
+				
+				
+				
+				
+				
+			</dl>
+		</div>
+      <div class="col-sm-9">
+        <figure>
+          <img style="width:300px" src=""/>
+        </figure>
+      </div>
+    </slide-->
+    
+
+
+   <h4>DGI Demo Guide</h4>
+   
+
+
+<slide class="row-fluid">
+  <div class="col-sm-12">
+    <h3>Introduction</h3>
+    <br/>
+    <div>
+      <div class="paragraph">
+<p>Tackle Data Gravity Insights is a new way to gain insights into your monolithic application code so that you can better refactor it into domain driven microservices. It takes a wholistic approach to application modernization and refactoring by triangulating between code, and, data, and transactional boundaries.</p>
+</div>
+<div class="paragraph">
+<p>Application modernization is a complex topic with refactoring being the most complicated undertaking. Current tools only look at the application source code or only at the runtime traces when refactoring. This, however, yields a myopic view that doesn&#8217;t take into account data relationships and transactional scopes. This project hopes to join the three views of application, data, and transactions into a 3D view of the all of the application relationships so that you can easily discover application domains of interest and refactor them into microservices. Accordingly, DGI consists of three key components:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Call-/Control-/Data-dependency Analysis (code2graph):</strong> This is a source code analysis component that extracts various static code interaction features pertaining to object/dataflow dependencies and their respective lifecycle information. It presents this information in a graphical format with Classes as nodes and their dataflow, call-return, and heap-dependency interactions edges.</p>
+</li>
+<li>
+<p><strong>Schema:</strong> This component of DGI infers the schema of the underlying databases used in the application. It presents this information in a graphical format with database tables and columns as nodes and their relationships (e.g., foreign key, etc.) as edges.</p>
+</li>
+<li>
+<p><strong>Transactions to graph (tx2graph):</strong> This component of DGI leverages Tackle-DiVA to perform a data-centric application analysis. It imports a set of target application source files (*.java/xml) and provides following analysis result files. It presents this information in a graphical format with database tables and classes as nodes and their transactional relationships as edges.</p>
+</li>
+</ul>
+</div>
+	</div>
+  </div>
+</slide>
+
+
+
+<slide class="row-fluid">
+  <div class="col-sm-12">
+    <h3>Getting Started</h3>
+    <br/>
+    <div>
+      <div class="paragraph">
+<p>If you haven&#8217;t already, scan your project with our getting started guide.</p>
+</div>
+<div class="paragraph">
+<p>If you have your Neo4j instance running on the scanned data you can get a quick overview on the data model with this query</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->call db.schema.visualization()<!--/code--></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This view gives us an overview of the the nodes and edges in the neo4j graph</p>
+</div>
+<div class="paragraph">
+<p>For a tabular overview use this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (n)
+// a collection of multiple labels is turned into rows
+UNWIND labels(n) as label
+RETURN label, count(*)
+ORDER BY count(*) asc<!--/code--></pre>
+</div>
+</div>
+	</div>
+  </div>
+</slide>
+
+
+
+<slide class="row-fluid">
+  <div class="col-sm-12">
+    <h3>Interesting Information</h3>
+    <br/>
+    <div>
+      
+
+
+   <h4>How many classes are contained in the project?</h4>
+   <div class="paragraph">
+<p>This query counts all classes nodes in the project.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (t:ClassNode)
+RETURN count(t)<!--/code--></pre>
+</div>
+</div>
+
+
+
+   <h4>How many database tables are contained in the project?</h4>
+   <div class="paragraph">
+<p>This query counts all SQLTable nodes in the project.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (t:SQLTable)
+RETURN count(t)<!--/code--></pre>
+</div>
+</div>
+	</div>
+  </div>
+</slide>
+
+
+
+<slide class="row-fluid">
+  <div class="col-sm-12">
+    <h3>Relationships</h3>
+    <br/>
+    <div>
+      
+
+
+   <h4>All relationships between pairs of classes.</h4>
+   <div class="paragraph">
+<p>First, let&#8217;s gather all the relationship types:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->CALL db.relationshipTypes()<!--/code--></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll obtain the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>╒════════════════════════╕
+│"relationshipType"      │
+╞════════════════════════╡
+│"FOREIGN_KEY"           │
+├────────────────────────┤
+│"TRANSACTION_READ"      │
+├────────────────────────┤
+│"TRANSACTION_WRITE"     │
+├────────────────────────┤
+│"HEAP_DEPENDENCY"       │
+├────────────────────────┤
+│"DATA_DEPENDENCY"       │
+├────────────────────────┤
+│"CALL_RETURN_DEPENDENCY"│
+└────────────────────────┘</pre>
+</div>
+</div>
+	</div>
+  </div>
+</slide>
+
+
+
+<slide class="row-fluid">
+  <div class="col-sm-12">
+    <h3>Immutability</h3>
+    <br/>
+    <div>
+      
+
+
+   <h4>Labels all classes with an immutable state as "Immutable"</h4>
+   <div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (immutable:Class)-[:DECLARES]-&gt;(field:Field)&lt;-[:WRITES]-(accessorMethod)
+WHERE field.visibility = 'private'
+
+WITH immutable, collect(accessorMethod) AS accessorMethods
+WHERE ALL (accessorMethod IN accessorMethods WHERE accessorMethod:Constructor)
+
+SET immutable:Immutable
+RETURN immutable<!--/code--></pre>
+</div>
+</div>
+	</div>
+  </div>
+</slide>
+
+
+
+<slide class="row-fluid">
+  <div class="col-sm-12">
+    <h3>Coupling</h3>
+    <br/>
+    <div>
+      
+
+
+   <h4>Mark types to investigate</h4>
+   <div class="paragraph">
+<p>Mark the types in one package to be investigated.
+So instead of always checking this condition: <code>WHERE has(t.byteCodeVersion) AND t.fqn STARTS WITH {package}</code> we can just match on the <code>:Investigate</code> label.</p>
+</div>
+<input style="display:inline;width:30%;" value-for="package" class="form-control" value="some.package." size="40">
+<div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (t:Type:File)&lt;-[:DEPENDS_ON]-(dependent:Type)
+ WHERE has(t.byteCodeVersion) AND t.fqn STARTS WITH {package}
+SET t:Investigate<!--/code--></pre>
+</div>
+</div>
+
+
+
+   <h4>Add fan-in to type</h4>
+   <div class="paragraph">
+<p>Add a property 'fanIn' to a Type with the number of other types depending on them</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (t:Type:File:Investigate)&lt;-[:DEPENDS_ON]-(dependent:Type)
+WITH t, count(dependent) AS dependents
+SET t.fanIn = dependents
+RETURN t.fqn AS type<!--/code--></pre>
+</div>
+</div>
+
+
+
+   <h4>Add fan-out to type</h4>
+   <div class="paragraph">
+<p>Add a property 'fanOut' to a Type with the number of other types they depend on</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (t:Type:File:Investigate)-[:DEPENDS_ON]-&gt;(dependency:Type)
+
+WITH t, count(dependency) AS dependencies
+SET t.fanOut = dependencies
+
+RETURN t.fqn AS Type, t.fanOut AS fanOut
+ ORDER BY fanOut DESC<!--/code--></pre>
+</div>
+</div>
+
+
+
+   <h4>Add default fan-out</h4>
+   <div class="paragraph">
+<p>Add a property 'fanOut' to all Types without fanOut property</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (t:Type:File)
+ WHERE NOT has(t.fanOut)
+SET t.fanOut = 0
+RETURN t.fqn AS type<!--/code--></pre>
+</div>
+</div>
+
+
+
+   <h4>Add default fan-out</h4>
+   <div class="paragraph">
+<p>Add a property 'fanIn' to all Types without fanIn property</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (t:Type:File:Investigate)
+ WHERE NOT has(t.fanIn)
+SET t.fanIn = 0
+RETURN t.fqn AS type<!--/code--></pre>
+</div>
+</div>
+
+
+
+   <h4>Add type-coupling</h4>
+   <div class="paragraph">
+<p>Add a property <code>typeCoupling</code> to a <code>Type</code> as sum of <code>fanIn</code> and <code>fanOut</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (t:Type:File:Investigate)
+
+SET t.typeCoupling = t.fanIn + t.fanOut
+
+RETURN t.fqn AS type, t.typeCoupling AS typeCoupling,
+      t.fanIn AS fanIn, t.fanOut AS fanOut
+ ORDER BY typeCoupling DESC, fanIn DESC<!--/code--></pre>
+</div>
+</div>
+
+
+
+   <h4>Add in-package fan-out</h4>
+   <div class="paragraph">
+<p>Add a property 'inPackageFanOut' to a Type with the number of other types they depend on</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (p1:Package)-[:CONTAINS]-&gt;(t:Type:File:Investigate)-[:DEPENDS_ON]-&gt;
+      (dependency:Type)&lt;-[:CONTAINS]-(p2:Package)
+ WHERE p1 = p2 AND NOT dependency.fqn CONTAINS '$'
+
+WITH t, count(dependency) AS dependencies
+SET t.inPackageFanOut = dependencies
+
+RETURN t.fqn AS type, t.inPackageFanOut AS fanOut
+ ORDER BY fanOut DESC<!--/code--></pre>
+</div>
+</div>
+
+
+
+   <h4>Add in-package fan-in</h4>
+   <div class="paragraph">
+<p>Add a property <code>inPackageFanIn</code> to a <code>Type</code> with the number of other types they depend on</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (p1:Package)-[:CONTAINS]-&gt;(t:Type:File:Investigate)&lt;-[:DEPENDS_ON]-
+     (dependency:Type)&lt;-[:CONTAINS]-(p2:Package)
+ WHERE p1 = p2 AND NOT dependency.fqn CONTAINS '$'
+
+WITH t, count(dependency) AS dependencies
+
+SET t.inPackageFanIn = dependencies
+
+RETURN t.fqn AS type, t.inPackageFanIn AS fanIn
+ ORDER BY fanIn DESC<!--/code--></pre>
+</div>
+</div>
+
+
+
+   <h4>Add type-in-package coupling</h4>
+   <div class="paragraph">
+<p>Add a property <code>typeInPackageCoupling</code> to a <code>Type</code> as sum of <code>fanIn</code> and <code>fanOut</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (t:Type:File:Investigate)
+
+SET t.typeInPackageCoupling = t.inPackageFanIn + t.inPackageFanOut
+
+RETURN t.fqn AS type, t.typeInPackageCoupling AS typeCoupling,
+      t.inPackageFanIn AS FanIn, t.inPackageFanOut AS fanOut
+ ORDER BY typeCoupling DESC, fanIn DESC<!--/code--></pre>
+</div>
+</div>
+	</div>
+  </div>
+</slide>
+
+
+
+<slide class="row-fluid">
+  <div class="col-sm-12">
+    <h3>Unit Tests: Validate Assertions</h3>
+    <br/>
+    <div>
+      
+
+
+   <h4>Label Assert Methods</h4>
+   <div class="paragraph">
+<p>Unit Tests should have one (logical) assert per test method.
+Because also some methods of a mocking framework count as asserts, we want to label them.</p>
+</div>
+<div class="paragraph">
+<p>Here is an example for Mockito:</p>
+</div>
+<div class="paragraph">
+<p>Label all assertion methods with name "verify*" declared by "org.mockito.Mockito" with <code>Junit4</code> and <code>Assert</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (assertType:Type)-[:DECLARES]-&gt;(assertMethod)
+ WHERE assertType.fqn = 'org.mockito.Mockito'
+ AND assertMethod.signature CONTAINS 'verify'
+SET assertMethod:Junit4:Assert
+RETURN assertMethod<!--/code--></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Also the org.junit.Assert.fail method counts as an assert too:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (assertType:Type)-[:DECLARES]-&gt;(assertMethod)
+ WHERE assertType.fqn = 'org.junit.Assert'
+ AND assertMethod.signature starts with 'void fail'
+SET assertMethod:Junit4:Assert
+RETURN assertMethod<!--/code--></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>TODO</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"--><!--/code--></pre>
+</div>
+</div>
+	</div>
+  </div>
+</slide>
+
+
+
+<slide class="row-fluid">
+  <div class="col-sm-12">
+    <h3>(Unit) Test Coverage</h3>
+    <br/>
+    <div>
+      
+
+
+   <h4>Test Coverage</h4>
+   <div class="paragraph">
+<p>Test coverage is a wide field.
+There are lots of discussions about Unit Tests and Test Coverage.</p>
+</div>
+<div class="paragraph">
+<p>There is a <a href="https://github.com/kontext-e/jqassistant-plugins/tree/master/jacoco">JaCoCo Plugin by Kontext E</a> for importing JaCoCo test coverage results into the jQAssistant database.
+With all information in one database, you may define your Test Coverage rules (and exceptions from the rules) in a very flexible way.</p>
+</div>
+<div class="paragraph">
+<p>Here is one example.
+It is based on methods and their complexity: more complex methods need more test coverage, because the probability for bugs is higher in more complex methods - as a rule of thumb.</p>
+</div>
+
+
+
+   <h4>Define Test Coverage Goals</h4>
+   <div class="paragraph">
+<p>So we define two ranges of method complexity based on the number of branches:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->CREATE (medium:TestCoverageRange { complexity : 'medium', min : 4, max : 5, coverage : 80 })
+CREATE (high:TestCoverageRange { complexity : 'high', min : 6, max : 999999, coverage : 90 })
+RETURN medium, high<!--/code--></pre>
+</div>
+</div>
+
+
+
+   <h4>Find Methods with too low Coverage</h4>
+   <div class="paragraph">
+<p>Now we can find methods with a too low test coverage:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (tcr:TestCoverageRange)
+WITH tcr.min AS mincomplexity, tcr.max AS maxcomplexity, tcr.coverage AS coveragethreshold
+
+MATCH (cl:Jacoco:Class)--(m:Jacoco:Method)--(c:Jacoco:Counter {type: 'COMPLEXITY'})
+ WHERE c.missed + c.covered &gt;= mincomplexity AND c.missed + c.covered &lt;= maxcomplexity
+
+WITH m AS method, cl.fqn AS fqn, m.signature AS signature,
+    c.missed + c.covered AS complexity, coveragethreshold
+
+MATCH (m)--(branches:Jacoco:Counter {type: 'BRANCH'})
+ WHERE m = method
+WITH *, branches.covered * 100 / (branches.covered + branches.missed) AS coverage
+WHERE coverage &lt; coveragethreshold
+
+RETURN complexity, coveragethreshold, coverage, fqn, signature
+ ORDER BY complexity, coverage<!--/code--></pre>
+</div>
+</div>
+
+
+
+   <h4>Add Exceptions from Rule</h4>
+   <div class="paragraph">
+<p>And add some exceptions from this rule:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Methods equals() and hashCode() are generated by an IDE and need not to be tested</p>
+</li>
+<li>
+<p>For some reason we don’t want measure test coverage for the ui package</p>
+</li>
+<li>
+<p>And the <code>StringTool.doSomethingwithStrings</code> method should also be excluded</p>
+</li>
+<li>
+<p>Oh, and by the way we know that there are 10 other violations that we want to skip for now + (but we swear to handle this Technical Debt in the next spring)</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (tcr:TestCoverageRange)
+
+WITH tcr.min AS mincomplexity, tcr.max AS maxcomplexity, tcr.coverage AS coveragethreshold
+
+MATCH (cl:Jacoco:Class)--(m:Jacoco:Method)--(c:Jacoco:Counter {type: 'COMPLEXITY'})
+ WHERE c.missed + c.covered &gt;= mincomplexity AND c.missed + c.covered &lt;= maxcomplexity
+ AND NOT m.signature IN ['boolean equals(java.lang.Object)', 'int hashCode()']
+ AND NOT(cl.fqn STARTS WITH 'de.kontext_e.demo.ui')
+ AND NOT(cl.fqn = 'de.kontext_e.demo.tools.StringTool'
+ AND m.signature = 'java.lang.String doSomethingwithStrings(java.lang.String)')
+
+WITH m AS method, cl.fqn AS fqn, m.signature AS signature, c.missed+c.covered AS complexity, coveragethreshold AS coveragethreshold
+
+MATCH (m)--(branches:Jacoco:Counter {type: 'BRANCH'})
+ WHERE m=method AND branches.covered*100/(branches.covered+branches.missed) &lt; coveragethreshold
+RETURN complexity, coveragethreshold, branches.covered*100/(branches.covered+branches.missed) AS coverage, fqn, signature
+ ORDER BY complexity, coverage
+ SKIP 10<!--/code--></pre>
+</div>
+</div>
+	</div>
+  </div>
+</slide>
+
+
+
+<slide class="row-fluid">
+  <div class="col-sm-12">
+    <h3>Special case: Frequently changed classes</h3>
+    <br/>
+    <div>
+      <div class="paragraph">
+<p>Maybe it’s also a good idea to have a <strong>higher Test Coverage for frequently changed classes</strong>.
+Using the <a href="https://github.com/kontext-e/jqassistant-plugins/tree/master/git">Git Plugin by Kontext E</a> there is a way to test this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (c:Git:Commit)-[:CONTAINS_CHANGE]-&gt;(change:Git:Change)-[:MODIFIES]-&gt;(f:Git:File)
+WHERE f.relativePath=~'.*.java'
+AND NOT f.relativePath CONTAINS 'ui'
+WITH count(c) AS cnt, replace(f.relativePath, '/','.') AS gitfqn
+ORDER BY cnt DESC
+LIMIT 10
+MATCH (class:Java:Class)
+WHERE gitfqn CONTAINS class.fqn
+WITH cnt, class.fqn AS classfqn
+MATCH (cl:Jacoco:Class)--(m:Jacoco:Method)--(c:Jacoco:Counter {type: 'COMPLEXITY'})
+WHERE classfqn=cl.fqn
+AND c.missed+c.covered &gt; 3
+AND NOT(m.signature ='boolean equals(java.lang.Object)')
+AND NOT(m.signature ='int hashCode()')
+WITH m AS method, cl.fqn AS fqn, m.signature AS signature, c.missed+c.covered AS complexity
+MATCH (m)--(branches:Jacoco:Counter {type: 'BRANCH'})
+WHERE m=method
+AND branches.covered*100/(branches.covered+branches.missed) &lt; 90
+RETURN DISTINCT fqn, signature, complexity, branches.covered*100/(branches.covered+branches.missed) AS coverage
+ORDER BY fqn
+SKIP 3<!--/code--></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For the 10 most often changed Java files except the ones in the ui package the Test Coverage for branches should not be lower than 90 percent for methods with more than 3 branches - with three unnamed exceptions from this rule.
+== Encapsulation</p>
+</div>
+
+
+
+   <h4>Label types with internal FQNs as Internal</h4>
+   <input style="display:inline;width:30%;" value-for="fqn_internal" class="form-control" value=".internal." size="40">
+<div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (t:Type) WHERE t.fqn CONTAINS {fqn_internal}
+SET t:Internal<!--/code--></pre>
+</div>
+</div>
+
+
+
+   <h4>API/SPI types must not extend/implement internal types</h4>
+   <div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH
+    (class:Class)-[:EXTENDS|IMPLEMENTS]-&gt;(supertype:Type:Internal)
+WHERE NOT class:Internal
+RETURN
+    DISTINCT class as extendsInternal<!--/code--></pre>
+</div>
+</div>
+
+
+
+   <h4>API/SPI methods must not expose internal types</h4>
+   <div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->// return values
+MATCH
+    (class:Type)-[:DECLARES]-&gt;(method:Method)
+WHERE
+    NOT class:Internal
+    AND method.visibility IN ["public","protected"]
+    AND (exists ((method)-[:RETURNS]-&gt;(:Type:Internal)) OR
+         exists ((method)-[:`HAS`]-&gt;(:Parameter)-[:OF_TYPE]-&gt;(:Internal)))
+RETURN
+    method<!--/code--></pre>
+</div>
+</div>
+
+
+
+   <h4>API/SPI fields must not expose internal types</h4>
+   <div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH
+    (class:Class:Internal)-[:DECLARES]-&gt;(field)-[:OF_TYPE]-&gt;(fieldtype:Type:Internal)
+WHERE
+    AND field.visibility IN ["public","protected"]
+RETURN
+    class as internalClass, field, fieldtype as internalType<!--/code--></pre>
+</div>
+</div>
+	</div>
+  </div>
+</slide>
+
+
+
+<slide class="row-fluid">
+  <div class="col-sm-12">
+    <h3>Resources</h3>
+    <br/>
+    <div>
+      <div class="ulist">
+<ul>
+<li>
+<p><a href="https://jqassistant.org/blog/releases/">Releases</a></p>
+</li>
+<li>
+<p><a href="https://jqassistant.org/get-started/">Get Started / Download</a></p>
+</li>
+<li>
+<p><a href="http://buschmais.github.io/jqassistant/doc/1.2.0/">Documentation</a></p>
+</li>
+<li>
+<p><a href="http://github.com/buschmais/jqassistant">GitHub</a></p>
+</li>
+<li>
+<p><a href="https://github.com/kontext-e/jqassistant-plugins">jQA Plugins by Kontext E</a></p>
+</li>
+<li>
+<p><a href="https://groups.google.com/forum/#!forum/jqassistant">Google Group</a></p>
+</li>
+<li>
+<p><a href="http://stackoverflow.com/questions/tagged/jqassistant">Stackoverflow</a></p>
+</li>
+</ul>
+</div>
+	</div>
+  </div>
+</slide>
+  </carousel>
+</article>
