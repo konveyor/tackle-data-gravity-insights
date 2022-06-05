@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='tackle-dgi',
-    version='0.0.4',
+    version='0.1.0',
     url="https://github.com/konveyor/tackle-data-gravity-insights",
     author="IBM",
     description="Konveyor Tackle Data Gravity Insights",
@@ -39,7 +39,9 @@ setup(
             "coverage==6.3.2",
             "pylint==2.13",
             "py2neo==2021.2.3",
-            "tox==3.24.5",
+            "flake8==4.0.1",
+            "black==22.3.0",
+            "tox==3.24.5"
         ],
     },
     entry_points={
