@@ -256,21 +256,7 @@ We'll save the graph generated so far locally for further analysis. This enables
 
    ```sh
    docker start neo4j
-   ```
-
-## Step 7. (Optional) Creating an offline dump for use with networkx, etc. 
-
-We'll can also save the graph in a graphml format to be used, for example, with networkx. To do this, you can call the following APOC procedure:
-
-```sh
-docker-compose exec neo4j cypher-shell 'CALL apoc.export.graphml.all("DGI.graphml", {})'
-```
-
-This will be saved inside the running docker at `/import`. We want to copy this out. For that, you can use docker copy 
-
-```sh
-sudo docker cp neo4j:/var/lib/neo4j/import/DGI.graphml /path/to/save/location
-```
+   ```  
    
 ## Using Neo4J Desktop explore the graph
 
