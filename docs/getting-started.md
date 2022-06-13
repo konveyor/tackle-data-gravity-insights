@@ -269,7 +269,7 @@ docker-compose exec neo4j cypher-shell 'CALL apoc.export.graphml.all("DGI.graphm
 This will be saved inside the running docker at `/import`. We want to copy this out. For that, you can use docker copy 
 
 ```sh
-sudo docker cp goofy_roentgen:/var/lib/neo4j/import/DGI.graphml /path/to/save/location
+sudo docker cp neo4j:/var/lib/neo4j/import/DGI.graphml /path/to/save/location
 ```
    
 ## Using Neo4J Desktop explore the graph
