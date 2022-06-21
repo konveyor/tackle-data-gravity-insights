@@ -28,6 +28,10 @@
     "postCreateCommand": "if test -f 'requirements.txt'; then sudo pip install -r requirements.txt; fi && sudo bash -c 'pip install -e .[dev]'",
 	"features": {
 		"docker-from-docker": "latest",
-		"kubectl-helm-minikube": "latest"		
+		"kubectl-helm-minikube": {
+			"version": "latest",
+			"helm": "latest",
+			"minikube": "none"
+		}
 	}
 }
