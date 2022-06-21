@@ -19,7 +19,6 @@ Tackle Data Gravity Insights
 
 Command Line Interface (CLI) for Tackle Data Gravity Insights
 """
-import os
 import sys
 import json
 import click
@@ -28,7 +27,6 @@ import importlib.resources
 
 from neomodel import config
 from simple_ddl_parser import parse_from_file
-from neomodel import config
 
 # Import our packages
 from .schema2graph import schema_loader
@@ -41,7 +39,8 @@ from .code2graph.utils.parse_config import Config
 # cli - Grouping for sub commands
 ######################################################################
 @click.group()
-@click.option("--neo4j-bolt", "-n", envvar="NEO4J_BOLT_URL", default="bolt://neo4j:tackle@localhost:7687", help="Neo4j Bolt URL")
+@click.option("--neo4j-bolt", "-n", envvar="NEO4J_BOLT_URL",
+              default="bolt://neo4j:tackle@localhost:7687", help="Neo4j Bolt URL")
 @click.option("--quiet", "-q", required=False, help="Be more quiet", default=False, is_flag=True, show_default=True)
 @click.option("--validate", "-v", help="Validate but don't populate graph", default=False, is_flag=True)
 @click.option("--clear", "-c", help="Clear graph before loading", default=False, is_flag=True, show_default=True)
@@ -69,7 +68,8 @@ def cli(ctx, validate, quiet, clear, neo4j_bolt):
 # schema2graph - Populates the graph from an SQL schema DDL
 ######################################################################
 @cli.command()
-@click.option("--input", "-i", type=click.Path(exists=True), required=True, help="The SQL/DDL file to load into the graph")
+@click.option("--input", "-i", type=click.Path(exists=True), required=True,
+              help="The SQL/DDL file to load into the graph")
 @click.option("--output", "-o", required=False, help="The JSON file to write the schema to")
 @click.pass_context
 def s2g(ctx, input, output):
@@ -107,10 +107,12 @@ def s2g(ctx, input, output):
 #  tx2graph - Loads output from DiVA into graph
 ######################################################################
 @cli.command()
-@click.option("--input", "-i", type=click.Path(exists=True), required=True, help="DiVA Transaction JSON file")
-@click.option("--abstraction", "-a", type=click.Choice(["class","method","full"]), default="class", help="The level of abstraction to use when building the graph", show_default=True)
+@click.option("--input", "-i", type=click.Path(exists=True), required=True,
+              help="DiVA Transaction JSON file")
+@click.option("--abstraction", "-a", type=click.Choice(["class", "method", "full"]),
+              default="class", help="The level of abstraction to use when building the graph", show_default=True)
 @click.pass_context
-def tx2g(ctx, input,abstraction):
+def tx2g(ctx, input, abstraction):
     """This command loads DiVA database transactions into a graph"""
 
     if ctx.obj["verbose"]:
@@ -159,10 +161,12 @@ def tx2g(ctx, input,abstraction):
 #  code2graph - Imports code dependencies into the graph
 ######################################################################
 @cli.command()
-@click.option("--input", "-i", type=click.Path(exists=True, resolve_path=True, file_okay=False), required=True, help="DOOP output facts directory.")
-@click.option("--abstraction", "-a", type=click.Choice(["class","method","full"]), default="class", help="The level of abstraction to use when building the graph", show_default=True)
+@click.option("--input", "-i", type=click.Path(exists=True, resolve_path=True,
+              file_okay=False), required=True, help="DOOP output facts directory.")
+@click.option("--abstraction", "-a", type=click.Choice(["class", "method", "full"]),
+              default="class", help="The level of abstraction to use when building the graph", show_default=True)
 @click.pass_context
-def c2g(ctx, input,abstraction):
+def c2g(ctx, input, abstraction):
     """This command loads Code dependencies into the graph"""
 
     click.echo("code2graph generator started...")
