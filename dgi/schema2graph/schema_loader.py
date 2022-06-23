@@ -30,6 +30,38 @@ def remove_all_nodes():
         node.delete()
 
 
+def process_foreign_keys(all_foreign_keys: list):
+    print("Processing foreign keys:")
+    for entry in tqdm(all_foreign_keys, total=len(all_foreign_keys)):
+        my_table_name = entry[0]
+        my_column_name = entry[1]
+        ref_table_name = entry[2]
+        ref_column_name = entry[3]
+        # print(f"Processing foreign key from {my_table_name}.{my_column_name} to {ref_table_name}.{ref_column_name}")
+        my_tab = SQLTable.nodes.get(name=my_table_name)
+        if my_tab:
+            my_col = my_tab.columns.get(name=my_column_name)
+            if my_col:
+                ref_tab = SQLTable.nodes.get(name=ref_table_name)
+                if ref_tab:
+                    ref_col = ref_tab.columns.get(name=ref_column_name)
+                    if ref_col:
+                        # print(f"Connecting {my_tab.name}.{my_col.name} to {ref_tab.name}.{ref_col.name}")
+                        my_col.foreign_key.connect(ref_col)
+                    else:
+                        print(
+                            f"*** Error: Could not find reference column: {ref_column_name}"
+                        )
+                else:
+                    print(
+                        f"*** Error: Could not find reference table: {ref_table_name}"
+                    )
+            else:
+                print(f"*** Error: Could not find self column: {my_column_name}")
+        else:
+            print(f"*** Error: Could not find self table: {my_table_name}")
+
+
 def load_graph(result):
     """Populates the graph from a dictionary"""
     all_foreign_keys = []
@@ -78,32 +110,4 @@ def load_graph(result):
                     )
                 )
 
-    print("Processing foreign keys:")
-    for entry in tqdm(all_foreign_keys, total=len(all_foreign_keys)):
-        my_table_name = entry[0]
-        my_column_name = entry[1]
-        ref_table_name = entry[2]
-        ref_column_name = entry[3]
-        # print(f"Processing foreign key from {my_table_name}.{my_column_name} to {ref_table_name}.{ref_column_name}")
-        my_tab = SQLTable.nodes.get(name=my_table_name)
-        if my_tab:
-            my_col = my_tab.columns.get(name=my_column_name)
-            if my_col:
-                ref_tab = SQLTable.nodes.get(name=ref_table_name)
-                if ref_tab:
-                    ref_col = ref_tab.columns.get(name=ref_column_name)
-                    if ref_col:
-                        # print(f"Connecting {my_tab.name}.{my_col.name} to {ref_tab.name}.{ref_col.name}")
-                        my_col.foreign_key.connect(ref_col)
-                    else:
-                        print(
-                            f"*** Error: Could not find reference column: {ref_column_name}"
-                        )
-                else:
-                    print(
-                        f"*** Error: Could not find reference table: {ref_table_name}"
-                    )
-            else:
-                print(f"*** Error: Could not find self column: {my_column_name}")
-        else:
-            print(f"*** Error: Could not find self table: {my_table_name}")
+    process_foreign_keys(all_foreign_keys)
