@@ -162,7 +162,7 @@ Code2graph uses the output from a tool called [DOOP](https://bitbucket.org/yanni
    We'll run code2graph by pointing it to the doop generated facts from the step above:
   
     ```sh
-    dgi --clear c2g --abstraction=class --input=doop-output
+    dgi --clear --abstraction=class c2g --input=doop-output
     ```
     
     Note that we could have passed in [class|method|full] as the abstraction. If you decide to run with the `method` or `full` level of abstraction, make sure you use the same abstraction level when running with `tx2g` as well.
@@ -170,7 +170,7 @@ Code2graph uses the output from a tool called [DOOP](https://bitbucket.org/yanni
     After successful completion, you should see:
 
     ```bash
-    $ dgi --clear c2g --abstraction=class --input=doop-output
+    $ dgi --clear --abstraction=class c2g --input=doop-output
     code2graph generator started...
     Verbose mode: ON
     Building Graph...
