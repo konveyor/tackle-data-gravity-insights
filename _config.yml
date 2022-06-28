@@ -15,9 +15,9 @@
 # in the templates via {{ site.myvariable }}.
 title: Tackle-DGI
 description: A Jekyll theme for documentation for DGI
-theme: "just-the-docs"
-baseurl: "/just-the-docs" # the subpath of your site, e.g. /blog
-url: "https://konveyor.github.io/tackle-data-gravity-insights/" # the base hostname & protocol for your site, e.g. http://example.com
+remote_theme: "just-the-docs"
+baseurl: "/tackle-data-gravity-insights" # the subpath of your site, e.g. /blog
+# url: "https://konveyor.github.io/tackle-data-gravity-insights/" # the base hostname & protocol for your site, e.g. http://example.com
 
 permalink: pretty
 exclude: ["node_modules/", "*.gemspec", "*.gem", "Gemfile", "Gemfile.lock", "package.json", "package-lock.json",  "script/", "LICENSE.txt", "lib/", "bin/", "README.md", "Rakefile"
