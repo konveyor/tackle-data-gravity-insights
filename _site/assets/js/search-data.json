@@ -1,0 +1,152 @@
+{"0": {
+    "doc": "Demo",
+    "title": "Demo",
+    "content": "For the demo, we’ll use daytrader7 as an example. Feel free to follow along with your own application and your personal directories. But, keep track of the directories where the application source code and the built jar/war/ear reside and replace them appropriately below. | To get started, clone this repo and save the repository root as $DGI_ROOT: . git clone https://github.com/konveyor/tackle-data-gravity-insights.git cd tackle-data-gravity-insights . This repository comes with a demo folder to work through an example app. | Let’s download a copy of our sample application and build it. # Download and extract the demo application wget -c https://github.com/WASdev/sample.daytrader7/archive/refs/tags/v1.4.tar.gz -O - | tar -xvz -C demo/sample-application # Now build the application docker run --rm -v $(pwd)/demo/sample-application/sample.daytrader7-1.4:/build maven:3.8.4-openjdk-8-slim mvn --file=/build/pom.xml install . This will create an EAR file called daytrader-ee7-1.0-SNAPSHOT.ear in demo/sample-application/sample.daytrader7-1.4/daytrader-ee7/target directory. | For convenience, let’s put the generated daytrader-ee7-1.0-SNAPSHOT.ear in the demo/code2graph-samples/doop-input folder . ```sh cp demo/sample-application/sample.daytrader7-1.4/daytrader-ee7/target/daytrader-ee7-1.0-SNAPSHOT.ear demo/code2graph-samples/doop-input . | . ",
+    "url": "http://localhost:4000/docs/demo/",
+    "relUrl": "/docs/demo/"
+  },"1": {
+    "doc": "Development",
+    "title": "Set up your Developer Environment",
+    "content": "This project contains a .devcontainer folder that will set up a Docker environment in Visual Studio Code with the Remote Containers extension to provide a consistent repeatable disposable development environment for all of the developer. You will need the following software installed: . | Docker Desktop | Visual Studio Code | Remote Containers extension from the Visual Studio Marketplace | . All of these can be installed manually by clicking on the links above or you can use a package manager like Homebrew on Mac of Chocolatey on Windows. It is a good idea to add VSCode to your path so that you can invoke it from the command line. To do this, open VSCode and type Shift+Command+P on Mac or Shift+Ctrl+P on Windows to open the command palette and then search for “shell” and select the option Shell Command: Install ‘code’ command in Path. This will install VSCode in your path. ",
+    "url": "http://localhost:4000/docs/devlopment/#set-up-your-developer-environment",
+    "relUrl": "/docs/devlopment/#set-up-your-developer-environment"
+  },"2": {
+    "doc": "Development",
+    "title": "Bring up the development environment",
+    "content": "To bring up the development environment you should clone this repo, change into the repo directory, and start Visual Studio Code: . $ git clone git@github.com:konveyor/tackle-data-gravity-insights.git $ cd tackle-data-gravity-insights $ code . Note that there is a period . after the code command. This tells Visual Studio Code to open the editor and load the current folder of files. Visual Studio Code will prompt you to Reopen in a Container and you should push this button. This will take a while the first time as it builds the Docker image and creates a container from it to develop in. After teh first time, this environment should come up almost instantaneously. If it does not automatically prompt you to open the project in a container, you can select the green icon at the bottom left of your VSCode UI and select: Remote Containers: Reopen in Container. Once the environment is loaded you should be placed at a bash prompt in the /app folder inside of the development container. This folder is mounted to the current working directory of your repository on your computer. This means that any file you edit while inside of the /app folder in the container is actually being edited on your computer. You can then commit your changes to git from either inside or outside of the container. This project uses Neo4j which will also be added to your development environment running in a separate container and accessible at neo4j:7474 from inside the development environment and outside from your web browser at: http://localhost:7474. The default development username is neo4j and the default password is tackle. ",
+    "url": "http://localhost:4000/docs/devlopment/#bring-up-the-development-environment",
+    "relUrl": "/docs/devlopment/#bring-up-the-development-environment"
+  },"3": {
+    "doc": "Development",
+    "title": "Development",
+    "content": " ",
+    "url": "http://localhost:4000/docs/devlopment/",
+    "relUrl": "/docs/devlopment/"
+  },"4": {
+    "doc": "Getting Started",
+    "title": "Getting Started Guide",
+    "content": "This guide will get you started using the various commands for Data Gravity Insights (DGI). If you would like to contribute to the project you can Set up your Development Environment. Regular users can just follow the steps below: . ",
+    "url": "http://localhost:4000/docs/getting-started/#getting-started-guide",
+    "relUrl": "/docs/getting-started/#getting-started-guide"
+  },"5": {
+    "doc": "Getting Started",
+    "title": "Prerequisites",
+    "content": "If this is your first time using Tackle Data Gravity Insights you must first install some prerequisite software. Here are the instructions to install the Prerequisites . ",
+    "url": "http://localhost:4000/docs/getting-started/#prerequisites",
+    "relUrl": "/docs/getting-started/#prerequisites"
+  },"6": {
+    "doc": "Getting Started",
+    "title": "Step 1. Install Data Gravity Insights CLI",
+    "content": "There are two ways to install the dgi command line interface: . Install DGI CLI system wide . You can install dgi globally into your system packages as root with: . sudo pip install tackle-dgi . This will make the dgi command globally available. You can then run it from anywhere on your computer. Install DGI CLI locally . If you do not want to install it system wide you can install dgi locally with: . pip install tackle-dgi . This will install the dgi command locally under your home folder in a hidden folder called: ~/.local/bin. If you choose this approach, you must add this folder to your PATH with: . export PATH=$PATH:$HOME/.local/bin . Run Neo4J Community Edition container . You will need an instance of Neo4j to store the graphs that dgi creates. You can start one up in a container using docker or podman (to use podman just substitute podman for docker in the command below). docker run -d --name neo4j \\ -p 7474:7474 \\ -p 7687:7687 \\ -v neo4j:/data \\ -e NEO4J_AUTH=\"neo4j/tackle\" \\ docker.io/neo4j:latest . You must set an environment variable to let dgi know where to find this neo4j container. export NEO4J_BOLT_URL=\"bolt://neo4j:tackle@localhost:7687\" . Installation complete . You can now use the dgi command to load information about your application into the graph database. We start with dgi --help. This should produce: . Usage: dgi [OPTIONS] COMMAND [ARGS]... Tackle Data Gravity Insights Options: -n, --neo4j-bolt TEXT Neo4j Bolt URL -q, --quiet Be more quiet -c, --clear Clear graph before loading [default: True] --help Show this message and exit. Commands: c2g This command loads Code dependencies into the graph s2g This command parses SQL schema DDL into a graph tx2g This command loads DiVA database transactions into a graph . ",
+    "url": "http://localhost:4000/docs/getting-started/#step-1-install-data-gravity-insights-cli",
+    "relUrl": "/docs/getting-started/#step-1-install-data-gravity-insights-cli"
+  },"7": {
+    "doc": "Getting Started",
+    "title": "Step 2. Setting up a Sample Application to analyze",
+    "content": "This is a demonstration of the usage of DGI. For this, we’ll use daytrader7 as an example. Feel free to follow along with your own application and your personal directories. But, keep track of the directories where the application source code and the built jar/war/ear reside and replace them appropriately below. Let’s download a copy of our sample application and build it. If you already have your own application ear file you can skip this step. | First let’s create a folder called demo and change into it to extract the code to: . mkdir demo cd demo . | If you have your own Java application, you can skip this step. If you want to use the DayTrader7 demo, you must load and extract the demo DayTrader7 application using wget (if you don’t have wget you can install it here: install wget): . wget -c https://github.com/WASdev/sample.daytrader7/archive/refs/tags/v1.4.tar.gz -O - | tar -xvz -C . | Now build the application . docker run --rm -v $(pwd)/sample.daytrader7-1.4:/build docker.io/maven:3.8.4-openjdk-8-slim mvn --file=/build/pom.xml install . This will create an EAR file called daytrader-ee7-1.0-SNAPSHOT.ear in sample.daytrader7-1.4/daytrader-ee7/target directory. | . ",
+    "url": "http://localhost:4000/docs/getting-started/#step-2-setting-up-a-sample-application-to-analyze",
+    "relUrl": "/docs/getting-started/#step-2-setting-up-a-sample-application-to-analyze"
+  },"8": {
+    "doc": "Getting Started",
+    "title": "Step 3. Run code2graph",
+    "content": "In this step, we’ll run code2graph to populate the graph with various static code interaction features pertaining to object/dataflow dependencies and their respective lifecycle information. Code2graph uses the output from a tool called DOOP. | First let’s prepare an input and output folders for doop called doop-input and doop-output respectively and copy the generated daytrader-ee7-1.0-SNAPSHOT.ear file in the doop-input folder. You should already be in the demo folder from the previous steps before making these directories: . mkdir doop-input mkdir doop-output cp sample.daytrader7-1.4/daytrader-ee7/target/daytrader-ee7-1.0-SNAPSHOT.ear doop-input . Note: if you are using your own application ear file, copy it into the doop-input folder . Just to double check, you should see the DayTrader ear or your ear file in the doop-input folder: . $ ls doop-input/ daytrader-ee7-1.0-SNAPSHOT.ear . | Next, we’ll run DOOP to process the compiled *.jar files. For ease of use, DOOP has been pre-compiled and hosted as a docker image at quay.io/rkrsn/doop-main. We’ll use that for this demo. docker run -it --rm -v $(pwd)/doop-input:/root/doop-data/input -v $(pwd)/doop-output:/root/doop-data/output quay.io/rkrsn/doop-main:latest rundoop . Note: Running DOOP may roughly takes 5-6 mins . Let’s review what we have done so far: . | We used the doop-input/ folder to store the the compiled jars, wars, and ears . | We used a new folder doop-output to save all the information (formatted as *.csv files) gathered from DOOP. | . | After gathering the data with DOOP, we’ll now run code2graph to synthesize DOOP output into a graph stored on neo4j. The syntax for code2graph can be see with dgi c2g --help. Below: . $ dgi c2g Usage: dgi c2g [OPTIONS] This command loads Code dependencies into the graph Options: -i, --input DIRECTORY DOOP output facts directory. [required] -a, --abstraction [class|method|full] The level of abstraction to use when building the graph [default: class] --help Show this message and exit. We’ll run code2graph by pointing it to the doop generated facts from the step above: . dgi --clear c2g --abstraction=class --input=doop-output . | Note that we could have passed in [class | method | full] as the abstraction. If you decide to run with the method or full level of abstraction, make sure you use the same abstraction level when running with tx2g as well. | . After successful completion, you should see: . $ dgi --clear c2g --abstraction=class --input=doop-output code2graph generator started... Verbose mode: ON Building Graph... [INFO] Populating heap carried dependencies edges 100%|█████████████████████| 7138/7138 [01:37&lt;00:00, 72.92it/s] [INFO] Populating dataflow edges 100%|█████████████████████| 5022/5022 [01:31&lt;00:00, 54.99it/s] [INFO] Populating call-return dependencies edges 100%|█████████████████████| 7052/7052 [02:26&lt;00:00, 48.30it/s] [INFO] Populating entrypoints code2graph build complete . | . ",
+    "url": "http://localhost:4000/docs/getting-started/#step-3-run-code2graph",
+    "relUrl": "/docs/getting-started/#step-3-run-code2graph"
+  },"9": {
+    "doc": "Getting Started",
+    "title": "Step 4. Running schema2graph",
+    "content": "To run scheme to graph, use dgi [OPTIONS] s2g --input=&lt;path/to/ddl&gt;. For this demo, we have a sample DDL for daytrader at demo/schema2graph-samples/daytrader-orcale.ddl, let us use that: . dgi --clear s2g --input=./sample.daytrader7-1.4/daytrader-ee7-web/src/main/webapp/dbscripts/oracle/Table.ddl . This should give us: . Clearing graph... Building Graph... Processing schema tables: 100%|████████████████████| 12/12 [00:00&lt;00:00, 69.40it/s] 0it [00:00, ?it/s] Processing foreign keys: Graph build complete . ",
+    "url": "http://localhost:4000/docs/getting-started/#step-4-running-schema2graph",
+    "relUrl": "/docs/getting-started/#step-4-running-schema2graph"
+  },"10": {
+    "doc": "Getting Started",
+    "title": "Step 5. Populating Database Transactions with DiVA",
+    "content": "Here we’ll first use Tackle-DiVA to infer transaction traces from the source code. DiVA is available as a docker image, so we just need to run DiVA by pointing to the source code directory and the desired output directory (for which we’ll user the demo folder again). | Run the following command to get the transaction traces from DiVA: . mkdir tx2graph-output docker run --rm -v $(pwd)/sample.daytrader7-1.4:/app -v $(pwd)/tx2graph-output:/diva-distribution/output quay.io/konveyor/tackle-diva . This should output 6 files in the ./tx2graph-output folder. One of these will be a json file called transaction.json with all the transactions. | We’ll now run DGI’s tx2g command to populate the graph with SQL tables, transaction data, and their relationships to the code. dgi --clear tx2g --input=./tx2graph-output/transaction.json . After a successful run, you’ll see: . Verbose mode: ON [INFO] Clear flag detected... Deleting pre-existing SQLTable nodes. Building Graph... [INFO] Populating transactions 100%|████████████████████| 158/158 [00:01&lt;00:00, 125.73it/s] Graph build complete . | . ",
+    "url": "http://localhost:4000/docs/getting-started/#step-5-populating-database-transactions-with-diva",
+    "relUrl": "/docs/getting-started/#step-5-populating-database-transactions-with-diva"
+  },"11": {
+    "doc": "Getting Started",
+    "title": "Step 6. (Optional) Creating an offline dump of the neo4j DGI graph",
+    "content": "We’ll save the graph generated so far locally for further analysis. This enables us to use a free version of Neo4J Bloom to interact with the graph. | First we stop the neo4j container because the data can’t be backup while Neo4J is running. docker stop neo4j . | Then, we’ll use neo4j-admin command to dump the DB. docker run --rm -v neo4j:/data -v $(pwd):/var/dump neo4j bin/neo4j-admin dump --to=/var/dump/DGI.dump . You’ll now find a DGI.dump file, which has the entire DB with code2graph, schema2graph, and tx2graph in your current folder. | If you want to continue to use dgi with Neo4J don’t forget to restart Neo4J: . docker start neo4j . | . ",
+    "url": "http://localhost:4000/docs/getting-started/#step-6-optional-creating-an-offline-dump-of-the-neo4j-dgi-graph",
+    "relUrl": "/docs/getting-started/#step-6-optional-creating-an-offline-dump-of-the-neo4j-dgi-graph"
+  },"12": {
+    "doc": "Getting Started",
+    "title": "Using Neo4J Desktop explore the graph",
+    "content": "In order to explore the neo4j graph, visit http://localhost:7474/browser/. Then, . | Under connect URL, select neo4j:// and enter: localhost:7687 . | Under username, enter: neo4j . | Under password, enter: tackle . | . This should bring you to the browser page where you can explore the DGI graph. ",
+    "url": "http://localhost:4000/docs/getting-started/#using-neo4j-desktop-explore-the-graph",
+    "relUrl": "/docs/getting-started/#using-neo4j-desktop-explore-the-graph"
+  },"13": {
+    "doc": "Getting Started",
+    "title": "Getting Started",
+    "content": " ",
+    "url": "http://localhost:4000/docs/getting-started/",
+    "relUrl": "/docs/getting-started/"
+  },"14": {
+    "doc": "Home",
+    "title": "Tackle Data Gravity Insights",
+    "content": ". Tackle Data Gravity Insights is a new way to gain insights into your monolithic application code so that you can better refactor it into domain driven microservices. It takes a wholistic approach to application modernization and refactoring by triangulating between code, and, data, and transactional boundaries. Application modernization is a complex topic with refactoring being the most complicated undertaking. Current tools only look at the application source code or only at the runtime traces when refactoring. This, however, yields a myopic view that doesn’t take into account data relationships and transactional scopes. This project hopes to join the three views of application, data, and transactions into a 3D view of the all of the application relationships so that you can easily discover application domains of interest and refactor them into microservices. Accordingly, DGI consists of three key components: . 1. Call-/Control-/Data-dependency Analysis (code2graph): This is a source code analysis component that extracts various static code interaction features pertaining to object/dataflow dependencies and their respective lifecycle information. It presents this information in a graphical format with Classes as nodes and their dataflow, call-return, and heap-dependency interactions edges. 2. Schema: This component of DGI infers the schema of the underlying databases used in the application. It presents this information in a graphical format with database tables and columns as nodes and their relationships (e.g., foreign key, etc.) as edges. 3. Transactions to graph (tx2graph): This component of DGI leverages Tackle-DiVA to perform a data-centric application analysis. It imports a set of target application source files (*.java/xml) and provides following analysis result files. It presents this information in a graphical format with database tables and classes as nodes and their transactional relationships as edges. ",
+    "url": "http://localhost:4000/#tackle-data-gravity-insights",
+    "relUrl": "/#tackle-data-gravity-insights"
+  },"15": {
+    "doc": "Home",
+    "title": "Home",
+    "content": " ",
+    "url": "http://localhost:4000/",
+    "relUrl": "/"
+  },"16": {
+    "doc": "Prerequisites",
+    "title": "Prerequisites",
+    "content": "Tackle Data Gravity Insights is written in Python requires at least Python 3.9 and pip installed. Also, in order to provide a repeatable working environment, DGI uses Docker or Podman to perform analysis using software pre-installed into docker images. This allows you to build and analyze Java applications without having to have Maven or Java installed on your computer. ",
+    "url": "http://localhost:4000/docs/prerequisites/",
+    "relUrl": "/docs/prerequisites/"
+  },"17": {
+    "doc": "Prerequisites",
+    "title": "TL;DR for Mac",
+    "content": "If you are using a Mac and have Homebrew installed you can install Python, Pip and Docker with the following commands: . brew install python@3.9 brew install --cask docker . Note: Any version of Python after 3.9 is also acceptable. If you are not on a Mac or want to perform a manual install please keep reading. ",
+    "url": "http://localhost:4000/docs/prerequisites/#tldr-for-mac",
+    "relUrl": "/docs/prerequisites/#tldr-for-mac"
+  },"18": {
+    "doc": "Prerequisites",
+    "title": "Using a Multipass VM",
+    "content": "The next easiest way to get started is by using a virtual machine. This will eliminate the need to install Python or Docker/Podman on your workstation. Multipass is a tool by Canonical that allows you to get an instant Ubuntu VM with a single command. It uses the native hypervisor of your OS and runs on Linux, Mac, and Windows. You can download multipass from multipass.run . Multipass uses industry standard cloud-init files. We have included a cloud-init file called cloud-config.yaml in the root of this repo that will establish all of the software required to run DGI in an isolated VM with Podman. You can start a multipass VM and share your current folder with the following command from the root of this repo: . $ multipass launch jammy -v \\ --name dgi \\ --cpus 4 \\ --mem 8G \\ --disk 20G \\ --cloud-init cloud-config.yaml $ multipass mount . dgi:/dgi $ multipass shell dgi $ cd /dgi . This will launch an Ubuntu 22.04 LTS (Jammy) VM with 4 cpus, 8GB memory, and a 20GB disk, installing Python and Podman for you. It will then mount your current directory into the VM at the /dgi mount point. Finally it will place you inside a shell in the VM. Everything you do inside the VM in the /dgi folder will be saved to your current folder on yur computer for future use. You can stop the VM with: . $ multipass stop dgi . ",
+    "url": "http://localhost:4000/docs/prerequisites/#using-a-multipass-vm",
+    "relUrl": "/docs/prerequisites/#using-a-multipass-vm"
+  },"19": {
+    "doc": "Prerequisites",
+    "title": "Manual Install Python 3.9 and pip3",
+    "content": "You can see your Python version with the following command: . $ python3 --version Python 3.9.7 . It should return Python 3.9.x or greater. If it doesn’t please install Python 3 or upgrade your Python 3 version. | Install Python 3.9 | . Once Python 3.9 is installed, you install Tackle DGI using the Python package manager pip. If you don’t have pip follow the Instructions to install PIP before continuing. | Install PIP | . ",
+    "url": "http://localhost:4000/docs/prerequisites/#manual-install-python-39-and-pip3",
+    "relUrl": "/docs/prerequisites/#manual-install-python-39-and-pip3"
+  },"20": {
+    "doc": "Prerequisites",
+    "title": "Install Docker or Podman",
+    "content": "You will need a container runtime. You can use Docker or Podman. If you don’t have either of them you can install one or the other from the links below (you only need one): . | Docker Desktop | Podman | . (Optional) If you are using Podman and want to be able to cut and paste the Docker commands in the tutorial, just set an alias for docker and point it to podman. alias docker=$(which podman) . All of the tutorial commands that use docker will now call podman instead. ",
+    "url": "http://localhost:4000/docs/prerequisites/#install-docker-or-podman",
+    "relUrl": "/docs/prerequisites/#install-docker-or-podman"
+  },"21": {
+    "doc": "Prerequisites",
+    "title": "Prerequisites complete",
+    "content": "That is all the prerequisite you need to get started. You can now return ot installing Tackle data Gravity Insights on your computer. ",
+    "url": "http://localhost:4000/docs/prerequisites/#prerequisites-complete",
+    "relUrl": "/docs/prerequisites/#prerequisites-complete"
+  },"22": {
+    "doc": "Installation & Usage",
+    "title": "Installation",
+    "content": "Tackle Data Gravity Insights is written in Python and can be installed using the Python package manager pip. pip install tackle-dgi . ",
+    "url": "http://localhost:4000/docs/usage/#installation",
+    "relUrl": "/docs/usage/#installation"
+  },"23": {
+    "doc": "Installation & Usage",
+    "title": "Usage",
+    "content": "You will need an instance of Neo4j to store the graphs that dgi creates. You can start one up in a docker container and set an environment variable to let dgi know where to find it. docker run -d --name neo4j \\ -p 7474:7474 \\ -p 7687:7687 \\ -e NEO4J_AUTH=\"neo4j/tackle\" \\ neo4j export NEO4J_BOLT_URL=\"bolt://neo4j:tackle@localhost:7687\" . You can now use the dgi command to load information about your application into the graph database. dgi --help Usage: dgi [OPTIONS] COMMAND [ARGS]... Tackle Data Gravity Insights Options: -n, --neo4j-bolt TEXT Neo4j Bolt URL -a, --abstraction TEXT The level of abstraction to use when building the graph. Valid options are: class, method, or full. [default: class] -q, --quiet / -v, --verbose Be more quiet/verbose [default: verbose] -c, --clear / -dnc, --dont-clear Clear (or don't clear) graph before loading [default: clear] --help Show this message and exit. Commands: c2g This command loads Code dependencies into the graph s2g This command parses SQL schema DDL into a graph tx2g This command loads DiVA database transactions into a graph . ",
+    "url": "http://localhost:4000/docs/usage/#usage",
+    "relUrl": "/docs/usage/#usage"
+  },"24": {
+    "doc": "Installation & Usage",
+    "title": "Installation & Usage",
+    "content": " ",
+    "url": "http://localhost:4000/docs/usage/",
+    "relUrl": "/docs/usage/"
+  }
+}

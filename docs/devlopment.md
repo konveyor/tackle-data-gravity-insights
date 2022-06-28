@@ -1,3 +1,8 @@
+---
+layout: default
+title: Development
+nav_order: 6
+---
 # Set up your Developer Environment
 
 This project contains a `.devcontainer` folder that will set up a Docker environment in Visual Studio Code with the Remote Containers extension to provide a consistent repeatable disposable development environment for all of the developer.

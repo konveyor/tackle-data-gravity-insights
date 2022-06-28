@@ -1,3 +1,8 @@
+---
+layout: default
+title: Getting Started
+nav_order: 4
+---
 # Getting Started Guide
 
 This guide will get you started using the various commands for Data Gravity Insights (DGI). If you would like to contribute to the project you can [Set up your Development Environment](development.md). Regular users can just follow the steps below:
@@ -269,3 +274,5 @@ In order to explore the neo4j graph, visit [http://localhost:7474/browser/](http
 * Under password, enter: `tackle`
   
 This should bring you to the browser page where you can explore the DGI graph.
+
+![full_graph](../../assets/images/full_graph.png)

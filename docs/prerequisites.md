@@ -1,3 +1,9 @@
+---
+layout: default
+title: Prerequisites
+nav_order: 3
+---
+
 # Prerequisites
 
 **Tackle Data Gravity Insights** is written in Python requires at least Python 3.9 and pip installed. Also, in order to provide a repeatable working environment, DGI uses Docker or Podman to perform analysis using software pre-installed into docker images. This allows you to build and analyze Java applications without having to have Maven or Java installed on your computer.

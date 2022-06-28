@@ -1,3 +1,8 @@
+---
+layout: default
+title: Demo
+nav_order: 5
+---
 # Demo
 
 For the demo, we'll use [daytrader7](https://github.com/WASdev/sample.daytrader7) as an example. Feel free to follow along with your own application and your personal directories. But, keep track of the _directories_ where the application _source code_ and the _built jar/war/ear_ reside and replace them appropriately below.
@@ -26,4 +31,3 @@ For the demo, we'll use [daytrader7](https://github.com/WASdev/sample.daytrader7
   
     ```sh
     cp demo/sample-application/sample.daytrader7-1.4/daytrader-ee7/target/daytrader-ee7-1.0-SNAPSHOT.ear demo/code2graph-samples/doop-input
-    ```
