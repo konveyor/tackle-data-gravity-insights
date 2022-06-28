@@ -22,4 +22,4 @@ Application modernization is a complex topic with refactoring being the most com
 
 **3. Transactions to graph (tx2graph):** This component of DGI leverages [Tackle-DiVA](https://github.com/konveyor/tackle-diva) to perform a data-centric application analysis. It imports a set of target application source files (*.java/xml) and provides following analysis result files. It presents this information in a graphical format with database tables and classes as _nodes_ and their transactional relationships as _edges_.
 
-![DGI_3D](../../assets/images/DGI_3D.png)
+![DGI_3D](../assets/images/DGI_3D.png)
