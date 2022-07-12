@@ -15,7 +15,7 @@ There are two ways to install the `dgi` command line interface:
 You can install `dgi` globally into your system packages as root with:
 
 ```bash
-sudo pip install tackle-dgi
+sudo pip install -U tackle-dgi
 ```
 
 This will make the `dgi` command globally available. You can then run it from anywhere on your computer.
@@ -25,7 +25,7 @@ This will make the `dgi` command globally available. You can then run it from an
 If you do not want to install it system wide you can install `dgi` locally with:
 
 ```bash
-pip install tackle-dgi
+pip install -U tackle-dgi
 ```
 
 This will install the `dgi` command locally under your home folder in a hidden folder called: `~/.local/bin`. If you choose this approach, you must add this folder to your `PATH` with:
