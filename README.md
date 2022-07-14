@@ -19,7 +19,7 @@ Application modernization is a complex topic with refactoring being the most com
 Tackle Data Gravity Insights is written in Python and can be installed using the Python package manager `pip`.
 
 ```bash
-pip install tackle-dgi
+pip install -U tackle-dgi
 ```
 
 ## Usage
