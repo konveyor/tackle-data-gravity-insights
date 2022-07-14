@@ -14,8 +14,6 @@
 # limitations under the License.
 ################################################################################
 
-import os
-import errno
 import logging
 import pandas as pd
 from typing import Dict
@@ -54,18 +52,6 @@ class ClassGraphBuilder(AbstractGraphBuilder):
         Args:
             facts_dir (Path): Directory where the facts are stored.
         """
-        # Make sure all Servlet data files are available
-        if not facts_dir.joinpath(self.opt.JEE.SERVLET.GenericServlet).exists():
-            raise FileNotFoundError(errno.ENOENT, os.strerror(
-                errno.ENOENT), self.opt.JEE.SERVLET.GenericServlet)
-
-        if not facts_dir.joinpath(self.opt.JEE.SERVLET.WebServlet).exists():
-            raise FileNotFoundError(errno.ENOENT, os.strerror(
-                errno.ENOENT), self.opt.JEE.SERVLET.WebServlet)
-
-        if not facts_dir.joinpath(self.opt.JEE.SERVLET.ServletFilter).exists():
-            raise FileNotFoundError(errno.ENOENT, os.strerror(
-                errno.ENOENT), self.opt.JEE.SERVLET.ServletFilter)
 
         for key, fact_file in self.opt.JEE.SERVLET:
             if not fact_file or not isinstance(fact_file, str):
@@ -84,33 +70,12 @@ class ClassGraphBuilder(AbstractGraphBuilder):
                 graph_node.servlet_type = key
                 graph_node.save()
 
-
     def _process_beans(self, facts_dir: Path) -> None:
         """ Annotate Beans
 
         Args:
             facts_dir (Path): Directory where the facts are stored.
         """
-        # Make sure all Beans data files are available
-        if not facts_dir.joinpath(self.opt.JEE.BEANS.EJBTransactionBean).exists():
-            raise FileNotFoundError(errno.ENOENT, os.strerror(
-                errno.ENOENT), self.opt.JEE.BEANS.EJBTransactionBean)
-
-        if not facts_dir.joinpath(self.opt.JEE.BEANS.SessionBean).exists():
-            raise FileNotFoundError(errno.ENOENT, os.strerror(
-                errno.ENOENT), self.opt.JEE.BEANS.SessionBean)
-
-        if not facts_dir.joinpath(self.opt.JEE.BEANS.SingletonBean).exists():
-            raise FileNotFoundError(errno.ENOENT, os.strerror(
-                errno.ENOENT), self.opt.JEE.BEANS.SingletonBean)
-
-        if not facts_dir.joinpath(self.opt.JEE.BEANS.StatefulBean).exists():
-            raise FileNotFoundError(errno.ENOENT, os.strerror(
-                errno.ENOENT), self.opt.JEE.BEANS.StatefulBean)
-
-        if not facts_dir.joinpath(self.opt.JEE.BEANS.StatelessBean).exists():
-            raise FileNotFoundError(errno.ENOENT, os.strerror(
-                errno.ENOENT), self.opt.JEE.BEANS.StatelessBean)
 
         for key, fact_file in self.opt.JEE.BEANS:
             if not fact_file or not isinstance(fact_file, str):
