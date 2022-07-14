@@ -31,14 +31,12 @@ __status__ = "Research Prototype"
 
 
 class AbstractGraphBuilder(ABC):
-
     def __init__(self, opt):
         self.opt = opt
 
     @abstractmethod
     def _clear_all_nodes():
-        """ Delete all nodes
-        """
+        """Delete all nodes"""
         pass
 
     @abstractmethod
@@ -52,14 +50,14 @@ class AbstractGraphBuilder(ABC):
         pass
 
     @abstractmethod
-    def _process_entrypoints(self, opt):
+    def _process_entrypoints(self):
         """ Annotate nodes with their entrypoint data
         """
         pass
 
     @abstractmethod
     def _populate_heap_edges(self, heap_flows: pd.DataFrame) -> None:
-        """ Populate heap carried dependencies
+        """Populate heap carried dependencies
         Args:
             heap_flows (pd.DataFrame): Heap flows as a pandas dataframe
         """
@@ -67,7 +65,7 @@ class AbstractGraphBuilder(ABC):
 
     @abstractmethod
     def _populate_dataflow_edges(self, data_flows: pd.DataFrame) -> None:
-        """ Populate data flow dependencies
+        """Populate data flow dependencies
         Args:
             data_flows (pd.DataFrame): Data flows as a pandas dataframe
         """
@@ -75,23 +73,21 @@ class AbstractGraphBuilder(ABC):
 
     @abstractmethod
     def _populate_callreturn_edges(self, call_ret_flows: pd.DataFrame) -> None:
-        """ Populate data flow dependencies
+        """Populate data flow dependencies
         Args:
             call_ret_flows (pd.DataFrame): Data flows as a pandas dataframe
         """
         pass
 
     def build_ddg(self, clear: bool = True) -> None:
-        """ Build the data dependency graph
-        """
+        """Build the data dependency graph"""
         consume = ConsumeFacts(conf=self.opt)
 
         heap_flows, data_flows, call_return_flows = consume.process_and_get_facts_data()
 
         # Remove all stray nodes in the graph
         if clear:
-            logging.info(
-                "Clear flag detected... Deleting pre-existing nodes.")
+            logging.info("Clear flag detected... Deleting pre-existing nodes.")
             self._clear_all_nodes()
 
         # Process heap flows
@@ -103,7 +99,5 @@ class AbstractGraphBuilder(ABC):
         # Process call return flows
         self._populate_callreturn_edges(call_return_flows)
 
-        # Process entrypoints and partitions
+        # Process entrypoints
         self._process_entrypoints()
-
-        logging.info("Populating entrypoints")
