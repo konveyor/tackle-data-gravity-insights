@@ -129,7 +129,7 @@ operator_tokens = [
 ]
 
 
-def token0(s):
+def token0(s):  # noqa: C901
     k0 = 0
     while k0 < len(s):
         if not s[k0].isspace():

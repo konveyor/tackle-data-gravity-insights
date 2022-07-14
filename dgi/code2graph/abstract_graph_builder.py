@@ -50,6 +50,12 @@ class AbstractGraphBuilder(ABC):
         pass
 
     @abstractmethod
+    def _process_entrypoints(self):
+        """ Annotate nodes with their entrypoint data
+        """
+        pass
+
+    @abstractmethod
     def _populate_heap_edges(self, heap_flows: pd.DataFrame) -> None:
         """Populate heap carried dependencies
         Args:
@@ -92,3 +98,6 @@ class AbstractGraphBuilder(ABC):
 
         # Process call return flows
         self._populate_callreturn_edges(call_return_flows)
+
+        # Process entrypoints
+        self._process_entrypoints()
