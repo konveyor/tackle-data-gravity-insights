@@ -34,7 +34,7 @@ docker run -d --name neo4j \
     -e NEO4J_apoc_export_file_enabled=true \
     -e NEO4J_apoc_import_file_enabled=true \
     -e NEO4J_apoc_import_file_use__neo4j__config=true \
-    -e NEO4JLABS_PLUGINS=\[\"apoc\"\] \    
+    -e NEO4JLABS_PLUGINS=\["apoc"\] \    
   neo4j
 
 export NEO4J_BOLT_URL="bolt://neo4j:tackle@localhost:7687"    
