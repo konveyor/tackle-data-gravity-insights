@@ -83,3 +83,6 @@ To run this project please refer to the steps in the getting started guide
 To contribute to this project you will need to set up your development environment and set up some files. The steps are in the following file:
 
 1. [Set up your Developer Environment](https://github.com/konveyor/tackle-data-gravity-insights/tree/main/docs/development.md)
+
+## Code of Conduct
+Refer to Konveyor's Code of Conduct [here](https://github.com/konveyor/community/blob/main/CODE_OF_CONDUCT.md).
