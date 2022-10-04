@@ -66,23 +66,8 @@ Commands:
   tx2g  This command loads DiVA database transactions into a graph
 ```
 
-## Demo
-
-This is a demonstration of the usage of DGI
-
-1. [Demonstration](https://github.com/konveyor/tackle-data-gravity-insights/tree/main/docs/demo.md)
-
-## Running DGI
-
-To run this project please refer to the steps in the getting started guide
-
-1. [Getting Started](https://github.com/konveyor/tackle-data-gravity-insights/tree/main/docs/getting-started.md)
-
-## Contributing
-
-To contribute to this project you will need to set up your development environment and set up some files. The steps are in the following file:
-
-1. [Set up your Developer Environment](https://github.com/konveyor/tackle-data-gravity-insights/tree/main/docs/development.md)
+## Links
+Link to complete [Documentation](https://konveyor.github.io/tackle-data-gravity-insights/) of the project
 
 ## Code of Conduct
 Refer to Konveyor's Code of Conduct [here](https://github.com/konveyor/community/blob/main/CODE_OF_CONDUCT.md).
