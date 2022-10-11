@@ -23,6 +23,7 @@ docker run -d --name neo4j \
 
 export NEO4J_BOLT_URL="bolt://neo4j:tackle@localhost:7687"    
 ```
+If you come across any error saying the "neo4j" docker container already in use, please delete the container using the command from this link https://docs.docker.com/engine/reference/commandline/rm/ 
 
 You can now use the `dgi` command to load information about your application into the graph database.
 
@@ -49,3 +50,4 @@ Commands:
   s2g   This command parses SQL schema DDL into a graph
   tx2g  This command loads DiVA database transactions into a graph
 ```
+

@@ -61,3 +61,6 @@ Commands:
   s2g   This command parses SQL schema DDL into a graph
   tx2g  This command loads DiVA database transactions into a graph
 ```
+
+## Links
+Link to complete [Documentation](https://konveyor.github.io/tackle-data-gravity-insights/) of the project
