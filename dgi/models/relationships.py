@@ -14,13 +14,8 @@
 # limitations under the License.
 ################################################################################
 
-from neomodel import (
-    StringProperty,
-    IntegerProperty,
-    ArrayProperty,
-    JSONProperty,
-    StructuredRel,
-)
+from neomodel import StringProperty, IntegerProperty, ArrayProperty, JSONProperty, StructuredRel
+from neomodel.properties import ArrayProperty, IntegerProperty, StringProperty, JSONProperty
 
 __author__ = "Rahul Krishna"
 __license__ = "Apache License"
@@ -29,26 +24,31 @@ __maintainer__ = "Rahul Krishna"
 __email__ = "rkrsn@ibm.com"
 __status__ = "Research Prototype"
 
-
 class TransactionRead(StructuredRel):
-    """Transaction Read"""
-
+    """ Transaction Read
+    """
     txid = IntegerProperty(required=True)
     tx_meth = StringProperty(required=True)
-    action = StringProperty(required=True)
-
+    action = StringProperty(required=False)
+    sql_query = StringProperty(required=False)
 
 class TransactionWrite(StructuredRel):
-    """Transaction Write"""
-
+    """ Transaction Write
+    """
     txid = IntegerProperty(required=True)
     tx_meth = StringProperty(required=True)
-    action = StringProperty(required=True)
+    action = StringProperty(required=False)
+    sql_query = StringProperty(required=False)
 
+class TransactionCallTrace(StructuredRel):
+    """ Transaction Write
+    """
+    txid = IntegerProperty(required=True)
+    service_entry = StringProperty(required=True)
 
 class HeapCarriedRelationship(StructuredRel):
-    """A heap carried relationship between a pair of methods"""
-
+    """ A heap carried relationship between a pair of methods
+    """
     pmethod = JSONProperty(required=False)
     nmethod = JSONProperty(required=False)
     weight = IntegerProperty(required=True)
@@ -57,19 +57,19 @@ class HeapCarriedRelationship(StructuredRel):
 
 
 class DataRelationship(StructuredRel):
-    """A data flow relationship between a pair of methods"""
-
+    """ A data flow relationship between a pair of methods
+    """
     pmethod = JSONProperty(required=False)
     nmethod = JSONProperty(required=False)
     weight = IntegerProperty(required=True)
     context = ArrayProperty(JSONProperty(), required=False)
 
-
 class CallReturnRelationship(StructuredRel):
-    """A call-return relationship between a pair of methods"""
-
+    """ A call-return relationship between a pair of methods
+    """
     pmethod = JSONProperty(required=False)
     nmethod = JSONProperty(required=False)
     weight = IntegerProperty(required=True)
     pcontext = JSONProperty(required=False)
     ncontext = JSONProperty(required=False)
+    
