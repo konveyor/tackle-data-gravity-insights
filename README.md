@@ -30,14 +30,13 @@ You will need an instance of Neo4j to store the graphs that `dgi` creates. You c
 docker run -d --name neo4j \
     -p 7474:7474 \
     -p 7687:7687 \
-    -e NEO4J_AUTH="neo4j/tackle" \
-    -e NEO4J_apoc_export_file_enabled=true \
-    -e NEO4J_apoc_import_file_enabled=true \
-    -e NEO4J_apoc_import_file_use__neo4j__config=true \
-    -e NEO4JLABS_PLUGINS=\["apoc"\] \    
-  neo4j
+    -e NEO4J_AUTH="neo4j:konveyor" \
+    neo4j
+```
 
-export NEO4J_BOLT_URL="bolt://neo4j:tackle@localhost:7687"    
+Save the bolt url for further use:
+```
+export NEO4J_BOLT_URL="bolt://neo4j:konveyor@localhost:7687"    
 ```
 
 You can now use the `dgi` command to load information about your application into the graph database.
@@ -66,8 +65,20 @@ Commands:
   tx2g  This command loads DiVA database transactions into a graph
 ```
 
-## Links
-Link to complete [Documentation](https://konveyor.github.io/tackle-data-gravity-insights/) of the project
+## Demo
 
-## Code of Conduct
-Refer to Konveyor's Code of Conduct [here](https://github.com/konveyor/community/blob/main/CODE_OF_CONDUCT.md).
+This is a demonstration of the usage of DGI
+
+1. [Demonstration](docs/demo.md)
+
+## Running DGI
+
+To run this project please refer to the steps in the getting started guide
+
+1. [Getting Started](docs/getting-started.md)
+
+## Contributing
+
+To contribute to this project you will need to set up your development environment and set up some files. The steps are in the following file:
+
+1. [Set up your Developer Environment](docs/development.md)

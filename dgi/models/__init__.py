@@ -15,5 +15,3 @@
 ################################################################################
 
 from .entities import ClassNode, MethodNode, SQLTable, SQLColumn
-
-__all__ = ('ClassNode', 'MethodNode', 'SQLTable', 'SQLColumn')

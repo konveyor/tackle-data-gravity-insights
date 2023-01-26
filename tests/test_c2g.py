@@ -29,7 +29,7 @@ from py2neo import Graph
 ######################################################################
 
 
-NEO4J_BOLT_URL = os.getenv("NEO4J_BOLT_URL", "bolt://neo4j:tackle@neo4j:7687")
+NEO4J_BOLT_URL = os.getenv("NEO4J_BOLT_URL", "bolt://neo4j:konveyor@neo4j:7687")
 
 class TestS2GCLI(unittest.TestCase):
     """Test Cases for c2g command"""
@@ -63,8 +63,8 @@ class TestS2GCLI(unittest.TestCase):
     def test_abstraction_level_is_class(self):
         """Test --abstraction set to 'class'"""
         result = self.runner.invoke(
-            cli, ["c2g", "--abstraction=class",  "--input=tests/fixtures/doop_out"])
-        assert "code2graph build complete" in result.output
+            cli, ["--validate", "c2g", "--abstraction=class",  "--input=tests/fixtures/doop_out"])
+        assert "abstraction level is class" in result.output
         self.assertEqual(result.exit_code, 0)
 
     def test_abstraction_level_is_method(self):

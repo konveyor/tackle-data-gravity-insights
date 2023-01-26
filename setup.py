@@ -20,7 +20,10 @@ setup(
         'PyYAML>=6.0',
         'ipdb>=0.13.9',
         'pandas>=1.4.1',
-        'tqdm>=4.63.0'
+        'tqdm>=4.63.0',
+        'rich>=12.6.0',
+        "py2neo",
+        'rich-click'
     ],
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',

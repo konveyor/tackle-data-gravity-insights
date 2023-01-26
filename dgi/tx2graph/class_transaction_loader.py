@@ -14,28 +14,38 @@
 # limitations under the License.
 ################################################################################
 
+import os
+import re
+import sys
+import yaml
+import json
+import logging
+import argparse
+from pathlib import Path
+from neomodel import config
+from collections import OrderedDict
 from neomodel import DoesNotExist
 
-from dgi.tx2graph.abstract_transaction_loader import AbstactTransactionLoader
+from neomodel.exceptions import DoesNotExist, MultipleNodesReturned
 
+from dgi.tx2graph.abstract_transaction_loader import AbstractTransactionLoader
 # Import our modules
 from dgi.models import ClassNode, SQLTable
 
 
-class ClassTransactionLoader(AbstactTransactionLoader):
+class ClassTransactionLoader(AbstractTransactionLoader):
     def __init__(self) -> None:
         super().__init__()
 
     def find_or_create_program_node(self, method_signature):
-        # method_name = method_signature.split(".")[-1]
-        class_short_name = method_signature.split(".")[-2]
-        class_name = ".".join(method_signature.split(".")[:-1])
+        method_name = method_signature.split('.')[-1]
+        class_short_name = method_signature.split('.')[-2]
+        class_name = ".".join(method_signature.split('.')[:-1])
         try:
             node = ClassNode.nodes.get(node_short_name=class_short_name)
         except DoesNotExist:
-            node = ClassNode(
-                node_class=class_name, node_short_name=class_short_name
-            ).save()
+            node = ClassNode(node_class=class_name,
+                             node_short_name=class_short_name).save()
         return node
 
     def find_or_create_SQL_table_node(self, table_name):
@@ -46,42 +56,67 @@ class ClassTransactionLoader(AbstactTransactionLoader):
 
         return node
 
-    def populate_transaction_read(self, label, txid, table):
-        entry_method_signature = label["entry"]["methods"][0]
-        class_node = self.find_or_create_program_node(entry_method_signature)
+    def populate_transaction_read(self, method_signature, txid, table, action, the_sql_query) -> None:
+        class_node = self.find_or_create_program_node(method_signature)
         table_node = self.find_or_create_SQL_table_node(table)
         rel = class_node.transaction_read.relationship(table_node)
         if not rel:
-            action = (
-                "null"
-                if label.get("http-param") is None
-                else label.get("http-param").get("action")[0]
-            )
-            class_node.transaction_read.connect(
-                table_node,
-                {
-                    "txid": txid,
-                    "tx_meth": entry_method_signature.split(".")[-1],
-                    "action": action,
-                },
-            )
+            class_node.transaction_read.connect(table_node,
+                                                 {
+                                                     "txid": txid,
+                                                     "tx_meth": method_signature.split(".")[-1],
+                                                     "action": action,
+                                                     "sql_query": the_sql_query
+                                                 }
+                                                 )
 
-    def populate_transaction_write(self, label, txid, table):
-        entry_method_signature = label["entry"]["methods"][0]
-        class_node = self.find_or_create_program_node(entry_method_signature)
+    def populate_transaction_write(self, method_signature, txid, table, action, the_sql_query):
+        class_node = self.find_or_create_program_node(method_signature)
         table_node = self.find_or_create_SQL_table_node(table)
         rel = class_node.transaction_write.relationship(table_node)
         if not rel:
-            action = (
-                "null"
-                if label.get("http-param") is None
-                else label.get("http-param").get("action")[0]
-            )
-            class_node.transaction_write.connect(
-                table_node,
-                {
-                    "txid": txid,
-                    "tx_meth": entry_method_signature.split(".")[-1],
-                    "action": action,
-                },
-            )
+            class_node.transaction_write.connect(table_node,
+                                                  {
+                                                      "txid": txid,
+                                                      "tx_meth": method_signature.split(".")[-1],
+                                                      "action": action,
+                                                      "sql_query": the_sql_query
+                                                  }
+                                                  )
+
+    def populate_transaction_callgraph(self, label: dict, txid: int, table: str) -> None:
+        """Add transaction write edges to the database
+
+        Args:
+            label (dict): This is a dictionary of the attribute information for the edge. It contains information such
+                          as the entrypoint class, method, etc.
+            txid (int):   This is the ID assigned to the transaction.
+            table (str):  The is the name of the table.
+        """
+        pass
+    def populate_transaction(self, label: dict, txid: int, read: str, write: str, transaction: list, action: str):
+        """Add transaction write edges to the database
+
+        Args:
+            label (dict):        This is a dictionary of the attribute information for the edge. It contains information
+                                 such as the entrypoint class, method, etc.
+            txid (int):          This is the ID assigned to the transaction.
+            read (str):          The name of table that has read operations performed on it.
+            write (str):         The name of the table that has the write operations performed on it.
+            transaction (str):   The transaction under processing.
+            action (str):        The action that initiated the transaction
+        """
+        method_that_access_table = transaction['stacktrace'][-1]
+        class_name_next = re.sub('/', '.', method_that_access_table['method'].split(', ')[1][1:])
+        method_name_next = method_that_access_table['method'].split(', ')[2].split('(')[0]
+        method_signature = ".".join([class_name_next, method_name_next])
+
+
+        the_sql_query = transaction['sql']
+
+        for tx_read in read:
+            if tx_read.casefold() in the_sql_query.casefold():
+                self.populate_transaction_read(method_signature, txid, tx_read.casefold(), action, the_sql_query.casefold())
+        for tx_write in write:
+            if tx_write.casefold() in the_sql_query.casefold():
+                self.populate_transaction_write(method_signature, txid, tx_write.casefold(), action, the_sql_query.casefold())

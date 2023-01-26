@@ -14,11 +14,9 @@
 # limitations under the License.
 ################################################################################
 
-
 def pegop(f):
     def g(*args):
         memo = [None] * 64
-
         def h(s):
             i = hash(s) % 64
             if memo[i] and memo[i][0] == s:
@@ -27,20 +25,15 @@ def pegop(f):
                 v = f(s, *args)
                 memo[i] = (s, v)
                 return v
-
         return h
-
     return g
-
 
 def pegcxt(f):
     def g(e):
         c = []
-        c.append(f(e, lambda s: c[0](s)))
+        c.append(f(e, lambda s:c[0](s)))
         return c[0]
-
     return g
-
 
 @pegop
 def choice(s, *args):
@@ -49,7 +42,6 @@ def choice(s, *args):
         if a != ():
             return a
     return ()
-
 
 @pegop
 def seq(s, *args):
@@ -62,7 +54,6 @@ def seq(s, *args):
         r += a[1]
     return s, r
 
-
 @pegop
 def val(s, x):
     if s.startswith(x):
@@ -70,13 +61,12 @@ def val(s, x):
     else:
         return ()
 
-
 @pegop
 def before(s, *args):
     t = None
     for a in args:
         if a is None:
-            t = "" if t is None else t
+            t = '' if t is None else t
         elif a in s and (t is None or (len(s) - s.index(a)) > len(t)):
             t = s[s.index(a):]
     if t is None:
@@ -84,46 +74,35 @@ def before(s, *args):
     else:
         return t, []
 
-
 @pegop
 def match(s, e, r=None):
     a = e(s)
     if a == ():
         return ()
     elif r is None:
-        return a[0], a[1] + [s[: len(s) - len(a[0])]]
+        return a[0], a[1] + [s[:len(s)-len(a[0])]]
     else:
-        return a[0], r(a[1], s[: len(s) - len(a[0])])
-
+        return a[0], r(a[1], s[:len(s)-len(a[0])])
 
 @pegop
 def debug(s, e):
     print("debug:", s)
     return e(s)
 
-
 def nil(s):
     return s, []
-
 
 def star(e):
     f = choice(seq(e, lambda s: f(s)), nil)
     return f
 
 
-if __name__ == "__main__":
-    peg0 = seq(
-        val("{"),
-        star(seq(before("{", "}"), lambda s: peg0(s))),
-        before("{", "}"),
-        val("}"),
-    )
-    peg1 = star(seq(before("{", "}"), match(peg0)))
-    print(star(val("a"))("aaa"))
-    print(peg0("{aaa}"))
-    print(
-        peg1(
-            "akihiko.plugins.HttpRequestAnalyzer@3af87954={method=[POST, GET]"
-            ", path=/app, action=[login, {home}], passwd=xxx}, b={}"
-        )
-    )
+if __name__ == '__main__':
+    peg0 = seq(val('{'),
+               star(seq(before('{', '}'), lambda s : peg0(s))),
+               before('{', '}'),
+               val('}'))
+    peg1 = star(seq(before('{', '}'), match(peg0)))
+    print(star(val('a'))('aaa'))
+    print(peg0('{aaa}'))
+    print(peg1('akihiko.plugins.HttpRequestAnalyzer@3af87954={method=[POST, GET], path=/app, action=[login, {home}], passwd=xxx}, b={}'))
