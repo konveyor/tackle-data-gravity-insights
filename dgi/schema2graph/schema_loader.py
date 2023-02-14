@@ -20,8 +20,9 @@ from dgi.utils.progress_bar_factory import ProgressBarFactory
 from dgi.models import SQLColumn, SQLTable
 from dgi.utils.logging import Log
 
+
 def remove_all_nodes():
-    """ Clears existing nodes from the graph """
+    """Clears existing nodes from the graph"""
     all_nodes = SQLColumn.nodes.all()
     for node in all_nodes:
         node.delete()
@@ -29,8 +30,9 @@ def remove_all_nodes():
     for node in all_nodes:
         node.delete()
 
+
 def load_graph(result):
-    """ Populates the graph from a dictionary """
+    """Populates the graph from a dictionary"""
     all_foreign_keys = []
 
     Log.info("Processing schema tables:")
@@ -40,22 +42,22 @@ def load_graph(result):
             table = SQLTable.nodes.get_or_none(name=schema["table_name"])
             if table:
                 table.schema = schema["schema"]
-                table.primary_key=schema["primary_key"]
-                table.index=schema["index"]
+                table.primary_key = schema["primary_key"]
+                table.index = schema["index"]
                 table.save()
             else:
                 table = SQLTable(
-                    name=schema["table_name"], 
-                    schema=schema["schema"], 
+                    name=schema["table_name"],
+                    schema=schema["schema"],
                     primary_key=schema["primary_key"],
-                    index=schema["index"]
+                    index=schema["index"],
                 ).save()
             for column in schema["columns"]:
                 name = column["name"]
                 # Log.info(f" - {name}")
                 col = table.columns.get_or_none(name=name)
                 if col:
-                    col.datatype=column["type"]
+                    col.datatype = column["type"]
                     if column["name"] in schema["primary_key"]:
                         col.is_primary = True
                     col.save()
@@ -69,12 +71,19 @@ def load_graph(result):
 
                 # process foreign keys
                 if column["references"]:
-                    all_foreign_keys.append((schema["table_name"],name,column["references"]["table"],column["references"]["column"]))
-    
+                    all_foreign_keys.append(
+                        (
+                            schema["table_name"],
+                            name,
+                            column["references"]["table"],
+                            column["references"]["column"],
+                        )
+                    )
+
     if len(all_foreign_keys) == 0:
         Log.warn("No foreign key relationships found.")
         return
-    
+
     Log.info("Processing foreign keys:")
     with ProgressBarFactory.get_progress_bar() as p:
         for entry in p.track(all_foreign_keys, total=len(all_foreign_keys)):
@@ -86,7 +95,7 @@ def load_graph(result):
             my_tab = SQLTable.nodes.get(name=my_table_name)
             if my_tab:
                 my_col = my_tab.columns.get(name=my_column_name)
-                if my_col:                    
+                if my_col:
                     ref_tab = SQLTable.nodes.get(name=ref_table_name)
                     if ref_tab:
                         ref_col = ref_tab.columns.get(name=ref_column_name)
@@ -94,11 +103,14 @@ def load_graph(result):
                             # Log.info(f"Connecting {my_tab.name}.{my_col.name} to {ref_tab.name}.{ref_col.name}")
                             my_col.foreign_key.connect(ref_col)
                         else:
-                            Log.info(f"*** Error: Could not find reference column: {ref_column_name}")
+                            Log.info(
+                                f"*** Error: Could not find reference column: {ref_column_name}"
+                            )
                     else:
-                        Log.info(f"*** Error: Could not find reference table: {ref_table_name}")
-                else:  
+                        Log.info(
+                            f"*** Error: Could not find reference table: {ref_table_name}"
+                        )
+                else:
                     Log.info(f"*** Error: Could not find self column: {my_column_name}")
             else:
                 Log.info(f"*** Error: Could not find self table: {my_table_name}")
-            

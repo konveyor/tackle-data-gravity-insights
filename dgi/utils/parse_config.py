@@ -59,10 +59,10 @@ class Config:
         self._num_attributes = 0
 
     def __iter__(self):
-        """ Iterates over all the attributes.
+        """Iterates over all the attributes.
 
         Yields:
-            Generator[str, Config or dict_like]: Key is the name of the attribute. 
+            Generator[str, Config or dict_like]: Key is the name of the attribute.
             Value is either an instance of Config or any value
         """
 
@@ -70,12 +70,11 @@ class Config:
             yield attr_name, attr_val
 
     def get_num_attributes(self) -> int:
-        """ A getter method for number of attributes
-        """
+        """A getter method for number of attributes"""
         return self._num_attributes
 
     def set_config(self, key: str, val: Any):
-        """ Set config attribute
+        """Set config attribute
 
         Args:
             key (str): Name of the config
@@ -107,8 +106,11 @@ class Config:
             val = os.getenv(env_val)
 
             if not val:
-                assert (default), "Enviroment variable {val} not set, and default value is not set. Please set {val}".format(
-                    val=env_val)
+                assert (
+                    default
+                ), "Enviroment variable {val} not set, and default value is not set. Please set {val}".format(
+                    val=env_val
+                )
                 val = default
 
         setattr(self, key, val)
@@ -128,7 +130,7 @@ class Config:
         self: self
             A reference to self
         """
-        with open(self.config_file, 'r') as cfg:
+        with open(self.config_file, "r") as cfg:
             yaml_loader = yaml.load(cfg, Loader=yaml.FullLoader)
             for attr_name, attr_val in list(yaml_loader.items()):
                 self.set_config(attr_name, attr_val)

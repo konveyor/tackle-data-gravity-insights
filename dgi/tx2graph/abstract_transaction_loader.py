@@ -31,14 +31,14 @@ from ipdb import set_trace
 from typing import Dict
 from dgi.tx2graph.utils import sqlexp
 
-class AbstractTransactionLoader(ABC):
 
+class AbstractTransactionLoader(ABC):
     def __init__(self) -> None:
         super().__init__()
 
     @staticmethod
     def _consume_and_process_label(label: str) -> Dict:
-        """Format label into a proper JSON string 
+        """Format label into a proper JSON string
 
         Args:
         label (str): The label as an unformatted string
@@ -46,11 +46,11 @@ class AbstractTransactionLoader(ABC):
         label_raw: str = label
 
         # -- DiVA's JSON is malformed. Here, we fix those malformations --
-        label = re.sub("\n", '', label)
-        label = re.sub(" ", '', label)
-        label = re.sub("{", "{\"", label)
-        label = re.sub(":", "\":", label)
-        label = re.sub(",", ",\"", label)
+        label = re.sub("\n", "", label)
+        label = re.sub(" ", "", label)
+        label = re.sub("{", '{"', label)
+        label = re.sub(":", '":', label)
+        label = re.sub(",", ',"', label)
         label = re.sub("\[", '["', label)
         label = re.sub("\]", '"]', label)
 
@@ -61,7 +61,7 @@ class AbstractTransactionLoader(ABC):
 
     @staticmethod
     def _clear_all_nodes(force_clear_all: bool):
-        """ Delete all nodes """
+        """Delete all nodes"""
         Log.warn("The CLI argument clear is turned ON. Deleting pre-existing nodes.")
         db.cypher_query("MATCH (n:SQLTable)-[r]-(m) DELETE r")
         db.cypher_query("MATCH (n)-[r]-(m:SQLTable) DELETE r")
@@ -78,13 +78,16 @@ class AbstractTransactionLoader(ABC):
         if isinstance(ast, list):
             res = [set(), set()]
             for child in ast[1:]:
-                rs, ws = self.crud0(child, ast[0] != 'select')
+                rs, ws = self.crud0(child, ast[0] != "select")
                 res[0] |= rs
                 res[1] |= ws
             return res
-        elif isinstance(ast, dict) and ':from' in ast:
-            ts = [list(t.values())[0] if isinstance(t, dict)
-                  else t for t in ast[':from'] if not isinstance(t, tuple)]
+        elif isinstance(ast, dict) and ":from" in ast:
+            ts = [
+                list(t.values())[0] if isinstance(t, dict) else t
+                for t in ast[":from"]
+                if not isinstance(t, tuple)
+            ]
             res = set()
             for t in ts:
                 if isinstance(t, list):
@@ -105,13 +108,13 @@ class AbstractTransactionLoader(ABC):
     def analyze(self, txs):
         for tx in txs:
             stack = []
-            if tx['transaction'] and tx['transaction'][0]['sql'] != 'BEGIN':
-                tx['transaction'] = [{'sql': 'BEGIN'}] + tx['transaction']
-            for op in tx['transaction']:
-                if op['sql'] == 'BEGIN':
+            if tx["transaction"] and tx["transaction"][0]["sql"] != "BEGIN":
+                tx["transaction"] = [{"sql": "BEGIN"}] + tx["transaction"]
+            for op in tx["transaction"]:
+                if op["sql"] == "BEGIN":
                     stack.append([set(), set()])
-                    op['rwset'] = stack[-1]
-                elif op['sql'] in ('COMMIT', 'ROLLBACK'):
+                    op["rwset"] = stack[-1]
+                elif op["sql"] in ("COMMIT", "ROLLBACK"):
                     if len(stack) > 1:
                         stack[-2][0] |= stack[-1][0]
                         stack[-2][1] |= stack[-1][1]
@@ -119,14 +122,14 @@ class AbstractTransactionLoader(ABC):
                     stack[-1][1] = set(stack[-1][1])
                     stack.pop()
                 else:
-                    rs, ws = self.crud(op['sql'])
+                    rs, ws = self.crud(op["sql"])
                     stack[-1][0] |= rs
                     stack[-1][1] |= ws
         return txs
 
     @abstractmethod
     def find_or_create_program_node(self, method_signature: str) -> StructuredNode:
-        """Create an node pertaining to a program feature like class, method, etc. 
+        """Create an node pertaining to a program feature like class, method, etc.
 
         Args:
             method_signature (_type_): The full method method signature
@@ -147,8 +150,8 @@ class AbstractTransactionLoader(ABC):
         """Add transaction read edges to the database
 
         Args:
-            label (dict): This is a dictionary of the attribute information for the edge. It contains information such 
-                          as the entrypoint class, method, etc. 
+            label (dict): This is a dictionary of the attribute information for the edge. It contains information such
+                          as the entrypoint class, method, etc.
             txid (int):   This is the ID assigned to the transaction.
             table (str):  The is the name of the table.
         """
@@ -159,15 +162,23 @@ class AbstractTransactionLoader(ABC):
         """Add transaction write edges to the database
 
         Args:
-            label (dict): This is a dictionary of the attribute information for the edge. It contains information such 
-                          as the entrypoint class, method, etc. 
+            label (dict): This is a dictionary of the attribute information for the edge. It contains information such
+                          as the entrypoint class, method, etc.
             txid (int):   This is the ID assigned to the transaction.
             table (str):  The is the name of the table.
         """
         pass
 
     @abstractmethod
-    def populate_transaction(self, label: dict, txid: int, read: str, write: str, transactions: list, action: str):
+    def populate_transaction(
+        self,
+        label: dict,
+        txid: int,
+        read: str,
+        write: str,
+        transactions: list,
+        action: str,
+    ):
         """Add transaction write edges to the database
 
         Args:
@@ -182,7 +193,9 @@ class AbstractTransactionLoader(ABC):
         pass
 
     @abstractmethod
-    def populate_transaction_callgraph(self, callstack: dict, tx_id: int, entrypoint: str) -> None:
+    def populate_transaction_callgraph(
+        self, callstack: dict, tx_id: int, entrypoint: str
+    ) -> None:
         """Add transaction write edges to the database
 
         Args:
@@ -198,25 +211,35 @@ class AbstractTransactionLoader(ABC):
             return
 
         label = self._consume_and_process_label(label)
-        entrypoint = label['entry']['methods'][0]
-        action = label.get('action')
+        entrypoint = label["entry"]["methods"][0]
+        action = label.get("action")
         if action is not None:
-            action = action[tuple(label['action'].keys())[0]][0]
+            action = action[tuple(label["action"].keys())[0]][0]
 
         for transaction_dict in transactions:
-            txid = transaction_dict['txid']
-            read, write = transaction_dict['transaction'][0]['rwset']
-            for each_transaction in transaction_dict['transaction'][1:-1]:  # [0] -> BEGIN, [-1] -> COMMIT
-                self.populate_transaction_callgraph(each_transaction['stacktrace'], txid, entrypoint)
-                self.populate_transaction(label, txid, read, write, each_transaction, action)
+            txid = transaction_dict["txid"]
+            read, write = transaction_dict["transaction"][0]["rwset"]
+            for each_transaction in transaction_dict["transaction"][
+                1:-1
+            ]:  # [0] -> BEGIN, [-1] -> COMMIT
+                self.populate_transaction_callgraph(
+                    each_transaction["stacktrace"], txid, entrypoint
+                )
+                self.populate_transaction(
+                    label, txid, read, write, each_transaction, action
+                )
 
     def load_transactions(self, input, clear, force_clear=False):
 
         # ----------------------
         # Load transactions data
         # ----------------------
-        yaml.add_representer(OrderedDict, lambda dumper, data: dumper.represent_mapping(
-            'tag:yaml.org,2002:map', list(data.items())))
+        yaml.add_representer(
+            OrderedDict,
+            lambda dumper, data: dumper.represent_mapping(
+                "tag:yaml.org,2002:map", list(data.items())
+            ),
+        )
         data = json.load(open(input), object_pairs_hook=OrderedDict)
 
         # --------------------------
@@ -229,7 +252,7 @@ class AbstractTransactionLoader(ABC):
 
         with ProgressBarFactory.get_progress_bar() as p:
             for (c, entry) in p.track(enumerate(data), total=len(data)):
-                txs = self.analyze(entry['transactions'])
-                del(entry['transactions'])
+                txs = self.analyze(entry["transactions"])
+                del entry["transactions"]
                 label = yaml.dump(entry, default_flow_style=True).strip()
                 self.tx2neo4j(txs, label)
