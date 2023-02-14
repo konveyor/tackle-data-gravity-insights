@@ -7,8 +7,9 @@ from rich.progress import (
     SpinnerColumn,
     TimeElapsedColumn,
     MofNCompleteColumn,
-    TimeRemainingColumn
+    TimeRemainingColumn,
 )
+
 
 class ProgressBarFactory:
     @classmethod
@@ -23,5 +24,6 @@ class ProgressBarFactory:
             TextColumn("• Elapsed:"),
             TimeElapsedColumn(),
             TextColumn("• Remaining:"),
-            TimeRemainingColumn())
+            TimeRemainingColumn(),
+        )
         return progress_bar
