@@ -88,7 +88,7 @@ class ConsumeFacts:
             str: JSON string representation of the doop context
 
         Notes:
-            Take the context information from: 
+            Take the context information from:
             "[class_name_1/method_name_1/obj_name_1/id1, class_name_2/method_name_2/obj_name_2/id2]"
             And, converts it to the following format:
             "{
@@ -107,7 +107,7 @@ class ConsumeFacts:
             }"
         """
 
-        raw_str = re.sub("[\[\]]", "", raw)
+        raw_str = re.sub("[\[\]]", "", raw)  # nopep8: W601
         raw_ctx_lst = raw_str.split(", ")
 
         for i, str_el in enumerate(raw_ctx_lst):
@@ -159,7 +159,7 @@ class ConsumeFacts:
         ctx_json_str = json.dumps(raw_ctx_lst)
 
         # Add the found context to a dictionary.
-        # NOTE: For now, we keep the values empty. In a later method (`_update_context_transistions(...)`), 
+        # NOTE: For now, we keep the values empty. In a later method (`_update_context_transistions(...)`),
         # we update it lazily.
         self.contexts.update({ctx_json_str: {"prev": [], "next": []}})
 

@@ -16,7 +16,7 @@
 
 """A container to hold all configurations.
 
-Config contains methods to read a yaml file and create an object to hold the configration. Once initialized, 
+Config contains methods to read a yaml file and create an object to hold the configration. Once initialized,
 we can use the dot notation to access the configurations.
 
 E.g.,
@@ -42,8 +42,8 @@ False
 
 import os
 import re
+from typing import Any
 import yaml
-from typing import Any, Generator
 
 __author__ = "Rahul Krishna"
 __license__ = "Apache 2.0"
@@ -54,6 +54,8 @@ __status__ = "Research Prototype"
 
 
 class Config:
+    """Holds the configurations
+    """
     def __init__(self, config_file: str = None) -> None:
         self.config_file = config_file
         self._num_attributes = 0
@@ -94,9 +96,9 @@ class Config:
         self._num_attributes += 1
 
         # If the value has environment variables, replace them with the correct values or the defaults
-        reg = re.compile("\${[^\}]*}")
+        reg = re.compile("\${[^\}]*}")  # nopep8: W601
         if isinstance(val, str) and reg.match(val):
-            raw_str = re.sub("[${\ }]", "", val)
+            raw_str = re.sub("[${\ }]", "", val)  # nopep8: W601
             sub_str = raw_str.split("|")
             env_val = sub_str[0]
             default = None
@@ -106,11 +108,9 @@ class Config:
             val = os.getenv(env_val)
 
             if not val:
-                assert (
-                    default
-                ), "Enviroment variable {val} not set, and default value is not set. Please set {val}".format(
-                    val=env_val
-                )
+                assert (default), \
+                f"Enviroment variable {val} not set, \
+                    and default value is not set. Please set {val}".format(val=env_val)
                 val = default
 
         setattr(self, key, val)

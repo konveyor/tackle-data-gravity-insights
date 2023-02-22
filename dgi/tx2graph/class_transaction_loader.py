@@ -14,19 +14,8 @@
 # limitations under the License.
 ################################################################################
 
-import os
 import re
-import sys
-import yaml
-import json
-import logging
-import argparse
-from pathlib import Path
-from neomodel import config
-from collections import OrderedDict
 from neomodel import DoesNotExist
-
-from neomodel.exceptions import DoesNotExist, MultipleNodesReturned
 
 from dgi.tx2graph.abstract_transaction_loader import AbstractTransactionLoader
 
@@ -35,11 +24,12 @@ from dgi.models import ClassNode, SQLTable
 
 
 class ClassTransactionLoader(AbstractTransactionLoader):
+    """Transaction edges between classes and DBTables
+    """
     def __init__(self) -> None:
         super().__init__()
 
     def find_or_create_program_node(self, method_signature):
-        method_name = method_signature.split(".")[-1]
         class_short_name = method_signature.split(".")[-2]
         class_name = ".".join(method_signature.split(".")[:-1])
         try:
