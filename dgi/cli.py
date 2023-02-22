@@ -120,9 +120,9 @@ def s2g(ctx, input, output):
     # Optionally write it output to json
     if output:
         Log.info(f"Writing: {output}")
-        with open(output, "w") as f:
+        with open(output, "w", encoding='utf-8') as file:
             contents = json.dumps(result, indent=4)
-            f.write(contents)
+            file.write(contents)
 
     if ctx.obj["validate"]:
         Log.info(f"File [{input}] validated.")
@@ -338,11 +338,9 @@ def partition(ctx, seed_input, partitions):
     )
 
     if seed_input is None:
-        init_labels = "auto"
-        metrics, assignments = cargo.run("auto", max_part=partitions)
+        _, assignments = cargo.run("auto", max_part=partitions)
     else:
-        init_labels = seed_input
-        metrics, assignments = cargo.run("file", labels_file=seed_input)
+        _, assignments = cargo.run("file", labels_file=seed_input)
 
     class_partitions = defaultdict(lambda: list())
 

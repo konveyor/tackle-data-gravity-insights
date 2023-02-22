@@ -44,6 +44,6 @@ services:
 
 volumes:
   neo4j:
-    
+
 networks:
   dev: null

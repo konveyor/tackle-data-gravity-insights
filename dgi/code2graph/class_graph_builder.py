@@ -54,52 +54,6 @@ class ClassGraphBuilder(AbstractGraphBuilder):
         #     node.delete()
         # Log.warn(f"Deleted {count} ClassNodes")
 
-    def _process_entrypoints(self):
-        """Annotate nodes with their entrypoint data"""
-
-        facts_dir = Path(self.opt.GRAPH_FACTS_DIR)
-
-        # ----------------
-        # Process Servlets
-        # ----------------
-        for key, fact_file in self.opt.JEE.SERVLET:
-            if not fact_file or not isinstance(fact_file, str):
-                continue
-            fact_file = facts_dir.joinpath(fact_file)
-            with open(fact_file, "r", encoding='utf-8') as facts:
-                classes = facts.readlines()
-            for class_name in classes:
-                class_name = class_name.rstrip()
-                try:
-                    graph_node = ClassNode.nodes.get(node_class=class_name)
-                except DoesNotExist:
-                    continue
-
-                graph_node.node_is_entrypoint = True
-                graph_node.node_is_servlet = True
-                graph_node.servlet_type = key
-                graph_node.save()
-
-        # --------------
-        # Process Beans
-        # --------------
-        for key, fact_file in self.opt.JEE.BEANS:
-            if not fact_file or not isinstance(fact_file, str):
-                continue
-            fact_file = facts_dir.joinpath(fact_file)
-            with open(fact_file, "r", encoding='utf-8') as facts:
-                classes = facts.readlines()
-            for class_name in classes:
-                class_name = class_name.rstrip()
-                try:
-                    graph_node = ClassNode.nodes.get(node_class=class_name)
-                except DoesNotExist:
-                    continue
-                graph_node.node_is_entrypoint = True
-                graph_node.node_is_bean = True
-                graph_node.bean_type = key
-                graph_node.save()
-
     def _create_prev_and_next_nodes(self, prev_meth: Dict, next_meth: Dict):
         prev_class_name = prev_meth["class"]
         prev_class_short_name = prev_class_name.split(".")[-1]

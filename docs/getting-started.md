@@ -50,7 +50,7 @@ You will need an instance of Neo4j to store the graphs that `dgi` creates. You c
 You must set an environment variable to let `dgi` know where to find this neo4j container.
 
 ```bash
-export NEO4J_BOLT_URL="bolt://neo4j:konveyor@localhost:7687"    
+export NEO4J_BOLT_URL="bolt://neo4j:konveyor@localhost:7687"
 ```
 
 ### Installation complete
@@ -146,7 +146,7 @@ Code2graph uses the output from a tool called [DOOP](https://bitbucket.org/yanni
 
     ```sh
     $ dgi c2g
-    
+
     Usage: dgi c2g [OPTIONS]
 
       This command loads Code dependencies into the graph
@@ -164,7 +164,7 @@ Code2graph uses the output from a tool called [DOOP](https://bitbucket.org/yanni
     ```sh
     dgi --clear c2g --abstraction=class --input=doop-output
     ```
-    
+
     Note that we could have passed in [class|method|full] as the abstraction. If you decide to run with the `method` or `full` level of abstraction, make sure you use the same abstraction level when running with `tx2g` as well.
 
     After successful completion, you should see:
