@@ -21,12 +21,6 @@ from neomodel import (
     JSONProperty,
     StructuredRel,
 )
-from neomodel.properties import (
-    ArrayProperty,
-    IntegerProperty,
-    StringProperty,
-    JSONProperty,
-)
 
 __author__ = "Rahul Krishna"
 __license__ = "Apache License"

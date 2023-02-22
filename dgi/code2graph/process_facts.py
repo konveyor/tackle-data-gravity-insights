@@ -105,7 +105,7 @@ class ConsumeFacts:
             }"
         """
 
-        raw_str = re.sub("[\[\]]", "", raw)  # noqa: W601
+        raw_str = re.sub(r"[\[\]]", "", raw)  # noqa: W601
         raw_ctx_lst = raw_str.split(", ")
 
         for i, str_el in enumerate(raw_ctx_lst):

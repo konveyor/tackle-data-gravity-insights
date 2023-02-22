@@ -33,12 +33,12 @@ from simple_ddl_parser import parse_from_file
 
 from dgi.models import ClassNode, MethodNode
 
-from .code2graph import ClassGraphBuilder, MethodGraphBuilder
+from dgi.code2graph import ClassGraphBuilder, MethodGraphBuilder
 # Import our packages
-from .schema2graph import schema_loader
-from .tx2graph import ClassTransactionLoader, MethodTransactionLoader
-from .utils.logging import Log
-from .utils.parse_config import Config
+from dgi.schema2graph import schema_loader
+from dgi.tx2graph import ClassTransactionLoader, MethodTransactionLoader
+from dgi.utils.logging import Log
+from dgi.utils.parse_config import Config
 
 
 ######################################################################

@@ -14,7 +14,7 @@
 # limitations under the License.
 ################################################################################
 
-from .peg import seq, val, before, choice, star, nil, pegop, pegcxt
+from .peg import seq, choice, star, nil, pegop, pegcxt
 from .peg import match as match0
 
 
@@ -129,7 +129,7 @@ operator_tokens = [
 ]
 
 
-def token0(s):
+def token0(s):  # noqa: C901
     k0 = 0
     while k0 < len(s):
         if not s[k0].isspace():
@@ -137,10 +137,10 @@ def token0(s):
         k0 += 1
     else:
         return ()
-    if k0 + 2 <= len(s) and s[k0 : k0 + 2] in operator_tokens:
-        return (s[k0 + 2 :], [s[k0 : k0 + 2]])
-    if k0 + 3 <= len(s) and s[k0 : k0 + 3] in operator_tokens:
-        return (s[k0 + 3 :], [s[k0 : k0 + 3]])
+    if k0 + 2 <= len(s) and s[k0: k0 + 2] in operator_tokens:
+        return (s[k0 + 2:], [s[k0: k0 + 2]])
+    if k0 + 3 <= len(s) and s[k0: k0 + 3] in operator_tokens:
+        return (s[k0 + 3:], [s[k0: k0 + 3]])
     k = k0 + 1
     if s[k0].isalpha() or s[k0] == "_" or s[k0] == ":":
         while k < len(s):
@@ -241,7 +241,7 @@ def split(n):
         return ("", n)
     else:
         p = n.rindex(".")
-        return (n[:p], n[p + 1 :])
+        return (n[:p], n[p + 1:])
 
 
 qname = seq(name, star(seq(op("."), name)))
@@ -251,16 +251,16 @@ paren = seq(
 )
 
 # skip until one of strs occurs, ignoring anything inside parenthesis
-until_ignoring_paren = lambda *strs: seq(
+until_ignoring_paren = lambda *strs: seq(   # noqa: E731
     star(seq(until("(", ")", *strs), paren)), until("(", ")", *strs), until(*strs)
 )
 
-comma_sep = lambda e: seq(e, star(seq(op(","), e)))
-plus = lambda e: seq(e, star(e))
+comma_sep = lambda e: seq(e, star(seq(op(","), e)))     # noqa: E731
+plus = lambda e: seq(e, star(e))    # noqa: E731
 
 # [{ s[-1][None] : s[0] }] if len(s) == 2 and seq(qname, option(op('as')), name)(v) == ('', []) else
 
-ascxt = lambda e: match(
+ascxt = lambda e: match(    # noqa: E731
     seq(e, option(seq(option(op("as")), match(name, lambda s, v: [{None: v}])))),
     lambda s, v: [{s[-1][None]: s[0] if len(s) == 2 else s[:-1]}]
     if s and isinstance(s[-1], dict) and None in s[-1]
@@ -361,7 +361,7 @@ tblexp = choice(
     seq(op("("), lambda s: tblsexp(s), op(")")),
 )
 
-frmcxt = lambda e: match(e, lambda s, _: [{":from": s}])
+frmcxt = lambda e: match(e, lambda s, _: [{":from": s}])    # noqa: E731
 
 tblsexp = frmcxt(
     seq(
@@ -593,24 +593,30 @@ if __name__ == "__main__":
     print(selexp("select a from b t,c"))
     print(
         selexp(
-            "SELECT ACCOUNTID, BALANCE, CREATIONDATE, LASTLOGIN, LOGINCOUNT, LOGOUTCOUNT, OPENBALANCE, PROFILE_USERID FROM accountejb WHERE (PROFILE_USERID = ?)".lower()
+            "SELECT ACCOUNTID, BALANCE, CREATIONDATE, LASTLOGIN, LOGINCOUNT, "
+            "LOGOUTCOUNT, OPENBALANCE, PROFILE_USERID FROM accountejb "
+            "WHERE (PROFILE_USERID = ?)".lower()
         )
     )
     print(updexp("UPDATE accountejb SET LOGOUTCOUNT = ? WHERE (ACCOUNTID = ?)".lower()))
     print(
         selexp(
-            "SELECT t1.HOLDINGID, t1.PURCHASEDATE, t1.PURCHASEPRICE, t1.QUANTITY, t1.ACCOUNT_ACCOUNTID, t1.QUOTE_SYMBOL FROM accountejb t0, holdingejb t1 WHERE ((t0.PROFILE_USERID = ?) AND (t0.ACCOUNTID = t1.ACCOUNT_ACCOUNTID))".lower()
+            "SELECT t1.HOLDINGID, t1.PURCHASEDATE, t1.PURCHASEPRICE, t1.QUANTITY, "
+            "t1.ACCOUNT_ACCOUNTID, t1.QUOTE_SYMBOL FROM accountejb t0, holdingejb t1 "
+            "WHERE ((t0.PROFILE_USERID = ?) AND (t0.ACCOUNTID = t1.ACCOUNT_ACCOUNTID))".lower()
         )
     )
     print(
         sqlexp(
-            "INSERT INTO holdingejb (HOLDINGID, PURCHASEDATE, PURCHASEPRICE, QUANTITY, ACCOUNT_ACCOUNTID, QUOTE_SYMBOL) VALUES (?, ?, ?, ?, ?, ?)".lower()
+            "INSERT INTO holdingejb (HOLDINGID, PURCHASEDATE, PURCHASEPRICE, QUANTITY, "
+            "ACCOUNT_ACCOUNTID, QUOTE_SYMBOL) VALUES (?, ?, ?, ?, ?, ?)".lower()
         )
     )
     print(sqlexp("DELETE FROM orderejb WHERE (ORDERID = ?".lower()))
     print(
         sqlexp(
-            "select dept, LISTAGG(name, ',') WITHIN GROUP (order by saraly desc nulls last, a asc) csv_name from listagg_sample group by dept".lower()
+            "select dept, LISTAGG(name, ',') WITHIN GROUP (order by saraly desc nulls last, a asc)"
+            " csv_name from listagg_sample group by dept".lower()
         )
     )
     print(sqlexp("select a as x from b t, (select c from d) u"))
