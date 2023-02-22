@@ -159,7 +159,8 @@ class ConsumeFacts:
         ctx_json_str = json.dumps(raw_ctx_lst)
 
         # Add the found context to a dictionary.
-        # NOTE: For now, we keep the values empty. In a later method (`_update_context_transistions(...)`), we update it lazily.
+        # NOTE: For now, we keep the values empty. In a later method (`_update_context_transistions(...)`), 
+        # we update it lazily.
         self.contexts.update({ctx_json_str: {"prev": [], "next": []}})
 
         return raw_ctx_lst
