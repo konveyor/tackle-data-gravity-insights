@@ -16,20 +16,8 @@
 
 from neomodel import (
     StructuredNode,
-    StringProperty,
-    IntegerProperty,
-    ArrayProperty,
     RelationshipTo,
 )
-from .relationships import (
-    HeapCarriedRelationship,
-    DataRelationship,
-    CallReturnRelationship,
-    TransactionWrite,
-    TransactionRead,
-    TransactionCallTrace,
-)
-
 from neomodel.properties import (
     ArrayProperty,
     IntegerProperty,
@@ -38,6 +26,15 @@ from neomodel.properties import (
     BooleanProperty,
 )
 from neomodel.relationship_manager import RelationshipFrom
+
+from .relationships import (
+    HeapCarriedRelationship,
+    DataRelationship,
+    CallReturnRelationship,
+    TransactionWrite,
+    TransactionRead,
+    TransactionCallTrace,
+)
 
 __author__ = "Rahul Krishna"
 __license__ = "Apache 2.0"
