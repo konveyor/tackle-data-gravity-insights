@@ -130,7 +130,7 @@ class Config:
         self: self
             A reference to self
         """
-        with open(self.config_file, "r") as cfg:
+        with open(self.config_file, "r", encoding='utf-8') as cfg:
             yaml_loader = yaml.load(cfg, Loader=yaml.FullLoader)
             for attr_name, attr_val in list(yaml_loader.items()):
                 self.set_config(attr_name, attr_val)

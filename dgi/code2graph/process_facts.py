@@ -14,25 +14,21 @@
 # limitations under the License.
 ################################################################################
 
+import errno
+import json
 import os
 import re
-import sys
-import json
-import errno
 from csv import reader
-from ipdb import set_trace
-import pandas as pd
 from pathlib import Path
 from typing import Dict, Tuple
 
-# Add the main project path to the python path.
-proj_root = Path.cwd()
-sys.path.append(proj_root.__str__())
+import pandas as pd
 
 from dgi.utils.parse_config import Config
 
 
 class ConsumeFacts:
+    "Synthesize DOOP facts"
     def __init__(self, conf: Config) -> None:
         """Take raw datalog facts and convert them to a comsumable form.
 
@@ -42,6 +38,7 @@ class ConsumeFacts:
             opt_cfg (Config): Other configs
         """
         self.conf = conf
+        self.method_info = dict()
         self.__setup()
 
     def __setup(self) -> None:
@@ -225,8 +222,7 @@ class ConsumeFacts:
         Args:
             method_info_file (Path): Path to doop method information file
         """
-        self.method_info = dict()
-        with open(method_info_file, "r") as file_obj:
+        with open(method_info_file, "r", encoding='utf-8') as file_obj:
             csv_reader = reader(file_obj, delimiter="\t")
             for row in csv_reader:
                 key = "::".join(row[::-1][1:3])

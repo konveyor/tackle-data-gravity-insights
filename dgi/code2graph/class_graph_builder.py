@@ -14,24 +14,19 @@
 # limitations under the License.
 ################################################################################
 
-import os
-import errno
 import logging
-import pandas as pd
+from pathlib import Path
 from typing import Dict
 
-from pathlib import Path
-from tqdm import tqdm
-from ipdb import set_trace
+import pandas as pd
+from neomodel import db
 from neomodel.exceptions import DoesNotExist
 
-# Import out packages
-from dgi.code2graph.process_facts import ConsumeFacts
-from dgi.models import ClassNode
 from dgi.code2graph.abstract_graph_builder import AbstractGraphBuilder
+# Import out packages
+from dgi.models import ClassNode
 from dgi.utils import ProgressBarFactory
 from dgi.utils.logging import Log
-from neomodel import db
 
 # Author information
 __author__ = "Rahul Krishna"
@@ -43,8 +38,8 @@ __status__ = "Research Prototype"
 
 
 class ClassGraphBuilder(AbstractGraphBuilder):
-    def __init__(self, opt):
-        super().__init__(opt)
+    """ Build a class level abstraction graph
+    """
 
     @staticmethod
     def _clear_all_nodes():
@@ -71,7 +66,7 @@ class ClassGraphBuilder(AbstractGraphBuilder):
             if not fact_file or not isinstance(fact_file, str):
                 continue
             fact_file = facts_dir.joinpath(fact_file)
-            with open(fact_file, "r") as facts:
+            with open(fact_file, "r", encoding='utf-8') as facts:
                 classes = facts.readlines()
             for class_name in classes:
                 class_name = class_name.rstrip()
@@ -92,7 +87,7 @@ class ClassGraphBuilder(AbstractGraphBuilder):
             if not fact_file or not isinstance(fact_file, str):
                 continue
             fact_file = facts_dir.joinpath(fact_file)
-            with open(fact_file, "r") as facts:
+            with open(fact_file, "r", encoding='utf-8') as facts:
                 classes = facts.readlines()
             for class_name in classes:
                 class_name = class_name.rstrip()

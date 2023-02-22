@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-with open("README.md", "r") as fh:
+with open("README.md", "r", encoding='utf-8') as fh:
     long_description = fh.read()
 
 setup(
@@ -23,6 +23,7 @@ setup(
         "tqdm>=4.63.0",
         "rich>=12.6.0",
         "py2neo",
+        "minerva-cargo",
         "rich-click",
     ],
     classifiers=[

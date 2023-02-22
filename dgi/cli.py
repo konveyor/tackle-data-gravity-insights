@@ -18,32 +18,27 @@ Tackle Data Gravity Insights
 
 Command Line Interface (CLI) for Tackle Data Gravity Insights
 """
-from collections import defaultdict
-from statistics import mode
-import os
-from pathlib import Path
-import random
-import sys
-import json
-import rich_click as click
-import logging
-from rich.logging import RichHandler
 import importlib.resources
+import json
+import sys
+from collections import defaultdict
+from pathlib import Path
+from statistics import mode
+
+import rich_click as click
 from cargo import Cargo
 from neomodel import config
-from simple_ddl_parser import parse_from_file
-from neomodel import config
-from ipdb import set_trace
 from neomodel.exceptions import DoesNotExist
+from simple_ddl_parser import parse_from_file
 
+from dgi.models import ClassNode, MethodNode
+
+from .code2graph import ClassGraphBuilder, MethodGraphBuilder
 # Import our packages
 from .schema2graph import schema_loader
-from dgi.models import ClassNode, MethodNode
-from .code2graph import ClassGraphBuilder, MethodGraphBuilder
 from .tx2graph import ClassTransactionLoader, MethodTransactionLoader
-from .utils.parse_config import Config
 from .utils.logging import Log
-import numpy as np
+from .utils.parse_config import Config
 
 
 ######################################################################

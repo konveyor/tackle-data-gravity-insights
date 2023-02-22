@@ -16,8 +16,8 @@
 
 from abc import ABC, abstractmethod
 from typing import Dict
+
 import pandas as pd
-from neomodel import db
 
 from dgi.code2graph.process_facts import ConsumeFacts
 from dgi.utils.logging import Log
@@ -32,6 +32,8 @@ __status__ = "Research Prototype"
 
 
 class AbstractGraphBuilder(ABC):
+    """Abstract graph builder is a base class that is implemented by method and class graph builders.
+    """
     def __init__(self, opt):
         self.opt = opt
 
@@ -39,7 +41,6 @@ class AbstractGraphBuilder(ABC):
     @abstractmethod
     def _clear_all_nodes():
         """Delete all nodes"""
-        pass
 
     @abstractmethod
     def _create_prev_and_next_nodes(self, prev_meth: Dict, next_meth: Dict):
@@ -49,12 +50,10 @@ class AbstractGraphBuilder(ABC):
             prev_df_entry (Dict): A dictionary of method information for source method
             next_df_entry (Dict): A dictionary of method information for destination method
         """
-        pass
 
     @abstractmethod
-    def _process_entrypoints(self, opt):
+    def _process_entrypoints(self):
         """Annotate nodes with their entrypoint data"""
-        pass
 
     @abstractmethod
     def _populate_heap_edges(self, heap_flows: pd.DataFrame) -> None:
@@ -62,7 +61,6 @@ class AbstractGraphBuilder(ABC):
         Args:
             heap_flows (pd.DataFrame): Heap flows as a pandas dataframe
         """
-        pass
 
     @abstractmethod
     def _populate_dataflow_edges(self, data_flows: pd.DataFrame) -> None:
@@ -70,7 +68,6 @@ class AbstractGraphBuilder(ABC):
         Args:
             data_flows (pd.DataFrame): Data flows as a pandas dataframe
         """
-        pass
 
     @abstractmethod
     def _populate_callreturn_edges(self, call_ret_flows: pd.DataFrame) -> None:
@@ -78,7 +75,6 @@ class AbstractGraphBuilder(ABC):
         Args:
             call_ret_flows (pd.DataFrame): Data flows as a pandas dataframe
         """
-        pass
 
     def build_ddg(self, clear: bool = True) -> None:
         """Build the data dependency graph"""

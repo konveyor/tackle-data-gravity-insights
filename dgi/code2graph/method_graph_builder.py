@@ -14,27 +14,21 @@
 # limitations under the License.
 ################################################################################
 
-import os
 import errno
 import logging
-import sys
+import os
+from pathlib import Path
+from typing import Dict
 
 import pandas as pd
-from typing import Dict
-from pathlib import Path
-
 from neomodel import db
-from tqdm import tqdm
-
 from neomodel.exceptions import DoesNotExist
 
-from dgi.utils.progress_bar_factory import ProgressBarFactory
-
-# Import out packages
-from dgi.code2graph.process_facts import ConsumeFacts
-from dgi.models import MethodNode
 from dgi.code2graph.abstract_graph_builder import AbstractGraphBuilder
+# Import out packages
+from dgi.models import MethodNode
 from dgi.utils.logging import Log
+from dgi.utils.progress_bar_factory import ProgressBarFactory
 
 # Author information
 __author__ = "Rahul Krishna"
@@ -46,9 +40,8 @@ __status__ = "Research Prototype"
 
 
 class MethodGraphBuilder(AbstractGraphBuilder):
-    def __init__(self, opt):
-        self.opt = opt
-
+    """ Build a class level abstraction graph
+    """
     @staticmethod
     def _clear_all_nodes():
         """Delete all nodes"""
@@ -56,12 +49,8 @@ class MethodGraphBuilder(AbstractGraphBuilder):
         db.cypher_query("MATCH (n:MethodNode)-[r]-(m) DELETE r")
         db.cypher_query("MATCH (n)-[r]-(m:MethodNode) DELETE r")
         db.cypher_query("MATCH (n:MethodNode) DELETE n")
-        # count = 0
-        # for node in MethodNode.nodes.all():
-        #     count += 1
-        #     node.delete()
-        # Log.warn(f"Deleted {count} ClassNodes")
-
+    
+    
     def _process_entrypoints(self):
         """Annotate nodes with their entrypoint data"""
         facts_dir = Path(self.opt.GRAPH_FACTS_DIR)
@@ -93,7 +82,7 @@ class MethodGraphBuilder(AbstractGraphBuilder):
             if not fact_file or not isinstance(fact_file, str):
                 continue
             fact_file = facts_dir.joinpath(fact_file)
-            with open(fact_file, "r") as facts:
+            with open(fact_file, "r", encoding='utf-8') as facts:
                 classes = facts.readlines()
             for class_name in classes:
                 class_name = class_name.rstrip()
@@ -146,7 +135,7 @@ class MethodGraphBuilder(AbstractGraphBuilder):
             if not fact_file or not isinstance(fact_file, str):
                 continue
             fact_file = facts_dir.joinpath(fact_file)
-            with open(fact_file, "r") as facts:
+            with open(fact_file, "r", encoding='utf-8') as facts:
                 classes = facts.readlines()
             for class_name in classes:
                 all_method_nodes = MethodNode.nodes.all()
