@@ -88,9 +88,7 @@ class ConsumeFacts:
             str: JSON string representation of the doop context
 
         Notes:
-            Take the context information from:
-            "[class_name_1/method_name_1/obj_name_1/id1, class_name_2/method_name_2/obj_name_2/id2]"
-            And, converts it to the following format:
+            Take the context information and convert it to:
             "{
                 {
                     "class": "class_name_1",
@@ -107,7 +105,7 @@ class ConsumeFacts:
             }"
         """
 
-        raw_str = re.sub("[\[\]]", "", raw)  # nopep8: W601
+        raw_str = re.sub("[\[\]]", "", raw)  # noqa: W601
         raw_ctx_lst = raw_str.split(", ")
 
         for i, str_el in enumerate(raw_ctx_lst):
