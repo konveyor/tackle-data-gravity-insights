@@ -96,9 +96,9 @@ class Config:
         self._num_attributes += 1
 
         # If the value has environment variables, replace them with the correct values or the defaults
-        reg = re.compile("\${[^\}]*}")  # noqa: W601
+        reg = re.compile("\${[^\}]*}")  # noqa: W601,W605
         if isinstance(val, str) and reg.match(val):
-            raw_str = re.sub("[${\ }]", "", val)  # noqa: W601
+            raw_str = re.sub("[${\ }]", "", val)  # noqa: W601,W605
             sub_str = raw_str.split("|")
             env_val = sub_str[0]
             default = None
@@ -109,8 +109,8 @@ class Config:
 
             if not val:
                 assert (default), \
-                f"Enviroment variable {val} not set, \
-                    and default value is not set. Please set {val}".format(val=env_val)
+                    f"Environment variable {val} not set, and default value is not set. Please set {val}".format(
+                        val=env_val)
                 val = default
 
         setattr(self, key, val)

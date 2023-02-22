@@ -26,7 +26,7 @@ from dgi.tx2graph.abstract_transaction_loader import AbstractTransactionLoader
 class MethodTransactionLoader(AbstractTransactionLoader):
     """CRUD operation at a method level.
     """
-    
+
     def find_or_create_program_node(self, method_signature: str, is_entrypoint=False) -> MethodNode:
         method_name = method_signature.split(".")[-1]
         class_short_name = method_signature.split(".")[-2]
