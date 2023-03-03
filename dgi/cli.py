@@ -175,8 +175,7 @@ def tx2g(ctx, input, abstraction, force_clear):
     if abstraction.lower() == "full":
         if ctx.obj["validate"]:
             Log.info(
-                "Validate mode: abstraction level is {}".format(
-                    abstraction.lower())
+                f"Validate mode: abstraction level is {abstraction.lower()}"
             )
             sys.exit()
 
@@ -189,8 +188,7 @@ def tx2g(ctx, input, abstraction, force_clear):
     elif abstraction.lower() == "class":
         if ctx.obj["validate"]:
             Log.info(
-                "Validate mode: abstraction level is {}".format(
-                    abstraction.lower())
+                f"Validate mode: abstraction level is {abstraction.lower()}"
             )
             sys.exit()
         class_transaction_loader.load_transactions(
@@ -200,8 +198,7 @@ def tx2g(ctx, input, abstraction, force_clear):
     elif abstraction.lower() == "method":
         if ctx.obj["validate"]:
             Log.info(
-                "Validate mode: abstraction level is {}".format(
-                    abstraction.lower())
+                f"Validate mode: abstraction level is {abstraction.lower()}"
             )
             sys.exit()
 
@@ -267,8 +264,7 @@ def c2g(ctx, input, abstraction):
     if abstraction.lower() == "full":
         if ctx.obj["validate"]:
             Log.info(
-                "Validate mode: abstraction level is {}".format(
-                    abstraction.lower())
+                f"Validate mode: abstraction level is {abstraction.lower()}"
             )
             sys.exit()
         Log.info("Full level abstraction adds both Class and Method nodes.")
@@ -278,8 +274,7 @@ def c2g(ctx, input, abstraction):
     elif abstraction.lower() == "class":
         if ctx.obj["validate"]:
             Log.info(
-                "Validate mode: abstraction level is {}".format(
-                    abstraction.lower())
+                f"Validate mode: abstraction level is {abstraction.lower()}"
             )
             sys.exit()
         Log.info("Class level abstraction.")
@@ -288,8 +283,7 @@ def c2g(ctx, input, abstraction):
     elif abstraction.lower() == "method":
         if ctx.obj["validate"]:
             Log.info(
-                "Validate mode: abstraction level is {}".format(
-                    abstraction.lower())
+                f"Validate mode: abstraction level is {abstraction.lower()}"
             )
             sys.exit()
         Log.info("Method level abstraction.")
@@ -331,7 +325,7 @@ def c2g(ctx, input, abstraction):
     show_default=True,
 )
 @click.pass_context
-def partition(ctx, seed_input, output, partitions):
+def partition(ctx, seed_input, partitions_output, partitions):
     """Partition is a command runs the CARGO algorithm to (re-)partition a monolith into microservices"""
     Log.info("Partitioning the monolith with CARGO")
 
@@ -339,5 +333,5 @@ def partition(ctx, seed_input, output, partitions):
     bolt_url = ctx.obj["bolt"].strip("bolt://")  # Strip scheme
     auth_str, netloc = bolt_url.split("@")
     hostname, hostport = netloc.split(":")
-    recommend_partitions(hostname, hostport, auth_str, output,
-                         seed_input, partitions, verbosity=ctx.obj["verbose"])
+    recommend_partitions(hostname, hostport, auth_str,
+                         partitions_output, partitions, seed_input)

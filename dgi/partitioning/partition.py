@@ -16,15 +16,16 @@ import json
 from collections import defaultdict
 from pathlib import Path
 from statistics import mode
+from typing import Union
 from neomodel.exceptions import DoesNotExist
 from cargo import Cargo
 from dgi.models.entities import ClassNode, MethodNode
 
 
 def recommend_partitions(
-        hostname: str, hostport, auth_str: str, output: Path, verbosity: bool, seed_input: Path, partitions: int):
+        hostname: str, hostport, auth_str: str, output: str, partitions: int, seed_input: Union[Path, None] = None, verbosity: bool = True):
     """Recommend partitions with CARGO.
-    
+
     Args:
         hostname(str): Neo4j hostname
         hostport(str): Neo4j port
@@ -42,11 +43,12 @@ def recommend_partitions(
     else:
         _, assignments = cargo.run("file", labels_file=seed_input)
 
-    class_partitions = defaultdict([])
+    class_partitions = defaultdict(lambda: [])
 
     for method_signature, partition in assignments.items():
         try:
-            dgi_method_node = MethodNode.nodes.get(node_method=method_signature)
+            dgi_method_node = MethodNode.nodes.get(
+                node_method=method_signature)
             dgi_method_node.partition_id = partition
             dgi_method_node.save()
         except DoesNotExist:
@@ -61,11 +63,9 @@ def recommend_partitions(
             dgi_class_node.save()
         except DoesNotExist:
             pass
-    
-    for class_name, methods_partitions in class_partitions.items():
-        class_partitions[class_name] = mode(methods_partitions)
-    
-    with open(output.joinpath('partitions.json'), 'w+') as op:
-        json.dump(class_partitions, op, indent=4, sort_keys=True)
 
-    
+    # for class_name, methods_partitions in class_partitions.items():
+    #     class_partitions[class_name] = mode(methods_partitions)
+
+    with open(Path(output).joinpath('partitions.json'), 'w+', encoding='utf-8') as partitions_file:
+        json.dump(assignments, partitions_file, indent=4, sort_keys=True)
