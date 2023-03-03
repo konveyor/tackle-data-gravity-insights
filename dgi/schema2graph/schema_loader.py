@@ -31,7 +31,7 @@ def remove_all_nodes():
         node.delete()
 
 
-def load_graph(result):
+def load_graph(result):  # noqa: C901
     """Populates the graph from a dictionary"""
     all_foreign_keys = []
 

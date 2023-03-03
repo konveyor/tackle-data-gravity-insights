@@ -1,3 +1,6 @@
+# Ignore idea auxiliary files
+.idea
+
 # Ignore DB auxiliary files
 demo/**/*.dump
 demo/code2graph-samples/doop-input/*

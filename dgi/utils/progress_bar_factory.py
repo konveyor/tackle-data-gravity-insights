@@ -1,5 +1,4 @@
 # Fancy Progress Bar
-import os
 from rich.progress import (
     Progress,
     BarColumn,

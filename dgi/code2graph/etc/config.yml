@@ -15,7 +15,7 @@ JEE:
     GenericServlet: "GenericServlet.csv"
     WebServlet: "WebServlet.csv"
     ServletFilter: "ServletFilterClass.csv"
-  BEANS:    
+  BEANS:
     EJBTransactionBean: "EJBTransactionBean.csv"
     SessionBean: "SessionBean.csv"
     SingletonBean: "SingletonBean.csv"

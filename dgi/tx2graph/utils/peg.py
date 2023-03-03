@@ -66,7 +66,7 @@ def seq(s, *args):
 @pegop
 def val(s, x):
     if s.startswith(x):
-        return s[len(x) :], []
+        return s[len(x):], []
     else:
         return ()
 
@@ -78,7 +78,7 @@ def before(s, *args):
         if a is None:
             t = "" if t is None else t
         elif a in s and (t is None or (len(s) - s.index(a)) > len(t)):
-            t = s[s.index(a) :]
+            t = s[s.index(a):]
     if t is None:
         return ()
     else:
@@ -109,20 +109,3 @@ def nil(s):
 def star(e):
     f = choice(seq(e, lambda s: f(s)), nil)
     return f
-
-
-if __name__ == "__main__":
-    peg0 = seq(
-        val("{"),
-        star(seq(before("{", "}"), lambda s: peg0(s))),
-        before("{", "}"),
-        val("}"),
-    )
-    peg1 = star(seq(before("{", "}"), match(peg0)))
-    print(star(val("a"))("aaa"))
-    print(peg0("{aaa}"))
-    print(
-        peg1(
-            "akihiko.plugins.HttpRequestAnalyzer@3af87954={method=[POST, GET], path=/app, action=[login, {home}], passwd=xxx}, b={}"
-        )
-    )

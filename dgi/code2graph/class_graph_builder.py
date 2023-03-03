@@ -14,24 +14,18 @@
 # limitations under the License.
 ################################################################################
 
-import os
-import errno
 import logging
-import pandas as pd
 from typing import Dict
 
-from pathlib import Path
-from tqdm import tqdm
-from ipdb import set_trace
+import pandas as pd
+from neomodel import db
 from neomodel.exceptions import DoesNotExist
 
-# Import out packages
-from dgi.code2graph.process_facts import ConsumeFacts
-from dgi.models import ClassNode
 from dgi.code2graph.abstract_graph_builder import AbstractGraphBuilder
+# Import out packages
+from dgi.models import ClassNode
 from dgi.utils import ProgressBarFactory
 from dgi.utils.logging import Log
-from neomodel import db
 
 # Author information
 __author__ = "Rahul Krishna"
@@ -43,8 +37,8 @@ __status__ = "Research Prototype"
 
 
 class ClassGraphBuilder(AbstractGraphBuilder):
-    def __init__(self, opt):
-        super().__init__(opt)
+    """ Build a class level abstraction graph
+    """
 
     @staticmethod
     def _clear_all_nodes():
@@ -58,52 +52,6 @@ class ClassGraphBuilder(AbstractGraphBuilder):
         #     count += 1
         #     node.delete()
         # Log.warn(f"Deleted {count} ClassNodes")
-
-    def _process_entrypoints(self):
-        """Annotate nodes with their entrypoint data"""
-
-        facts_dir = Path(self.opt.GRAPH_FACTS_DIR)
-
-        # ----------------
-        # Process Servlets
-        # ----------------
-        for key, fact_file in self.opt.JEE.SERVLET:
-            if not fact_file or not isinstance(fact_file, str):
-                continue
-            fact_file = facts_dir.joinpath(fact_file)
-            with open(fact_file, "r") as facts:
-                classes = facts.readlines()
-            for class_name in classes:
-                class_name = class_name.rstrip()
-                try:
-                    graph_node = ClassNode.nodes.get(node_class=class_name)
-                except DoesNotExist:
-                    continue
-
-                graph_node.node_is_entrypoint = True
-                graph_node.node_is_servlet = True
-                graph_node.servlet_type = key
-                graph_node.save()
-
-        # --------------
-        # Process Beans
-        # --------------
-        for key, fact_file in self.opt.JEE.BEANS:
-            if not fact_file or not isinstance(fact_file, str):
-                continue
-            fact_file = facts_dir.joinpath(fact_file)
-            with open(fact_file, "r") as facts:
-                classes = facts.readlines()
-            for class_name in classes:
-                class_name = class_name.rstrip()
-                try:
-                    graph_node = ClassNode.nodes.get(node_class=class_name)
-                except DoesNotExist:
-                    continue
-                graph_node.node_is_entrypoint = True
-                graph_node.node_is_bean = True
-                graph_node.bean_type = key
-                graph_node.save()
 
     def _create_prev_and_next_nodes(self, prev_meth: Dict, next_meth: Dict):
         prev_class_name = prev_meth["class"]

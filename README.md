@@ -36,33 +36,29 @@ docker run -d --name neo4j \
 
 Save the bolt url for further use:
 ```
-export NEO4J_BOLT_URL="bolt://neo4j:konveyor@localhost:7687"    
+export NEO4J_BOLT_URL="neo4j://neo4j:konveyor@localhost:7687"
 ```
 
 You can now use the `dgi` command to load information about your application into the graph database.
 
 ```man
-dgi --help
+ Usage: dgi [OPTIONS] COMMAND [ARGS]...
 
-Usage: dgi [OPTIONS] COMMAND [ARGS]...
+ Tackle Data Gravity Insights
 
-  Tackle Data Gravity Insights
-
-Options:
-  -n, --neo4j-bolt TEXT           Neo4j Bolt URL
-  -a, --abstraction TEXT          The level of abstraction to use when
-                                  building the graph. Valid options are:
-                                  class, method, or full.  [default: class]
-  -q, --quiet / -v, --verbose     Be more quiet/verbose  [default: verbose]
-  -c, --clear / -dnc, --dont-clear
-                                  Clear (or don't clear) graph before loading
-                                  [default: clear]
-  --help                          Show this message and exit.
-
-Commands:
-  c2g   This command loads Code dependencies into the graph
-  s2g   This command parses SQL schema DDL into a graph
-  tx2g  This command loads DiVA database transactions into a graph
+╭─ Options ────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ --neo4j-bolt  -n  TEXT  Neo4j Bolt URL                                                                               │
+│ --quiet       -q        Be more quiet                                                                                │
+│ --validate    -v        Validate but don't populate graph                                                            │
+│ --clear       -c        Clear graph before loading                                                                   │
+│ --help                  Show this message and exit.                                                                  │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Commands ───────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ c2g         Code2Graph add various program dependencies (i.e., call return, heap, and data) into the graph           │
+│ partition   Partition is a command runs the CARGO algorithm to (re-)partition a monolith into microservices          │
+│ s2g         Schema2Graph parses SQL schema (*.DDL file) into the graph                                               │
+│ tx2g        Transaction2Graph add edges denoting CRUD operations to the graph.                                       │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ```
 
 ## Demo

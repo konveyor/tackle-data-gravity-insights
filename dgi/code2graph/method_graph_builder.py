@@ -14,27 +14,18 @@
 # limitations under the License.
 ################################################################################
 
-import os
-import errno
 import logging
-import sys
+from typing import Dict
 
 import pandas as pd
-from typing import Dict
-from pathlib import Path
-
 from neomodel import db
-from tqdm import tqdm
-
 from neomodel.exceptions import DoesNotExist
 
-from dgi.utils.progress_bar_factory import ProgressBarFactory
-
-# Import out packages
-from dgi.code2graph.process_facts import ConsumeFacts
-from dgi.models import MethodNode
 from dgi.code2graph.abstract_graph_builder import AbstractGraphBuilder
+# Import out packages
+from dgi.models import MethodNode
 from dgi.utils.logging import Log
+from dgi.utils.progress_bar_factory import ProgressBarFactory
 
 # Author information
 __author__ = "Rahul Krishna"
@@ -46,9 +37,8 @@ __status__ = "Research Prototype"
 
 
 class MethodGraphBuilder(AbstractGraphBuilder):
-    def __init__(self, opt):
-        self.opt = opt
-
+    """ Build a class level abstraction graph
+    """
     @staticmethod
     def _clear_all_nodes():
         """Delete all nodes"""
@@ -56,107 +46,6 @@ class MethodGraphBuilder(AbstractGraphBuilder):
         db.cypher_query("MATCH (n:MethodNode)-[r]-(m) DELETE r")
         db.cypher_query("MATCH (n)-[r]-(m:MethodNode) DELETE r")
         db.cypher_query("MATCH (n:MethodNode) DELETE n")
-        # count = 0
-        # for node in MethodNode.nodes.all():
-        #     count += 1
-        #     node.delete()
-        # Log.warn(f"Deleted {count} ClassNodes")
-
-    def _process_entrypoints(self):
-        """Annotate nodes with their entrypoint data"""
-        facts_dir = Path(self.opt.GRAPH_FACTS_DIR)
-
-        # ----------------
-        # Process Servlets
-        # ----------------
-        # Make sure all Servlet data files are available
-        if not facts_dir.joinpath(self.opt.JEE.SERVLET.GenericServlet).exists():
-            raise FileNotFoundError(
-                errno.ENOENT,
-                os.strerror(errno.ENOENT),
-                self.opt.JEE.SERVLET.GenericServlet,
-            )
-
-        if not facts_dir.joinpath(self.opt.JEE.SERVLET.WebServlet).exists():
-            raise FileNotFoundError(
-                errno.ENOENT, os.strerror(errno.ENOENT), self.opt.JEE.SERVLET.WebServlet
-            )
-
-        if not facts_dir.joinpath(self.opt.JEE.SERVLET.ServletFilter).exists():
-            raise FileNotFoundError(
-                errno.ENOENT,
-                os.strerror(errno.ENOENT),
-                self.opt.JEE.SERVLET.ServletFilter,
-            )
-
-        for key, fact_file in self.opt.JEE.SERVLET:
-            if not fact_file or not isinstance(fact_file, str):
-                continue
-            fact_file = facts_dir.joinpath(fact_file)
-            with open(fact_file, "r") as facts:
-                classes = facts.readlines()
-            for class_name in classes:
-                class_name = class_name.rstrip()
-                all_method_nodes = MethodNode.nodes.all()
-                for graph_node in all_method_nodes:
-                    if graph_node.node_class != class_name:
-                        continue
-                    graph_node.node_is_entrypoint = True
-                    graph_node.node_is_servlet = True
-                    graph_node.servlet_type = key
-                    graph_node.save()
-
-        # --------------
-        # Process Beans
-        # --------------
-
-        # Make sure all Beans data files are available
-        if not facts_dir.joinpath(self.opt.JEE.BEANS.EJBTransactionBean).exists():
-            raise FileNotFoundError(
-                errno.ENOENT,
-                os.strerror(errno.ENOENT),
-                self.opt.JEE.BEANS.EJBTransactionBean,
-            )
-
-        if not facts_dir.joinpath(self.opt.JEE.BEANS.SessionBean).exists():
-            raise FileNotFoundError(
-                errno.ENOENT, os.strerror(errno.ENOENT), self.opt.JEE.BEANS.SessionBean
-            )
-
-        if not facts_dir.joinpath(self.opt.JEE.BEANS.SingletonBean).exists():
-            raise FileNotFoundError(
-                errno.ENOENT,
-                os.strerror(errno.ENOENT),
-                self.opt.JEE.BEANS.SingletonBean,
-            )
-
-        if not facts_dir.joinpath(self.opt.JEE.BEANS.StatefulBean).exists():
-            raise FileNotFoundError(
-                errno.ENOENT, os.strerror(errno.ENOENT), self.opt.JEE.BEANS.StatefulBean
-            )
-
-        if not facts_dir.joinpath(self.opt.JEE.BEANS.StatelessBean).exists():
-            raise FileNotFoundError(
-                errno.ENOENT,
-                os.strerror(errno.ENOENT),
-                self.opt.JEE.BEANS.StatelessBean,
-            )
-
-        for key, fact_file in self.opt.JEE.BEANS:
-            if not fact_file or not isinstance(fact_file, str):
-                continue
-            fact_file = facts_dir.joinpath(fact_file)
-            with open(fact_file, "r") as facts:
-                classes = facts.readlines()
-            for class_name in classes:
-                all_method_nodes = MethodNode.nodes.all()
-                for graph_node in all_method_nodes:
-                    if graph_node.node_class != class_name:
-                        continue
-                    graph_node.node_is_entrypoint = True
-                    graph_node.node_is_bean = True
-                    graph_node.bean_type = key
-                    graph_node.save()
 
     def _create_prev_and_next_nodes(self, prev_meth: Dict, next_meth: Dict):
         """_summary_

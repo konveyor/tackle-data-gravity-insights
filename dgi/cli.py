@@ -116,9 +116,9 @@ def s2g(ctx, input, output):
     # Optionally write it output to json
     if output:
         Log.info(f"Writing: {output}")
-        with open(output, "w") as f:
+        with open(output, "w", encoding='utf-8') as file:
             contents = json.dumps(result, indent=4)
-            f.write(contents)
+            file.write(contents)
 
     if ctx.obj["validate"]:
         Log.info(f"File [{input}] validated.")
