@@ -17,24 +17,17 @@
 import re
 
 from neomodel import DoesNotExist
-from neomodel.exceptions import DoesNotExist
 
 # Import our modules
 from dgi.models import SQLTable, MethodNode
 from dgi.tx2graph.abstract_transaction_loader import AbstractTransactionLoader
-from dgi.utils.logging import Log
-
-# Debugging
-from ipdb import set_trace
 
 
 class MethodTransactionLoader(AbstractTransactionLoader):
-    def __init__(self) -> None:
-        super().__init__()
+    """CRUD operation at a method level.
+    """
 
-    def find_or_create_program_node(
-        self, method_signature: str, is_entrypoint=False
-    ) -> MethodNode:
+    def find_or_create_program_node(self, method_signature: str, is_entrypoint=False) -> MethodNode:
         method_name = method_signature.split(".")[-1]
         class_short_name = method_signature.split(".")[-2]
         class_name = ".".join(method_signature.split(".")[:-1])

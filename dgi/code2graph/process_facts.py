@@ -14,25 +14,21 @@
 # limitations under the License.
 ################################################################################
 
+import errno
+import json
 import os
 import re
-import sys
-import json
-import errno
 from csv import reader
-from ipdb import set_trace
-import pandas as pd
 from pathlib import Path
 from typing import Dict, Tuple
 
-# Add the main project path to the python path.
-proj_root = Path.cwd()
-sys.path.append(proj_root.__str__())
+import pandas as pd
 
 from dgi.utils.parse_config import Config
 
 
 class ConsumeFacts:
+    "Synthesize DOOP facts"
     def __init__(self, conf: Config) -> None:
         """Take raw datalog facts and convert them to a comsumable form.
 
@@ -42,6 +38,7 @@ class ConsumeFacts:
             opt_cfg (Config): Other configs
         """
         self.conf = conf
+        self.method_info = dict()
         self.__setup()
 
     def __setup(self) -> None:
@@ -91,8 +88,7 @@ class ConsumeFacts:
             str: JSON string representation of the doop context
 
         Notes:
-            Take the context information from: "[class_name_1/method_name_1/obj_name_1/id1, class_name_2/method_name_2/obj_name_2/id2]"
-            And, converts it to the following format:
+            Take the context information and convert it to:
             "{
                 {
                     "class": "class_name_1",
@@ -109,7 +105,7 @@ class ConsumeFacts:
             }"
         """
 
-        raw_str = re.sub("[\[\]]", "", raw)
+        raw_str = re.sub(r"[\[\]]", "", raw)  # noqa: W601
         raw_ctx_lst = raw_str.split(", ")
 
         for i, str_el in enumerate(raw_ctx_lst):
@@ -161,7 +157,8 @@ class ConsumeFacts:
         ctx_json_str = json.dumps(raw_ctx_lst)
 
         # Add the found context to a dictionary.
-        # NOTE: For now, we keep the values empty. In a later method (`_update_context_transistions(...)`), we update it lazily.
+        # NOTE: For now, we keep the values empty. In a later method (`_update_context_transistions(...)`),
+        # we update it lazily.
         self.contexts.update({ctx_json_str: {"prev": [], "next": []}})
 
         return raw_ctx_lst
@@ -225,8 +222,7 @@ class ConsumeFacts:
         Args:
             method_info_file (Path): Path to doop method information file
         """
-        self.method_info = dict()
-        with open(method_info_file, "r") as file_obj:
+        with open(method_info_file, "r", encoding='utf-8') as file_obj:
             csv_reader = reader(file_obj, delimiter="\t")
             for row in csv_reader:
                 key = "::".join(row[::-1][1:3])

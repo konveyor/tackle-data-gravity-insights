@@ -36,7 +36,7 @@ docker run -d --name neo4j \
 
 Save the bolt url for further use:
 ```
-export NEO4J_BOLT_URL="bolt://neo4j:konveyor@localhost:7687"    
+export NEO4J_BOLT_URL="bolt://neo4j:konveyor@localhost:7687"
 ```
 
 You can now use the `dgi` command to load information about your application into the graph database.

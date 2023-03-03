@@ -18,32 +18,27 @@ Tackle Data Gravity Insights
 
 Command Line Interface (CLI) for Tackle Data Gravity Insights
 """
-from collections import defaultdict
-from statistics import mode
-import os
-from pathlib import Path
-import random
-import sys
-import json
-import rich_click as click
-import logging
-from rich.logging import RichHandler
 import importlib.resources
+import json
+import sys
+from collections import defaultdict
+from pathlib import Path
+from statistics import mode
+
+import rich_click as click
 from cargo import Cargo
 from neomodel import config
-from simple_ddl_parser import parse_from_file
-from neomodel import config
-from ipdb import set_trace
 from neomodel.exceptions import DoesNotExist
+from simple_ddl_parser import parse_from_file
 
-# Import our packages
-from .schema2graph import schema_loader
 from dgi.models import ClassNode, MethodNode
-from .code2graph import ClassGraphBuilder, MethodGraphBuilder
-from .tx2graph import ClassTransactionLoader, MethodTransactionLoader
-from .utils.parse_config import Config
-from .utils.logging import Log
-import numpy as np
+
+from dgi.code2graph import ClassGraphBuilder, MethodGraphBuilder
+# Import our packages
+from dgi.schema2graph import schema_loader
+from dgi.tx2graph import ClassTransactionLoader, MethodTransactionLoader
+from dgi.utils.logging import Log
+from dgi.utils.parse_config import Config
 
 
 ######################################################################
@@ -125,9 +120,9 @@ def s2g(ctx, input, output):
     # Optionally write it output to json
     if output:
         Log.info(f"Writing: {output}")
-        with open(output, "w") as f:
+        with open(output, "w", encoding='utf-8') as file:
             contents = json.dumps(result, indent=4)
-            f.write(contents)
+            file.write(contents)
 
     if ctx.obj["validate"]:
         Log.info(f"File [{input}] validated.")
@@ -343,11 +338,9 @@ def partition(ctx, seed_input, partitions):
     )
 
     if seed_input is None:
-        init_labels = "auto"
-        metrics, assignments = cargo.run("auto", max_part=partitions)
+        _, assignments = cargo.run("auto", max_part=partitions)
     else:
-        init_labels = seed_input
-        metrics, assignments = cargo.run("file", labels_file=seed_input)
+        _, assignments = cargo.run("file", labels_file=seed_input)
 
     class_partitions = defaultdict(lambda: list())
 

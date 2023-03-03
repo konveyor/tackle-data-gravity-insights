@@ -15,7 +15,6 @@
 ################################################################################
 
 import re
-import sys
 
 import yaml
 import json
@@ -23,19 +22,16 @@ from neomodel import db
 from neomodel import StructuredNode
 from collections import OrderedDict
 from abc import ABC, abstractmethod
-from dgi.models import SQLTable, SQLColumn, MethodNode, ClassNode
 from dgi.utils.logging import Log
 from dgi.utils.progress_bar_factory import ProgressBarFactory
-from ipdb import set_trace
 
 from typing import Dict
 from dgi.tx2graph.utils import sqlexp
 
 
 class AbstractTransactionLoader(ABC):
-    def __init__(self) -> None:
-        super().__init__()
-
+    """ABC for tx2graph
+    """
     @staticmethod
     def _consume_and_process_label(label: str) -> Dict:
         """Format label into a proper JSON string
@@ -43,16 +39,15 @@ class AbstractTransactionLoader(ABC):
         Args:
         label (str): The label as an unformatted string
         """
-        label_raw: str = label
 
         # -- DiVA's JSON is malformed. Here, we fix those malformations --
-        label = re.sub("\n", "", label)
-        label = re.sub(" ", "", label)
-        label = re.sub("{", '{"', label)
-        label = re.sub(":", '":', label)
-        label = re.sub(",", ',"', label)
-        label = re.sub("\[", '["', label)
-        label = re.sub("\]", '"]', label)
+        label = re.sub(r"\n", "", label)
+        label = re.sub(r" ", "", label)
+        label = re.sub(r"{", '{"', label)
+        label = re.sub(r":", '":', label)
+        label = re.sub(r",", ',"', label)
+        label = re.sub(r"\[", '["', label)
+        label = re.sub(r"\]", '"]', label)
 
         # -- convert to json --
         label = json.loads(label)
