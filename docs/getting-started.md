@@ -50,7 +50,7 @@ You will need an instance of Neo4j to store the graphs that `dgi` creates. You c
 You must set an environment variable to let `dgi` know where to find this neo4j container.
 
 ```bash
-export NEO4J_BOLT_URL="bolt://neo4j:konveyor@localhost:7687"
+export NEO4J_BOLT_URL="neo4j://neo4j:konveyor@localhost:7687"
 ```
 
 ### Installation complete
