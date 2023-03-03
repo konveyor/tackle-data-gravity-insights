@@ -198,9 +198,13 @@ def tx2g(ctx, input, abstraction, force_clear):  # pylint: disable=redefined-bui
                 f"Validate mode: abstraction level is {abstraction.lower()}"
 =======
             Log.info(
+<<<<<<< HEAD
                 "Validate mode: abstraction level is {}".format(
                     abstraction.lower())
 >>>>>>> 613456c (Move logic within partition to a new package)
+=======
+                f"Validate mode: abstraction level is {abstraction.lower()}"
+>>>>>>> f9ccb48 (Added a CLI option to dgi partition to save the discovered partitions as a JSON file at a user provided path as 'partitions.json')
             )
             sys.exit()
 
@@ -217,9 +221,13 @@ def tx2g(ctx, input, abstraction, force_clear):  # pylint: disable=redefined-bui
                 f"Validate mode: abstraction level is {abstraction.lower()}"
 =======
             Log.info(
+<<<<<<< HEAD
                 "Validate mode: abstraction level is {}".format(
                     abstraction.lower())
 >>>>>>> 613456c (Move logic within partition to a new package)
+=======
+                f"Validate mode: abstraction level is {abstraction.lower()}"
+>>>>>>> f9ccb48 (Added a CLI option to dgi partition to save the discovered partitions as a JSON file at a user provided path as 'partitions.json')
             )
             sys.exit()
         class_transaction_loader.load_transactions(
@@ -233,9 +241,13 @@ def tx2g(ctx, input, abstraction, force_clear):  # pylint: disable=redefined-bui
                 f"Validate mode: abstraction level is {abstraction.lower()}"
 =======
             Log.info(
+<<<<<<< HEAD
                 "Validate mode: abstraction level is {}".format(
                     abstraction.lower())
 >>>>>>> 613456c (Move logic within partition to a new package)
+=======
+                f"Validate mode: abstraction level is {abstraction.lower()}"
+>>>>>>> f9ccb48 (Added a CLI option to dgi partition to save the discovered partitions as a JSON file at a user provided path as 'partitions.json')
             )
             sys.exit()
 
@@ -305,9 +317,13 @@ def c2g(ctx, input, abstraction):  # pylint: disable=redefined-builtin
                 f"Validate mode: abstraction level is {abstraction.lower()}"
 =======
             Log.info(
+<<<<<<< HEAD
                 "Validate mode: abstraction level is {}".format(
                     abstraction.lower())
 >>>>>>> 613456c (Move logic within partition to a new package)
+=======
+                f"Validate mode: abstraction level is {abstraction.lower()}"
+>>>>>>> f9ccb48 (Added a CLI option to dgi partition to save the discovered partitions as a JSON file at a user provided path as 'partitions.json')
             )
             sys.exit()
         Log.info("Full level abstraction adds both Class and Method nodes.")
@@ -321,9 +337,13 @@ def c2g(ctx, input, abstraction):  # pylint: disable=redefined-builtin
                 f"Validate mode: abstraction level is {abstraction.lower()}"
 =======
             Log.info(
+<<<<<<< HEAD
                 "Validate mode: abstraction level is {}".format(
                     abstraction.lower())
 >>>>>>> 613456c (Move logic within partition to a new package)
+=======
+                f"Validate mode: abstraction level is {abstraction.lower()}"
+>>>>>>> f9ccb48 (Added a CLI option to dgi partition to save the discovered partitions as a JSON file at a user provided path as 'partitions.json')
             )
             sys.exit()
         Log.info("Class level abstraction.")
@@ -336,9 +356,13 @@ def c2g(ctx, input, abstraction):  # pylint: disable=redefined-builtin
                 f"Validate mode: abstraction level is {abstraction.lower()}"
 =======
             Log.info(
+<<<<<<< HEAD
                 "Validate mode: abstraction level is {}".format(
                     abstraction.lower())
 >>>>>>> 613456c (Move logic within partition to a new package)
+=======
+                f"Validate mode: abstraction level is {abstraction.lower()}"
+>>>>>>> f9ccb48 (Added a CLI option to dgi partition to save the discovered partitions as a JSON file at a user provided path as 'partitions.json')
             )
             sys.exit()
         Log.info("Method level abstraction.")
@@ -381,10 +405,14 @@ def c2g(ctx, input, abstraction):  # pylint: disable=redefined-builtin
 )
 @click.pass_context
 <<<<<<< HEAD
+<<<<<<< HEAD
 def partition(ctx, seed_input, partitions_output, partitions):
 =======
 def partition(ctx, seed_input, output, partitions):
 >>>>>>> 613456c (Move logic within partition to a new package)
+=======
+def partition(ctx, seed_input, partitions_output, partitions):
+>>>>>>> f9ccb48 (Added a CLI option to dgi partition to save the discovered partitions as a JSON file at a user provided path as 'partitions.json')
     """Partition is a command runs the CARGO algorithm to (re-)partition a monolith into microservices"""
     Log.info("Partitioning the monolith with CARGO")
 
@@ -399,9 +427,14 @@ def partition(ctx, seed_input, output, partitions):
     auth_str, netloc = bolt_url.split("@")
     hostname, hostport = netloc.split(":")
 <<<<<<< HEAD
+<<<<<<< HEAD
     recommend_partitions(hostname, hostport, auth_str,
                          partitions_output, partitions, seed_input)
 =======
     recommend_partitions(hostname, hostport, auth_str, output,
                          seed_input, partitions, verbosity=ctx.obj["verbose"])
 >>>>>>> 613456c (Move logic within partition to a new package)
+=======
+    recommend_partitions(hostname, hostport, auth_str,
+                         partitions_output, partitions, seed_input)
+>>>>>>> f9ccb48 (Added a CLI option to dgi partition to save the discovered partitions as a JSON file at a user provided path as 'partitions.json')
