@@ -18,6 +18,7 @@
 Test cases for C2G CLI
 """
 import os
+import logging
 import unittest
 from click.testing import CliRunner
 from dgi.cli import cli
@@ -28,8 +29,7 @@ from py2neo import Graph
 ######################################################################
 
 
-NEO4J_BOLT_URL = os.getenv(
-    "NEO4J_BOLT_URL", "bolt://neo4j:konveyor@neo4j:7687")
+NEO4J_BOLT_URL = os.getenv("NEO4J_BOLT_URL", "bolt://neo4j:konveyor@neo4j:7687")
 
 
 class TestS2GCLI(unittest.TestCase):
@@ -39,7 +39,8 @@ class TestS2GCLI(unittest.TestCase):
         self.runner = CliRunner()
 
     def tearDown(self) -> None:
-        pass
+        g = Graph(NEO4J_BOLT_URL)
+        g.delete_all()
 
     def test_help(self):
         """Test help command"""
@@ -50,7 +51,7 @@ class TestS2GCLI(unittest.TestCase):
         """Test --input with no filename"""
         result = self.runner.invoke(cli, ["c2g", "--input"])
         self.assertNotEqual(result.exit_code, 0)
-        assert "Option '--input' requires an argument." in result.output
+        assert "Error: Option '--input' requires an argument." in result.output
 
     def test_not_found_output(self):
         """Test --input directory not found"""

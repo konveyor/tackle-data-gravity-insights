@@ -25,15 +25,14 @@ from wsgiref import validate
 from click.testing import CliRunner
 from dgi.cli import cli
 from py2neo import Graph
-from ipdb import set_trace
+import logging
 
 ######################################################################
 #  T X 2 G   C L I   T E S T   C A S E S
 ######################################################################
 
 
-NEO4J_BOLT_URL = os.getenv(
-    "NEO4J_BOLT_URL", "neo4j://neo4j:konveyor@neo4j:7687")
+NEO4J_BOLT_URL = os.getenv("NEO4J_BOLT_URL", "bolt://neo4j:konveyor@neo4j:7687")
 
 loglevel = logging.CRITICAL
 logging.basicConfig(level=loglevel)
@@ -46,7 +45,10 @@ class TestTX2GCLI(unittest.TestCase):
         self.runner = CliRunner()
 
     def tearDown(self) -> None:
-        pass
+        g = Graph(NEO4J_BOLT_URL)
+        g.delete_all()
+        nodes = len(g.nodes)
+        self.assertEquals(nodes, 0)
 
     def test_help(self):
         """Test help command"""
@@ -57,20 +59,20 @@ class TestTX2GCLI(unittest.TestCase):
         """Call with no arguments"""
         result = self.runner.invoke(cli, ["tx2g"])
         self.assertNotEqual(result.exit_code, 0)
-        assert "Missing option '--input' / '-i'." in result.output
+        assert "Error: Missing option '--input' / '-i'." in result.output
 
     def test_missing_input(self):
         """Test --input with no filename"""
         result = self.runner.invoke(cli, ["tx2g", "--input"])
         self.assertNotEqual(result.exit_code, 0)
-        assert "Option '--input' requires an argument." in result.output
+        assert "Error: Option '--input' requires an argument." in result.output
 
     def test_not_found_input(self):
         """Test --input with file not found"""
         result = self.runner.invoke(cli, ["tx2g", "--input", "foo"])
-        print(result.output)
+        self.assertEqual(result.exit_code, 2)
         assert (
-            "Invalid value for '--input' / '-i': Path 'foo' does not exist."
+            "Error: Invalid value for '--input' / '-i': Path 'foo' does not exist."
             in result.output
         )
 
@@ -86,14 +88,13 @@ class TestTX2GCLI(unittest.TestCase):
             ],
         )
         self.assertEqual(result.exit_code, 0)
-        assert "Validate mode" in result.output
+        assert "Verbose mode: ON" in result.output
 
     def test_good_output_with_http_param(self):
         """Test with good output *with* HTTP param"""
         result = self.runner.invoke(
             cli,
-            ["--clear", "tx2g", "--input",
-                "tests/fixtures/daytrader_transaction.json"],
+            ["--clear", "tx2g", "--input", "tests/fixtures/daytrader_transaction.json"],
         )
         self.assertEqual(result.exit_code, 0)
 
