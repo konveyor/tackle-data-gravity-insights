@@ -14,7 +14,7 @@ services:
     command: "sleep infinity"
     environment:
       FLASK_APP: service:app
-      NEO4J_BOLT_URL: "bolt://neo4j:tackle@neo4j:7687"
+      NEO4J_BOLT_URL: "neo4j://neo4j:tackle@neo4j:7687"
       GRAPH_FACTS_DIR: /app/doop-data/output
     networks:
       - dev
@@ -44,6 +44,6 @@ services:
 
 volumes:
   neo4j:
-    
+
 networks:
   dev: null

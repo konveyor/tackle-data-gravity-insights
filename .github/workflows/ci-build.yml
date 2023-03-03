@@ -20,14 +20,14 @@ jobs:
     # use a known build environment
     container: python:3.9-slim
 
-    # Required services    
+    # Required services
     services:
       neo4j:
         image: neo4j
         env:
           NEO4J_USERNAME: neo4j
           NEO4J_PASSWORD: test
-          NEO4J_AUTH: neo4j/test          
+          NEO4J_AUTH: neo4j/test      
         ports:
           - 7474:7474
           - 7687:7687
@@ -36,7 +36,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      
+  
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip wheel
@@ -52,7 +52,7 @@ jobs:
       - name: Run unit tests with nose
         run: nosetests
         env:
-          NEO4J_BOLT_URL: "bolt://neo4j:test@neo4j:7687"
+          NEO4J_BOLT_URL: "neo4j://neo4j:test@neo4j:7687"
 
       # - name: Upload code coverage
       #   uses: codecov/codecov-action@v2 
