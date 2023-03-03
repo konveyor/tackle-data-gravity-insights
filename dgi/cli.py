@@ -18,37 +18,28 @@ Tackle Data Gravity Insights
 
 Command Line Interface (CLI) for Tackle Data Gravity Insights
 """
-from collections import defaultdict
-from statistics import mode
 import os
 from pathlib import Path
-import random
 import sys
 import json
-import rich_click as click
-import logging
-from rich.logging import RichHandler
 import importlib.resources
-from cargo import Cargo
+import rich_click as click
 from neomodel import config
 from simple_ddl_parser import parse_from_file
-from neomodel import config
-from ipdb import set_trace
-from neomodel.exceptions import DoesNotExist
 
 # Import our packages
-from .schema2graph import schema_loader
-from dgi.models import ClassNode, MethodNode
-from .code2graph import ClassGraphBuilder, MethodGraphBuilder
-from .tx2graph import ClassTransactionLoader, MethodTransactionLoader
-from .utils.parse_config import Config
-from .utils.logging import Log
-import numpy as np
-
+from dgi.partitioning import recommend_partitions
+from dgi.schema2graph import schema_loader
+from dgi.code2graph import ClassGraphBuilder, MethodGraphBuilder
+from dgi.tx2graph import ClassTransactionLoader, MethodTransactionLoader
+from dgi.utils.parse_config import Config
+from dgi.utils.logging import Log
 
 ######################################################################
 # cli - Grouping for sub commands
 ######################################################################
+
+
 @click.group()
 @click.option(
     "--neo4j-bolt",
@@ -184,11 +175,13 @@ def tx2g(ctx, input, abstraction, force_clear):
     if abstraction.lower() == "full":
         if ctx.obj["validate"]:
             Log.info(
-                "Validate mode: abstraction level is {}".format(abstraction.lower())
+                "Validate mode: abstraction level is {}".format(
+                    abstraction.lower())
             )
             sys.exit()
 
-        class_transaction_loader.load_transactions(input, clear=ctx.obj["clear"])
+        class_transaction_loader.load_transactions(
+            input, clear=ctx.obj["clear"])
         # We don't want to clear the table node twice.
         # Otherwise, we'll lose the table nodes created above
         method_transaction_loader.load_transactions(input, clear=False)
@@ -196,7 +189,8 @@ def tx2g(ctx, input, abstraction, force_clear):
     elif abstraction.lower() == "class":
         if ctx.obj["validate"]:
             Log.info(
-                "Validate mode: abstraction level is {}".format(abstraction.lower())
+                "Validate mode: abstraction level is {}".format(
+                    abstraction.lower())
             )
             sys.exit()
         class_transaction_loader.load_transactions(
@@ -206,7 +200,8 @@ def tx2g(ctx, input, abstraction, force_clear):
     elif abstraction.lower() == "method":
         if ctx.obj["validate"]:
             Log.info(
-                "Validate mode: abstraction level is {}".format(abstraction.lower())
+                "Validate mode: abstraction level is {}".format(
+                    abstraction.lower())
             )
             sys.exit()
 
@@ -272,7 +267,8 @@ def c2g(ctx, input, abstraction):
     if abstraction.lower() == "full":
         if ctx.obj["validate"]:
             Log.info(
-                "Validate mode: abstraction level is {}".format(abstraction.lower())
+                "Validate mode: abstraction level is {}".format(
+                    abstraction.lower())
             )
             sys.exit()
         Log.info("Full level abstraction adds both Class and Method nodes.")
@@ -282,7 +278,8 @@ def c2g(ctx, input, abstraction):
     elif abstraction.lower() == "class":
         if ctx.obj["validate"]:
             Log.info(
-                "Validate mode: abstraction level is {}".format(abstraction.lower())
+                "Validate mode: abstraction level is {}".format(
+                    abstraction.lower())
             )
             sys.exit()
         Log.info("Class level abstraction.")
@@ -291,7 +288,8 @@ def c2g(ctx, input, abstraction):
     elif abstraction.lower() == "method":
         if ctx.obj["validate"]:
             Log.info(
-                "Validate mode: abstraction level is {}".format(abstraction.lower())
+                "Validate mode: abstraction level is {}".format(
+                    abstraction.lower())
             )
             sys.exit()
         Log.info("Method level abstraction.")
@@ -317,6 +315,13 @@ def c2g(ctx, input, abstraction):
     help="A file of user desired seed partitions.",
 )
 @click.option(
+    "--partitions-output",
+    "-o",
+    type=click.Path(exists=True, resolve_path=True, file_okay=True),
+    default=Path(os.getcwd()),
+    help="A destination to save the final partitions.",
+)
+@click.option(
     "--partitions",
     "-k",
     type=int,
@@ -326,7 +331,7 @@ def c2g(ctx, input, abstraction):
     show_default=True,
 )
 @click.pass_context
-def partition(ctx, seed_input, partitions):
+def partition(ctx, seed_input, output, partitions):
     """Partition is a command runs the CARGO algorithm to (re-)partition a monolith into microservices"""
     Log.info("Partitioning the monolith with CARGO")
 
@@ -334,37 +339,5 @@ def partition(ctx, seed_input, partitions):
     bolt_url = ctx.obj["bolt"].strip("bolt://")  # Strip scheme
     auth_str, netloc = bolt_url.split("@")
     hostname, hostport = netloc.split(":")
-    cargo = Cargo(
-        use_dgi=True,
-        dgi_neo4j_hostname=hostname,
-        dgi_neo4j_hostport=hostport,
-        dgi_neo4j_auth=auth_str,
-        verbose=ctx.obj["verbose"],
-    )
-
-    if seed_input is None:
-        init_labels = "auto"
-        metrics, assignments = cargo.run("auto", max_part=partitions)
-    else:
-        init_labels = seed_input
-        metrics, assignments = cargo.run("file", labels_file=seed_input)
-
-    class_partitions = defaultdict(lambda: list())
-
-    for method_signature, partition in assignments.items():
-        try:
-            dgi_method_node = MethodNode.nodes.get(node_method=method_signature)
-            dgi_method_node.partition_id = partition
-            dgi_method_node.save()
-        except DoesNotExist:
-            pass
-        class_name = method_signature.rsplit(".", 1)[0]
-        class_partitions[class_name].append(partition)
-
-    for class_name, methods_partitions in class_partitions.items():
-        try:
-            dgi_class_node = ClassNode.nodes.get(node_class=class_name)
-            dgi_class_node.partition_id = mode(methods_partitions)
-            dgi_class_node.save()
-        except DoesNotExist:
-            pass
+    recommend_partitions(hostname, hostport, auth_str, output,
+                         seed_input, partitions, verbosity=ctx.obj["verbose"])
