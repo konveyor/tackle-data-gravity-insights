@@ -49,7 +49,7 @@ from dgi.utils.parse_config import Config
     "--neo4j-bolt",
     "-n",
     envvar="NEO4J_BOLT_URL",
-    default="bolt://neo4j:konveyor@localhost:7687",
+    default="neo4j://neo4j:konveyor@localhost:7687",
     help="Neo4j Bolt URL",
 )
 @click.option(
@@ -178,20 +178,23 @@ def tx2g(ctx, input, abstraction, force_clear):
 
     if abstraction.lower() == "full":
         if ctx.obj["validate"]:
-            Log.info(
-                "Validate mode: abstraction level is {}".format(abstraction.lower())
+            click.echo(
+                "Validate mode: abstraction level is {}".format(
+                    abstraction.lower())
             )
             sys.exit()
 
-        class_transaction_loader.load_transactions(input, clear=ctx.obj["clear"])
+        class_transaction_loader.load_transactions(
+            input, clear=ctx.obj["clear"])
         # We don't want to clear the table node twice.
         # Otherwise, we'll lose the table nodes created above
         method_transaction_loader.load_transactions(input, clear=False)
 
     elif abstraction.lower() == "class":
         if ctx.obj["validate"]:
-            Log.info(
-                "Validate mode: abstraction level is {}".format(abstraction.lower())
+            click.echo(
+                "Validate mode: abstraction level is {}".format(
+                    abstraction.lower())
             )
             sys.exit()
         class_transaction_loader.load_transactions(
@@ -200,9 +203,8 @@ def tx2g(ctx, input, abstraction, force_clear):
 
     elif abstraction.lower() == "method":
         if ctx.obj["validate"]:
-            Log.info(
-                "Validate mode: abstraction level is {}".format(abstraction.lower())
-            )
+            click.echo("Validate mode: abstraction level is {}".format(
+                abstraction.lower()))
             sys.exit()
 
         method_transaction_loader.load_transactions(
@@ -238,7 +240,7 @@ def tx2g(ctx, input, abstraction, force_clear):
 )
 @click.pass_context
 def c2g(ctx, input, abstraction):
-    """Code2Graph add various program dependencies (i.e., call return, heap, and data) into the graph"""
+    """Code2Graph add various program dependencies (i.e., call return , heap, and data) into the graph"""
 
     Log.info("code2graph generator started.")
 
@@ -266,8 +268,9 @@ def c2g(ctx, input, abstraction):
 
     if abstraction.lower() == "full":
         if ctx.obj["validate"]:
-            Log.info(
-                "Validate mode: abstraction level is {}".format(abstraction.lower())
+            click.echo(
+                "Validate mode: abstraction level is {}".format(
+                    abstraction.lower())
             )
             sys.exit()
         Log.info("Full level abstraction adds both Class and Method nodes.")
@@ -276,8 +279,9 @@ def c2g(ctx, input, abstraction):
 
     elif abstraction.lower() == "class":
         if ctx.obj["validate"]:
-            Log.info(
-                "Validate mode: abstraction level is {}".format(abstraction.lower())
+            click.echo(
+                "Validate mode: abstraction level is {}".format(
+                    abstraction.lower())
             )
             sys.exit()
         Log.info("Class level abstraction.")
@@ -285,8 +289,9 @@ def c2g(ctx, input, abstraction):
 
     elif abstraction.lower() == "method":
         if ctx.obj["validate"]:
-            Log.info(
-                "Validate mode: abstraction level is {}".format(abstraction.lower())
+            click.echo(
+                "Validate mode: abstraction level is {}".format(
+                    abstraction.lower())
             )
             sys.exit()
         Log.info("Method level abstraction.")
@@ -322,11 +327,11 @@ def c2g(ctx, input, abstraction):
 )
 @click.pass_context
 def partition(ctx, seed_input, partitions):
-    """Partition is a command runs the CARGO algorithm to (re-)partition a monolith into microservices"""
+    """Partition is a command runs the CARGO algorithm to(re-)partition a monolith into microservices"""
     Log.info("Partitioning the monolith with CARGO")
 
     # Process the bolt url to be used by CARGO
-    bolt_url = ctx.obj["bolt"].strip("bolt://")  # Strip scheme
+    bolt_url = ctx.obj["bolt"].strip("neo4j://")  # Strip scheme
     auth_str, netloc = bolt_url.split("@")
     hostname, hostport = netloc.split(":")
     cargo = Cargo(
@@ -346,7 +351,8 @@ def partition(ctx, seed_input, partitions):
 
     for method_signature, partition in assignments.items():
         try:
-            dgi_method_node = MethodNode.nodes.get(node_method=method_signature)
+            dgi_method_node = MethodNode.nodes.get(
+                node_method=method_signature)
             dgi_method_node.partition_id = partition
             dgi_method_node.save()
         except DoesNotExist:

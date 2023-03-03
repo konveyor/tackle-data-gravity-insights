@@ -52,7 +52,7 @@ jobs:
       - name: Run unit tests with nose
         run: nosetests
         env:
-          NEO4J_BOLT_URL: "bolt://neo4j:test@neo4j:7687"
+          NEO4J_BOLT_URL: "neo4j://neo4j:test@neo4j:7687"
 
       # - name: Upload code coverage
       #   uses: codecov/codecov-action@v2 
