@@ -18,17 +18,26 @@ Tackle Data Gravity Insights
 
 Command Line Interface (CLI) for Tackle Data Gravity Insights
 """
+<<<<<<< HEAD
 import importlib.resources
 import json
 import os
 import sys
 from pathlib import Path
 
+=======
+import os
+from pathlib import Path
+import sys
+import json
+import importlib.resources
+>>>>>>> 613456c (Move logic within partition to a new package)
 import rich_click as click
 from neomodel import config
 from simple_ddl_parser import parse_from_file
 
 # Import our packages
+<<<<<<< HEAD
 from dgi.code2graph import ClassGraphBuilder, MethodGraphBuilder
 from dgi.partitioning.partition import recommend_partitions
 from dgi.schema2graph import schema_loader
@@ -36,10 +45,20 @@ from dgi.tx2graph import ClassTransactionLoader, MethodTransactionLoader
 from dgi.utils.logging import Log
 from dgi.utils.parse_config import Config
 
+=======
+from dgi.partitioning import recommend_partitions
+from dgi.schema2graph import schema_loader
+from dgi.code2graph import ClassGraphBuilder, MethodGraphBuilder
+from dgi.tx2graph import ClassTransactionLoader, MethodTransactionLoader
+from dgi.utils.parse_config import Config
+from dgi.utils.logging import Log
+>>>>>>> 613456c (Move logic within partition to a new package)
 
 ######################################################################
 # cli - Grouping for sub commands
 ######################################################################
+
+
 @click.group()
 @click.option(
     "--neo4j-bolt",
@@ -174,8 +193,14 @@ def tx2g(ctx, input, abstraction, force_clear):  # pylint: disable=redefined-bui
 
     if abstraction.lower() == "full":
         if ctx.obj["validate"]:
+<<<<<<< HEAD
             click.echo(
                 f"Validate mode: abstraction level is {abstraction.lower()}"
+=======
+            Log.info(
+                "Validate mode: abstraction level is {}".format(
+                    abstraction.lower())
+>>>>>>> 613456c (Move logic within partition to a new package)
             )
             sys.exit()
 
@@ -187,8 +212,14 @@ def tx2g(ctx, input, abstraction, force_clear):  # pylint: disable=redefined-bui
 
     elif abstraction.lower() == "class":
         if ctx.obj["validate"]:
+<<<<<<< HEAD
             click.echo(
                 f"Validate mode: abstraction level is {abstraction.lower()}"
+=======
+            Log.info(
+                "Validate mode: abstraction level is {}".format(
+                    abstraction.lower())
+>>>>>>> 613456c (Move logic within partition to a new package)
             )
             sys.exit()
         class_transaction_loader.load_transactions(
@@ -197,8 +228,14 @@ def tx2g(ctx, input, abstraction, force_clear):  # pylint: disable=redefined-bui
 
     elif abstraction.lower() == "method":
         if ctx.obj["validate"]:
+<<<<<<< HEAD
             click.echo(
                 f"Validate mode: abstraction level is {abstraction.lower()}"
+=======
+            Log.info(
+                "Validate mode: abstraction level is {}".format(
+                    abstraction.lower())
+>>>>>>> 613456c (Move logic within partition to a new package)
             )
             sys.exit()
 
@@ -263,8 +300,14 @@ def c2g(ctx, input, abstraction):  # pylint: disable=redefined-builtin
 
     if abstraction.lower() == "full":
         if ctx.obj["validate"]:
+<<<<<<< HEAD
             click.echo(
                 f"Validate mode: abstraction level is {abstraction.lower()}"
+=======
+            Log.info(
+                "Validate mode: abstraction level is {}".format(
+                    abstraction.lower())
+>>>>>>> 613456c (Move logic within partition to a new package)
             )
             sys.exit()
         Log.info("Full level abstraction adds both Class and Method nodes.")
@@ -273,8 +316,14 @@ def c2g(ctx, input, abstraction):  # pylint: disable=redefined-builtin
 
     elif abstraction.lower() == "class":
         if ctx.obj["validate"]:
+<<<<<<< HEAD
             click.echo(
                 f"Validate mode: abstraction level is {abstraction.lower()}"
+=======
+            Log.info(
+                "Validate mode: abstraction level is {}".format(
+                    abstraction.lower())
+>>>>>>> 613456c (Move logic within partition to a new package)
             )
             sys.exit()
         Log.info("Class level abstraction.")
@@ -282,8 +331,14 @@ def c2g(ctx, input, abstraction):  # pylint: disable=redefined-builtin
 
     elif abstraction.lower() == "method":
         if ctx.obj["validate"]:
+<<<<<<< HEAD
             click.echo(
                 f"Validate mode: abstraction level is {abstraction.lower()}"
+=======
+            Log.info(
+                "Validate mode: abstraction level is {}".format(
+                    abstraction.lower())
+>>>>>>> 613456c (Move logic within partition to a new package)
             )
             sys.exit()
         Log.info("Method level abstraction.")
@@ -325,7 +380,11 @@ def c2g(ctx, input, abstraction):  # pylint: disable=redefined-builtin
     show_default=True,
 )
 @click.pass_context
+<<<<<<< HEAD
 def partition(ctx, seed_input, partitions_output, partitions):
+=======
+def partition(ctx, seed_input, output, partitions):
+>>>>>>> 613456c (Move logic within partition to a new package)
     """Partition is a command runs the CARGO algorithm to (re-)partition a monolith into microservices"""
     Log.info("Partitioning the monolith with CARGO")
 
@@ -339,5 +398,10 @@ def partition(ctx, seed_input, partitions_output, partitions):
 
     auth_str, netloc = bolt_url.split("@")
     hostname, hostport = netloc.split(":")
+<<<<<<< HEAD
     recommend_partitions(hostname, hostport, auth_str,
                          partitions_output, partitions, seed_input)
+=======
+    recommend_partitions(hostname, hostport, auth_str, output,
+                         seed_input, partitions, verbosity=ctx.obj["verbose"])
+>>>>>>> 613456c (Move logic within partition to a new package)
