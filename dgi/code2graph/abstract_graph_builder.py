@@ -14,6 +14,11 @@
 # limitations under the License.
 ################################################################################
 
+"""
+Abstract Graph Builder
+
+This is the abstract base class for all of the graph builders
+"""
 from abc import ABC, abstractmethod
 from typing import Dict
 
@@ -31,6 +36,7 @@ __email__ = "rkrsn@ibm.com"
 __status__ = "Research Prototype"
 
 
+# pylint: disable=too-few-public-methods
 class AbstractGraphBuilder(ABC):
     """Abstract graph builder is a base class that is implemented by method and class graph builders.
     """

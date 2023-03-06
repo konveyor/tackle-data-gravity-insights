@@ -1,3 +1,4 @@
+# pylint: disable=duplicate-code
 ################################################################################
 # Copyright IBM Corporation 2021, 2022
 #
@@ -14,6 +15,14 @@
 # limitations under the License.
 ################################################################################
 
+"""
+Class Graph Builder Module
+
+This module builds a class level abstraction graph.
+It is very similar to the method graph builder but with ClassNodes
+
+"""
+
 import logging
 from typing import Dict
 
@@ -22,7 +31,7 @@ from neomodel import db
 from neomodel.exceptions import DoesNotExist
 
 from dgi.code2graph.abstract_graph_builder import AbstractGraphBuilder
-# Import out packages
+# Import local packages
 from dgi.models import ClassNode
 from dgi.utils import ProgressBarFactory
 from dgi.utils.logging import Log
@@ -36,6 +45,7 @@ __email__ = "rkrsn@ibm.com"
 __status__ = "Research Prototype"
 
 
+# pylint: disable=too-few-public-methods, duplicate-code
 class ClassGraphBuilder(AbstractGraphBuilder):
     """ Build a class level abstraction graph
     """

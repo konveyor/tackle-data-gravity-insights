@@ -14,6 +14,12 @@
 # limitations under the License.
 ################################################################################
 
+"""
+Process facts Module
+
+This module processes the facts from the code analysis
+"""
+
 import errno
 import json
 import os
@@ -38,14 +44,14 @@ class ConsumeFacts:
             opt_cfg (Config): Other configs
         """
         self.conf = conf
-        self.method_info = dict()
+        self.method_info = {}
         self.__setup()
 
     def __setup(self) -> None:
         """Perform some setup for auxiliary paths, data structures, etc."""
         self.absolute_facts_dir = Path(self.conf.GRAPH_FACTS_DIR)
-        self.method_info = dict()
-        self.contexts = dict()
+        self.method_info = {}
+        self.contexts = {}
 
     def _jsonify_method_string(self, raw: str) -> str:
         """Convert doop style method information to a json formatted string
@@ -163,7 +169,7 @@ class ConsumeFacts:
 
         return raw_ctx_lst
 
-    def _jsonify_heap_obj(self, heapobj_str: str) -> str:
+    def _jsonify_heap_obj(self, heapobj_str: str) -> str:  # pylint: disable=no-self-use
         """Create a JSON string from raw heap object string from doop
 
         Args:

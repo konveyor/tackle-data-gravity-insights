@@ -1,3 +1,4 @@
+# pylint: disable=duplicate-code
 ################################################################################
 # Copyright IBM Corporation 2021, 2022
 #
@@ -14,6 +15,13 @@
 # limitations under the License.
 ################################################################################
 
+"""
+Method Graph Builder Module
+
+This module builds a method level abstraction graph.
+It is very similar to the class graph builder but with MethodNodes
+"""
+
 import logging
 from typing import Dict
 
@@ -22,10 +30,10 @@ from neomodel import db
 from neomodel.exceptions import DoesNotExist
 
 from dgi.code2graph.abstract_graph_builder import AbstractGraphBuilder
-# Import out packages
+# Import local packages
 from dgi.models import MethodNode
+from dgi.utils import ProgressBarFactory
 from dgi.utils.logging import Log
-from dgi.utils.progress_bar_factory import ProgressBarFactory
 
 # Author information
 __author__ = "Rahul Krishna"
@@ -36,9 +44,11 @@ __email__ = "rkrsn@ibm.com"
 __status__ = "Research Prototype"
 
 
+# pylint: disable=too-few-public-methods, duplicate-code
 class MethodGraphBuilder(AbstractGraphBuilder):
-    """ Build a class level abstraction graph
+    """ Build a method level abstraction graph
     """
+
     @staticmethod
     def _clear_all_nodes():
         """Delete all nodes"""
