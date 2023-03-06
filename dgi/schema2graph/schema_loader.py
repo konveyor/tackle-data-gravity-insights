@@ -14,8 +14,12 @@
 # limitations under the License.
 ################################################################################
 
-# Install CLI for development with:
-#   pip install --editable .
+"""
+Schema Loader
+
+This module is responsible for loading the schema into the GraphDB
+"""
+
 from dgi.utils.progress_bar_factory import ProgressBarFactory
 from dgi.models import SQLColumn, SQLTable
 from dgi.utils.logging import Log
@@ -31,13 +35,51 @@ def remove_all_nodes():
         node.delete()
 
 
-def load_graph(result):  # noqa: C901
+def process_foreign_keys(all_foreign_keys: list):
+    """Processes the foreign key relations into the graph
+
+    Args:
+        all_foreign_keys (list): A list of foreign keys from the schema
+    """
+    Log.info("Processing foreign keys:")
+    with ProgressBarFactory.get_progress_bar() as prog_bar:
+        for entry in prog_bar.track(all_foreign_keys, total=len(all_foreign_keys)):
+            my_table_name = entry[0]
+            my_column_name = entry[1]
+            ref_table_name = entry[2]
+            ref_column_name = entry[3]
+            # Log.info(f"Processing foreign key from {my_table_name}.{my_column_name} to {ref_table_name}.{ref_column_name}")
+            my_tab = SQLTable.nodes.get(name=my_table_name)
+            if my_tab:
+                my_col = my_tab.columns.get(name=my_column_name)
+                if my_col:
+                    ref_tab = SQLTable.nodes.get(name=ref_table_name)
+                    if ref_tab:
+                        ref_col = ref_tab.columns.get(name=ref_column_name)
+                        if ref_col:
+                            # Log.info(f"Connecting {my_tab.name}.{my_col.name} to {ref_tab.name}.{ref_col.name}")
+                            my_col.foreign_key.connect(ref_col)
+                        else:
+                            Log.info(
+                                f"*** Error: Could not find reference column: {ref_column_name}"
+                            )
+                    else:
+                        Log.info(
+                            f"*** Error: Could not find reference table: {ref_table_name}"
+                        )
+                else:
+                    Log.info(f"*** Error: Could not find self column: {my_column_name}")
+            else:
+                Log.info(f"*** Error: Could not find self table: {my_table_name}")
+
+
+def load_graph(result):
     """Populates the graph from a dictionary"""
     all_foreign_keys = []
 
     Log.info("Processing schema tables:")
-    with ProgressBarFactory.get_progress_bar() as p:
-        for schema in p.track(result["tables"], total=len(result["tables"])):
+    with ProgressBarFactory.get_progress_bar() as prog_bar:
+        for schema in prog_bar.track(result["tables"], total=len(result["tables"])):
             # Log.info(schema["table_name"])
             table = SQLTable.nodes.get_or_none(name=schema["table_name"])
             if table:
@@ -80,37 +122,7 @@ def load_graph(result):  # noqa: C901
                         )
                     )
 
-    if len(all_foreign_keys) == 0:
+    if len(all_foreign_keys) > 0:
+        process_foreign_keys(all_foreign_keys)
+    else:
         Log.warn("No foreign key relationships found.")
-        return
-
-    Log.info("Processing foreign keys:")
-    with ProgressBarFactory.get_progress_bar() as p:
-        for entry in p.track(all_foreign_keys, total=len(all_foreign_keys)):
-            my_table_name = entry[0]
-            my_column_name = entry[1]
-            ref_table_name = entry[2]
-            ref_column_name = entry[3]
-            # Log.info(f"Processing foreign key from {my_table_name}.{my_column_name} to {ref_table_name}.{ref_column_name}")
-            my_tab = SQLTable.nodes.get(name=my_table_name)
-            if my_tab:
-                my_col = my_tab.columns.get(name=my_column_name)
-                if my_col:
-                    ref_tab = SQLTable.nodes.get(name=ref_table_name)
-                    if ref_tab:
-                        ref_col = ref_tab.columns.get(name=ref_column_name)
-                        if ref_col:
-                            # Log.info(f"Connecting {my_tab.name}.{my_col.name} to {ref_tab.name}.{ref_col.name}")
-                            my_col.foreign_key.connect(ref_col)
-                        else:
-                            Log.info(
-                                f"*** Error: Could not find reference column: {ref_column_name}"
-                            )
-                    else:
-                        Log.info(
-                            f"*** Error: Could not find reference table: {ref_table_name}"
-                        )
-                else:
-                    Log.info(f"*** Error: Could not find self column: {my_column_name}")
-            else:
-                Log.info(f"*** Error: Could not find self table: {my_table_name}")
