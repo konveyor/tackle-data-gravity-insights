@@ -339,6 +339,7 @@ def partition(ctx, seed_input, partitions_output, partitions):
     Log.info("Partitioning the monolith with CARGO")
 
     # Process the bolt url to be used by CARGO
+<<<<<<< HEAD
     if "bolt://" in ctx.obj["bolt"]:
         # Strip scheme (in case it starts with bolt://)
         bolt_url = ctx.obj["bolt"].removeprefix("bolt://")
@@ -349,6 +350,9 @@ def partition(ctx, seed_input, partitions_output, partitions):
         # Strip scheme (in case it starts with https://)
         bolt_url = ctx.obj["bolt"].removeprefix("https://")
 
+=======
+    bolt_url = ctx.obj["bolt"].removeprefix("neo4j://")  # Strip scheme
+>>>>>>> e6b52ad (fix an issue with rstrip. I am replacing it with str.removeprefix(...) instead)
     auth_str, netloc = bolt_url.split("@")
     hostname, hostport = netloc.split(":")
     recommend_partitions(hostname, hostport, auth_str,
