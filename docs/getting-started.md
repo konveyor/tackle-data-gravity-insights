@@ -266,6 +266,6 @@ In order to explore the neo4j graph, visit [http://localhost:7474/browser/](http
   
 * Under username, enter: `neo4j`
 
-* Under password, enter: `tackle`
+* Under password, enter: `konveyor`
   
 This should bring you to the browser page where you can explore the DGI graph.

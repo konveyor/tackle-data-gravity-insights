@@ -5,27 +5,31 @@
 	"service": "app",
 	"workspaceFolder": "/app",
 	"remoteUser": "vscode",
-	"settings": {},
-	"extensions": [
-		"VisualVisualStudioExptTeam.vscodeintellicodeStudio",
-		"ms-python.python",
-		"ms-python.vscode-pylance",
-		"ms-azuretools.vscode-docker",
-		"njpwerner.autodocstring",
-    	"wholroyd.jinja",
-		"yzhang.markdown-all-in-one",
-		"hnw.vscode-auto-open-markdown-preview",
-        "bierner.markdown-preview-github-styles",
-        "davidanson.vscode-markdownlint",
-		"donjayamanne.githistory",
-		"GitHub.vscode-pull-request-github",
-		"hbenl.vscode-test-explorer",
-		"redhat.fabric8-analytics",
-		"redhat.vscode-yaml",
-		"inercia.vscode-k3d",
-		"streetsidesoftware.code-spell-checker"
-	],
-    "postCreateCommand": "if test -f 'requirements.txt'; then sudo pip install -r requirements.txt; fi && sudo bash -c 'pip install -e .[dev]'",
+	"customizations": {
+		"vscode": {
+			"settings": {},
+			"extensions": [
+				"VisualVisualStudioExptTeam.vscodeintellicodeStudio",
+				"ms-python.python",
+				"ms-python.vscode-pylance",
+				"ms-azuretools.vscode-docker",
+				"njpwerner.autodocstring",
+				"wholroyd.jinja",
+				"yzhang.markdown-all-in-one",
+				"hnw.vscode-auto-open-markdown-preview",
+				"bierner.markdown-preview-github-styles",
+				"davidanson.vscode-markdownlint",
+				"donjayamanne.githistory",
+				"GitHub.vscode-pull-request-github",
+				"hbenl.vscode-test-explorer",
+				"redhat.fabric8-analytics",
+				"redhat.vscode-yaml",
+				"inercia.vscode-k3d",
+				"streetsidesoftware.code-spell-checker"
+			]		
+		}
+	},
+    "postCreateCommand": "sudo bash -c 'pip install -e .[dev]'",
 	"features": {
 		"docker-from-docker": "latest"
 	}
