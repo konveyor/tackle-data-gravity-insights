@@ -14,6 +14,9 @@
 # limitations under the License.
 ################################################################################
 
+"""
+Relationships Model
+"""
 from neomodel import (
     StringProperty,
     IntegerProperty,

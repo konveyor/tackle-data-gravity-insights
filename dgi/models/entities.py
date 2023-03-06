@@ -14,6 +14,10 @@
 # limitations under the License.
 ################################################################################
 
+"""
+Entities Model
+"""
+
 from neomodel import (
     StructuredNode,
     RelationshipTo,
@@ -44,6 +48,7 @@ __email__ = "rkrsn@ibm.com"
 __status__ = "Research Prototype"
 
 
+# pylint: disable=abstract-method
 class MethodNode(StructuredNode):
     """A basic node to be inherited. Every node has 3 relationships:
     1. Heap relationship
@@ -87,6 +92,7 @@ class MethodNode(StructuredNode):
     )
 
 
+# pylint: disable=abstract-method
 class ClassNode(StructuredNode):
     """A basic node to be inherited. Every node has 3 relationships:
     1. Heap relationship
@@ -125,6 +131,7 @@ class ClassNode(StructuredNode):
     )
 
 
+# pylint: disable=abstract-method
 class SQLColumn(StructuredNode):
     """Represents a column in an SQL table"""
 
@@ -136,6 +143,7 @@ class SQLColumn(StructuredNode):
     foreign_key = RelationshipTo("SQLColumn", "FOREIGN_KEY")
 
 
+# pylint: disable=abstract-method
 class SQLTable(StructuredNode):
     """Represents a table in an SQL database"""
 
