@@ -96,9 +96,9 @@ class Config:
         self._num_attributes += 1
 
         # If the value has environment variables, replace them with the correct values or the defaults
-        reg = re.compile("\${[^\}]*}")  # noqa: W601,W605
+        reg = re.compile("\${[^\}]*}")  # noqa: W601,W605 pylint: disable=W1401
         if isinstance(val, str) and reg.match(val):
-            raw_str = re.sub("[${\ }]", "", val)  # noqa: W601,W605
+            raw_str = re.sub("[${\ }]", "", val)  # noqa: W601,W605 pylint: disable=W1401
             sub_str = raw_str.split("|")
             env_val = sub_str[0]
             default = None
