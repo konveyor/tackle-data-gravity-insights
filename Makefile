@@ -25,5 +25,5 @@ test: ## Run the unit tests
 
 neo4j: ## Start Neo4J in Docker
 	$(info Starting Neo4J server...)
-	export NEO4J_BOLT_URL="neo4j://neo4j:tackle@localhost:7687"
-	docker run -d --name neo4j -p 7474:7474 -p 7687:7687 -e NEO4J_AUTH="neo4j/tackle" neo4j
+	export NEO4J_BOLT_URL="neo4j://neo4j:konveyor@localhost:7687"
+	docker run -d --name neo4j -p 7474:7474 -p 7687:7687 -e NEO4J_AUTH="neo4j/konveyor" neo4j:4.4.17
