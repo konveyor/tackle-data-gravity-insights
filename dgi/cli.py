@@ -105,7 +105,7 @@ def cli(ctx, validate, quiet, clear, neo4j_bolt):
     "--output", "-o", required=False, help="The JSON file to write the schema to"
 )
 @click.pass_context
-def s2g(ctx, input, output):
+def s2g(ctx, input, output):  # pylint: disable=redefined-builtin
     """Schema2Graph parses SQL schema (*.DDL file) into the graph"""
 
     # Read the DDL file
@@ -126,7 +126,7 @@ def s2g(ctx, input, output):
 
     if ctx.obj["validate"]:
         Log.info(f"File [{input}] validated.")
-        exit(0)
+        sys.exit(0)
 
     if ctx.obj["clear"]:
         Log.warn("Clear flag is turned ON. Clearing graph.")
@@ -167,7 +167,7 @@ def s2g(ctx, input, output):
     hidden=True,
 )
 @click.pass_context
-def tx2g(ctx, input, abstraction, force_clear):
+def tx2g(ctx, input, abstraction, force_clear):  # pylint: disable=redefined-builtin
     """Transaction2Graph add edges denoting CRUD operations to the graph."""
 
     if ctx.obj["verbose"]:
@@ -179,8 +179,7 @@ def tx2g(ctx, input, abstraction, force_clear):
     if abstraction.lower() == "full":
         if ctx.obj["validate"]:
             click.echo(
-                "Validate mode: abstraction level is {}".format(
-                    abstraction.lower())
+                f"Validate mode: abstraction level is {abstraction.lower()}"
             )
             sys.exit()
 
@@ -193,8 +192,7 @@ def tx2g(ctx, input, abstraction, force_clear):
     elif abstraction.lower() == "class":
         if ctx.obj["validate"]:
             click.echo(
-                "Validate mode: abstraction level is {}".format(
-                    abstraction.lower())
+                f"Validate mode: abstraction level is {abstraction.lower()}"
             )
             sys.exit()
         class_transaction_loader.load_transactions(
@@ -204,8 +202,7 @@ def tx2g(ctx, input, abstraction, force_clear):
     elif abstraction.lower() == "method":
         if ctx.obj["validate"]:
             click.echo(
-                "Validate mode: abstraction level is {}".format(
-                    abstraction.lower())
+                f"Validate mode: abstraction level is {abstraction.lower()}"
             )
             sys.exit()
 
@@ -241,7 +238,7 @@ def tx2g(ctx, input, abstraction, force_clear):
     show_default=True,
 )
 @click.pass_context
-def c2g(ctx, input, abstraction):
+def c2g(ctx, input, abstraction):  # pylint: disable=redefined-builtin
     """Code2Graph add various program dependencies (i.e., call return, heap, and data) into the graph"""
 
     Log.info("code2graph generator started.")
@@ -271,8 +268,7 @@ def c2g(ctx, input, abstraction):
     if abstraction.lower() == "full":
         if ctx.obj["validate"]:
             click.echo(
-                "Validate mode: abstraction level is {}".format(
-                    abstraction.lower())
+                f"Validate mode: abstraction level is {abstraction.lower()}"
             )
             sys.exit()
         Log.info("Full level abstraction adds both Class and Method nodes.")
@@ -282,8 +278,7 @@ def c2g(ctx, input, abstraction):
     elif abstraction.lower() == "class":
         if ctx.obj["validate"]:
             click.echo(
-                "Validate mode: abstraction level is {}".format(
-                    abstraction.lower())
+                f"Validate mode: abstraction level is {abstraction.lower()}"
             )
             sys.exit()
         Log.info("Class level abstraction.")
@@ -292,8 +287,7 @@ def c2g(ctx, input, abstraction):
     elif abstraction.lower() == "method":
         if ctx.obj["validate"]:
             click.echo(
-                "Validate mode: abstraction level is {}".format(
-                    abstraction.lower())
+                f"Validate mode: abstraction level is {abstraction.lower()}"
             )
             sys.exit()
         Log.info("Method level abstraction.")
@@ -351,16 +345,16 @@ def partition(ctx, seed_input, partitions):
 
     class_partitions = defaultdict(lambda: list())
 
-    for method_signature, partition in assignments.items():
+    for method_signature, partition_id in assignments.items():
         try:
             dgi_method_node = MethodNode.nodes.get(
                 node_method=method_signature)
-            dgi_method_node.partition_id = partition
+            dgi_method_node.partition_id = partition_id
             dgi_method_node.save()
         except DoesNotExist:
             pass
         class_name = method_signature.rsplit(".", 1)[0]
-        class_partitions[class_name].append(partition)
+        class_partitions[class_name].append(partition_id)
 
     for class_name, methods_partitions in class_partitions.items():
         try:
