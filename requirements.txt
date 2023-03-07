@@ -7,7 +7,7 @@ pandas~=1.4.1
 tqdm~=4.63.0
 rich~=12.6.0
 py2neo
-minerva-cargo==1.1
+minerva-cargo==1.1.0
 rich-click
 nose~=1.3.7
 pinocchio~=0.4.3
