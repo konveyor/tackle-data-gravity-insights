@@ -102,18 +102,18 @@ class TestS2GCLI(unittest.TestCase):
         self.assertEqual(result.exit_code, 0)
 
     def test_abstraction_level_is_wrong(self):
-        """Test raise exception when --abstraction set to 'gobbledygook'"""
+        """Test raise exception when --abstraction set to 'unknown'"""
         result = self.runner.invoke(
             cli,
             [
                 "--validate",
                 "c2g",
-                "--abstraction=gobbledygook",
+                "--abstraction=unknown",
                 "--input=tests/fixtures/doop_out",
             ],
         )
         self.assertIn(
-            "Invalid value for '--abstraction' / '-a': 'gobbledygook' is not one of 'class', 'method', 'full'.",
+            "Invalid value for '--abstraction' / '-a': 'unknown' is not one of 'class', 'method', 'full'.",
             result.output
         )
         self.assertEqual(result.exit_code, 2)

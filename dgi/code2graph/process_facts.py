@@ -169,7 +169,7 @@ class ConsumeFacts:
 
         return raw_ctx_lst
 
-    def _jsonify_heap_obj(self, heapobj_str: str) -> str:  # pylint: disable=no-self-use
+    def _jsonify_heap_obj(self, heapobj_str: str) -> str:
         """Create a JSON string from raw heap object string from doop
 
         Args:

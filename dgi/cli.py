@@ -250,7 +250,7 @@ def c2g(ctx, input, abstraction):  # pylint: disable=redefined-builtin
     # Initialize configurations
     # -------------------------
     proj_root = importlib.resources.files("dgi.code2graph")
-    usr_cfg = Config(config_file=proj_root.joinpath("etc", "config.yml"))
+    usr_cfg = Config(config_file=proj_root.joinpath("etc", "config.yml"))  # pylint: disable=E1121
     usr_cfg.load_config()
 
     # Add the input dir to configuration.
@@ -322,7 +322,7 @@ def c2g(ctx, input, abstraction):  # pylint: disable=redefined-builtin
     show_default=True,
 )
 @click.pass_context
-def partition(ctx, seed_input, partitions):
+def partition(ctx, seed_input, partitions):  # pylint: disable=too-many-function-args,too-many-locals
     """Partition is a command runs the CARGO algorithm to (re-)partition a monolith into microservices"""
     Log.info("Partitioning the monolith with CARGO")
 
@@ -343,7 +343,7 @@ def partition(ctx, seed_input, partitions):
     else:
         _, assignments = cargo.run("file", labels_file=seed_input)
 
-    class_partitions = defaultdict(lambda: list())
+    class_partitions = defaultdict(lambda: list())  # pylint: disable=unnecessary-lambda,use-list-literal
 
     for method_signature, partition_id in assignments.items():
         try:

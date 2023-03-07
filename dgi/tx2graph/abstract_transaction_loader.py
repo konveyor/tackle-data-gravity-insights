@@ -14,18 +14,21 @@
 # limitations under the License.
 ################################################################################
 
+"""
+Abstract Transaction Loader Module
+"""
+
 import re
 
-import yaml
 import json
-from neomodel import db
-from neomodel import StructuredNode
 from collections import OrderedDict
 from abc import ABC, abstractmethod
+from typing import Dict
+import yaml
+from neomodel import db
+from neomodel import StructuredNode
 from dgi.utils.logging import Log
 from dgi.utils.progress_bar_factory import ProgressBarFactory
-
-from typing import Dict
 from dgi.tx2graph.utils import sqlexp
 
 
@@ -70,46 +73,49 @@ class AbstractTransactionLoader(ABC):
             db.cypher_query("MATCH (n) DELETE n")
 
     def crud0(self, ast, write=False):
+        """Second stage CRUD"""
         if isinstance(ast, list):
             res = [set(), set()]
             for child in ast[1:]:
-                rs, ws = self.crud0(child, ast[0] != "select")
-                res[0] |= rs
-                res[1] |= ws
+                read_set, write_set = self.crud0(child, ast[0] != "select")
+                res[0] |= read_set
+                res[1] |= write_set
             return res
-        elif isinstance(ast, dict) and ":from" in ast:
-            ts = [
-                list(t.values())[0] if isinstance(t, dict) else t
-                for t in ast[":from"]
-                if not isinstance(t, tuple)
+
+        if isinstance(ast, dict) and ":from" in ast:
+            txn_set = [
+                list(txn.values())[0] if isinstance(txn, dict) else txn
+                for txn in ast[":from"]
+                if not isinstance(txn, tuple)
             ]
             res = set()
-            for t in ts:
-                if isinstance(t, list):
-                    res |= self.crud0(t, False)[0]
+            for txn in txn_set:
+                if isinstance(txn, list):
+                    res |= self.crud0(txn, False)[0]
                 else:
-                    res.add(t)
+                    res.add(txn)
             return [set(), res] if write else [res, set()]
-        else:
-            return [set(), set()]
+
+        return [set(), set()]
 
     def crud(self, sql):
-        r = sqlexp(sql.lower())
-        if r:
-            return self.crud0(r[1])
-        else:
-            return [set(), set()]
+        """First stage CRUD"""
+        resp = sqlexp(sql.lower())  # pylint: disable=not-callable
+        if resp:
+            return self.crud0(resp[1])
+        return [set(), set()]
 
-    def analyze(self, txs):
-        for tx in txs:
+    def analyze(self, txn_set):
+        """Analyze the transaction set"""
+        for txn in txn_set:
             stack = []
-            if tx["transaction"] and tx["transaction"][0]["sql"] != "BEGIN":
-                tx["transaction"] = [{"sql": "BEGIN"}] + tx["transaction"]
-            for op in tx["transaction"]:
-                if op["sql"] == "BEGIN":
+            if txn["transaction"] and txn["transaction"][0]["sql"] != "BEGIN":
+                txn["transaction"] = [{"sql": "BEGIN"}] + txn["transaction"]
+            for operand in txn["transaction"]:
+                if operand["sql"] == "BEGIN":
                     stack.append([set(), set()])
-                    op["rwset"] = stack[-1]
-                elif op["sql"] in ("COMMIT", "ROLLBACK"):
+                    operand["rwset"] = stack[-1]
+                elif operand["sql"] in ("COMMIT", "ROLLBACK"):
                     if len(stack) > 1:
                         stack[-2][0] |= stack[-1][0]
                         stack[-2][1] |= stack[-1][1]
@@ -117,10 +123,10 @@ class AbstractTransactionLoader(ABC):
                     stack[-1][1] = set(stack[-1][1])
                     stack.pop()
                 else:
-                    rs, ws = self.crud(op["sql"])
-                    stack[-1][0] |= rs
-                    stack[-1][1] |= ws
-        return txs
+                    read_set, write_set = self.crud(operand["sql"])
+                    stack[-1][0] |= read_set
+                    stack[-1][1] |= write_set
+        return txn_set
 
     @abstractmethod
     def find_or_create_program_node(self, method_signature: str) -> StructuredNode:
@@ -129,16 +135,14 @@ class AbstractTransactionLoader(ABC):
         Args:
             method_signature (_type_): The full method method signature
         """
-        pass
 
     @abstractmethod
-    def find_or_create_SQL_table_node(self, table_name: str) -> StructuredNode:
+    def find_or_create_sql_table_node(self, table_name: str) -> StructuredNode:
         """Create an nodes pertaining to a SQL Table.
 
         Args:
             table_name (str): The name of the table
         """
-        pass
 
     @abstractmethod
     def populate_transaction_read(self, label: dict, txid: int, table: str) -> None:
@@ -150,7 +154,6 @@ class AbstractTransactionLoader(ABC):
             txid (int):   This is the ID assigned to the transaction.
             table (str):  The is the name of the table.
         """
-        pass
 
     @abstractmethod
     def populate_transaction_write(self, label: dict, txid: int, table: str) -> None:
@@ -162,8 +165,8 @@ class AbstractTransactionLoader(ABC):
             txid (int):   This is the ID assigned to the transaction.
             table (str):  The is the name of the table.
         """
-        pass
 
+    # pylint: disable=too-many-arguments
     @abstractmethod
     def populate_transaction(
         self,
@@ -185,7 +188,6 @@ class AbstractTransactionLoader(ABC):
             transactions (str):  A list of all the transactions.
             action (str):        The action that initiated the transaction
         """
-        pass
 
     @abstractmethod
     def populate_transaction_callgraph(
@@ -198,9 +200,10 @@ class AbstractTransactionLoader(ABC):
             tx_id (int)      : This is the ID assigned to the transaction.
             entrypoint (str): The entrypoint that initiated this transaction.
         """
-        pass
 
     def tx2neo4j(self, transactions, label):
+        """Load the graphDB with transaction data"""
+
         # If there are no transactions to process, nothing to do here.
         if len(transactions) == 0:
             return
@@ -224,18 +227,17 @@ class AbstractTransactionLoader(ABC):
                     label, txid, read, write, each_transaction, action
                 )
 
-    def load_transactions(self, input, clear, force_clear=False):
+    def load_transactions(self, input_file, clear, force_clear=False):
+        """Load transactions data"""
 
-        # ----------------------
-        # Load transactions data
-        # ----------------------
         yaml.add_representer(
             OrderedDict,
             lambda dumper, data: dumper.represent_mapping(
                 "tag:yaml.org,2002:map", list(data.items())
             ),
         )
-        data = json.load(open(input), object_pairs_hook=OrderedDict)
+        # pylint: disable=consider-using-with,unspecified-encoding
+        data = json.load(open(input_file), object_pairs_hook=OrderedDict)
 
         # --------------------------
         # Remove all existing nodes?
@@ -243,11 +245,11 @@ class AbstractTransactionLoader(ABC):
         if clear:
             self._clear_all_nodes(force_clear)
 
-        Log.info("{}: Populating transactions".format(type(self).__name__))
+        Log.info(f"{type(self).__name__}: Populating transactions")
 
-        with ProgressBarFactory.get_progress_bar() as p:
-            for (c, entry) in p.track(enumerate(data), total=len(data)):
-                txs = self.analyze(entry["transactions"])
+        with ProgressBarFactory.get_progress_bar() as prog_bar:
+            for (_, entry) in prog_bar.track(enumerate(data), total=len(data)):
+                txn_set = self.analyze(entry["transactions"])
                 del entry["transactions"]
                 label = yaml.dump(entry, default_flow_style=True).strip()
-                self.tx2neo4j(txs, label)
+                self.tx2neo4j(txn_set, label)

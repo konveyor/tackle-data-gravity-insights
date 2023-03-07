@@ -1,3 +1,4 @@
+# pylint: disable=invalid-name,missing-function-docstring,not-callable,no-value-for-parameter,unnecessary-lambda
 ################################################################################
 # Copyright IBM Corporation 2021, 2022
 #
@@ -13,6 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ################################################################################
+
+"""
+SQL Parser Module
+"""
+
+# This code needs major cleanup! I am disabling the PyLint messages
+# until we can get someone to fix them properly. This code is an example
+# of how critical it is to use a good linter at the start of a project!
 
 from .peg import seq, choice, star, nil, pegop, pegcxt
 from .peg import match as match0
@@ -129,7 +138,7 @@ operator_tokens = [
 ]
 
 
-def token0(s):  # noqa: C901
+def token0(s):  # noqa: C901 pylint: disable=too-many-branches
     k0 = 0
     while k0 < len(s):
         if not s[k0].isspace():
@@ -152,7 +161,7 @@ def token0(s):  # noqa: C901
         while k < len(s):
             if s[k] == "." and p:
                 break
-            elif s[k] == ".":
+            if s[k] == ".":
                 p = True
             elif not s[k].isdigit():
                 break
@@ -166,6 +175,7 @@ def token0(s):  # noqa: C901
     return (s[k:], [s[k0:k]]) if k > k0 else ()
 
 
+# pylint: disable=consider-using-f-string
 @pegop
 def token1(s):
     r = token0(s)
@@ -232,16 +242,14 @@ def until(s, *ws):
 def match(e, r=None):
     if r is None:
         return match0(e, lambda s, v: s + [v.strip()])
-    else:
-        return match0(e, lambda s, v: r(s, v.strip()))
+    return match0(e, lambda s, v: r(s, v.strip()))
 
 
 def split(n):
     if "." not in n:
         return ("", n)
-    else:
-        p = n.rindex(".")
-        return (n[:p], n[p + 1:])
+    p = n.rindex(".")
+    return (n[:p], n[p + 1:])
 
 
 qname = seq(name, star(seq(op("."), name)))
@@ -251,16 +259,16 @@ paren = seq(
 )
 
 # skip until one of strs occurs, ignoring anything inside parenthesis
-until_ignoring_paren = lambda *strs: seq(   # noqa: E731
+until_ignoring_paren = lambda *strs: seq(   # noqa: E731 pylint: disable=unnecessary-lambda-assignment
     star(seq(until("(", ")", *strs), paren)), until("(", ")", *strs), until(*strs)
 )
 
-comma_sep = lambda e: seq(e, star(seq(op(","), e)))     # noqa: E731
-plus = lambda e: seq(e, star(e))    # noqa: E731
+comma_sep = lambda e: seq(e, star(seq(op(","), e)))     # noqa: E731 pylint: disable=unnecessary-lambda-assignment
+plus = lambda e: seq(e, star(e))    # noqa: E731 pylint: disable=unnecessary-lambda-assignment
 
 # [{ s[-1][None] : s[0] }] if len(s) == 2 and seq(qname, option(op('as')), name)(v) == ('', []) else
 
-ascxt = lambda e: match(    # noqa: E731
+ascxt = lambda e: match(    # noqa: E731 pylint: disable=unnecessary-lambda-assignment
     seq(e, option(seq(option(op("as")), match(name, lambda s, v: [{None: v}])))),
     lambda s, v: [{s[-1][None]: s[0] if len(s) == 2 else s[:-1]}]
     if s and isinstance(s[-1], dict) and None in s[-1]
@@ -361,7 +369,7 @@ tblexp = choice(
     seq(op("("), lambda s: tblsexp(s), op(")")),
 )
 
-frmcxt = lambda e: match(e, lambda s, _: [{":from": s}])    # noqa: E731
+frmcxt = lambda e: match(e, lambda s, _: [{":from": s}])  # noqa: E731 pylint: disable=unnecessary-lambda-assignment
 
 tblsexp = frmcxt(
     seq(
@@ -395,7 +403,7 @@ def unioncxt(e, fix):
 
 
 @pegcxt
-def withcxt(e, fix):
+def withcxt(e, fix):  # pylint: disable=unused-argument
     return choice(
         seq(
             op("with"),

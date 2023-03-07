@@ -14,6 +14,10 @@
 # limitations under the License.
 ################################################################################
 
+"""
+Class Transaction Loader Module
+"""
+
 import re
 from neomodel import DoesNotExist
 
@@ -40,7 +44,7 @@ class ClassTransactionLoader(AbstractTransactionLoader):
             ).save()
         return node
 
-    def find_or_create_SQL_table_node(self, table_name):
+    def find_or_create_sql_table_node(self, table_name):
         try:
             node = SQLTable.nodes.get(name=table_name)
         except DoesNotExist:
@@ -52,7 +56,7 @@ class ClassTransactionLoader(AbstractTransactionLoader):
         self, method_signature, txid, table, action, the_sql_query
     ) -> None:
         class_node = self.find_or_create_program_node(method_signature)
-        table_node = self.find_or_create_SQL_table_node(table)
+        table_node = self.find_or_create_sql_table_node(table)
         rel = class_node.transaction_read.relationship(table_node)
         if not rel:
             class_node.transaction_read.connect(
@@ -69,7 +73,7 @@ class ClassTransactionLoader(AbstractTransactionLoader):
         self, method_signature, txid, table, action, the_sql_query
     ):
         class_node = self.find_or_create_program_node(method_signature)
-        table_node = self.find_or_create_SQL_table_node(table)
+        table_node = self.find_or_create_sql_table_node(table)
         rel = class_node.transaction_write.relationship(table_node)
         if not rel:
             class_node.transaction_write.connect(
