@@ -57,21 +57,21 @@ class TestTX2GCLI(unittest.TestCase):
         """Call with no arguments"""
         result = self.runner.invoke(cli, ["tx2g"])
         self.assertNotEqual(result.exit_code, 0)
-        assert "Missing option '--input' / '-i'." in result.output
+        self.assertIn("Missing option '--input' / '-i'.", result.output)
 
     def test_missing_input(self):
         """Test --input with no filename"""
         result = self.runner.invoke(cli, ["tx2g", "--input"])
         self.assertNotEqual(result.exit_code, 0)
-        assert "Option '--input' requires an argument." in result.output
+        self.assertIn("Option '--input' requires an argument.", result.output)
 
     def test_not_found_input(self):
         """Test --input with file not found"""
         result = self.runner.invoke(cli, ["tx2g", "--input", "foo"])
         self.assertEqual(result.exit_code, 2)
-        assert (
-            "Invalid value for '--input' / '-i': Path 'foo' does not exist."
-            in result.output
+        self.assertIn(
+            "Invalid value for '--input' / '-i': Path 'foo' does not exist.",
+            result.output
         )
 
     def test_verbose_mode(self):
@@ -122,7 +122,7 @@ class TestTX2GCLI(unittest.TestCase):
                 "--input=tests/fixtures/daytrader_transaction.json",
             ],
         )
-        assert "abstraction level is class" in result.output
+        self.assertIn("abstraction level is class", result.output)
         self.assertEqual(result.exit_code, 0)
 
     def test_abstraction_level_is_method(self):
@@ -136,7 +136,7 @@ class TestTX2GCLI(unittest.TestCase):
                 "--input=tests/fixtures/daytrader_transaction.json",
             ],
         )
-        assert "abstraction level is method" in result.output
+        self.assertIn("abstraction level is method", result.output)
         self.assertEqual(result.exit_code, 0)
 
     def test_abstraction_level_is_full(self):
@@ -150,7 +150,7 @@ class TestTX2GCLI(unittest.TestCase):
                 "--input=tests/fixtures/daytrader_transaction.json",
             ],
         )
-        assert "abstraction level is full" in result.output
+        self.assertIn("abstraction level is full", result.output)
         self.assertEqual(result.exit_code, 0)
 
     def test_abstraction_level_is_wrong(self):
@@ -164,8 +164,8 @@ class TestTX2GCLI(unittest.TestCase):
                 "--input=tests/fixtures/daytrader_transaction.json",
             ],
         )
-        assert (
-            "Invalid value for '--abstraction' / '-a': 'gobbledygook' is not one of 'class', 'method', 'full'."
-            in result.output
+        self.assertIn(
+            "Invalid value for '--abstraction' / '-a': 'gobbledygook' is not one of 'class', 'method', 'full'.",
+            result.output
         )
         self.assertEqual(result.exit_code, 2)

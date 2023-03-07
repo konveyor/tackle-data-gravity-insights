@@ -51,13 +51,13 @@ class TestS2GCLI(unittest.TestCase):
         """Test --input with no filename"""
         result = self.runner.invoke(cli, ["c2g", "--input"])
         self.assertNotEqual(result.exit_code, 0)
-        assert "Option '--input' requires an argument." in result.output
+        self.assertIn("Option '--input' requires an argument.", result.output)
 
     def test_not_found_output(self):
         """Test --input directory not found"""
         result = self.runner.invoke(cli, ["c2g", "--input", "foo"])
         self.assertEqual(result.exit_code, 2)
-        assert "Directory 'foo' does not exist." in result.output
+        self.assertIn("Directory 'foo' does not exist.", result.output)
 
     def test_abstraction_level_is_class(self):
         """Test --abstraction set to 'class'"""
@@ -70,7 +70,7 @@ class TestS2GCLI(unittest.TestCase):
                 "--input=tests/fixtures/doop_out",
             ],
         )
-        assert "abstraction level is class" in result.output
+        self.assertIn("abstraction level is class", result.output)
         self.assertEqual(result.exit_code, 0)
 
     def test_abstraction_level_is_method(self):
@@ -84,7 +84,7 @@ class TestS2GCLI(unittest.TestCase):
                 "--input=tests/fixtures/doop_out",
             ],
         )
-        assert "abstraction level is method" in result.output
+        self.assertIn("abstraction level is method", result.output)
         self.assertEqual(result.exit_code, 0)
 
     def test_abstraction_level_is_full(self):
@@ -98,7 +98,7 @@ class TestS2GCLI(unittest.TestCase):
                 "--input=tests/fixtures/doop_out",
             ],
         )
-        assert "abstraction level is full" in result.output
+        self.assertIn("abstraction level is full", result.output)
         self.assertEqual(result.exit_code, 0)
 
     def test_abstraction_level_is_wrong(self):
@@ -112,8 +112,8 @@ class TestS2GCLI(unittest.TestCase):
                 "--input=tests/fixtures/doop_out",
             ],
         )
-        assert (
-            "Invalid value for '--abstraction' / '-a': 'gobbledygook' is not one of 'class', 'method', 'full'."
-            in result.output
+        self.assertIn(
+            "Invalid value for '--abstraction' / '-a': 'gobbledygook' is not one of 'class', 'method', 'full'.",
+            result.output
         )
         self.assertEqual(result.exit_code, 2)

@@ -52,6 +52,7 @@ jobs:
       - name: Run unit tests with nose
         run: nosetests
         env:
+          TERM: xterm-256color
           NEO4J_BOLT_URL: "neo4j://neo4j:konveyor@neo4j:7687"
 
       # - name: Upload code coverage
