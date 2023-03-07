@@ -20,21 +20,17 @@ Command Line Interface (CLI) for Tackle Data Gravity Insights
 """
 import importlib.resources
 import json
+import os
 import sys
-from collections import defaultdict
 from pathlib import Path
-from statistics import mode
 
 import rich_click as click
-from cargo import Cargo
 from neomodel import config
-from neomodel.exceptions import DoesNotExist
 from simple_ddl_parser import parse_from_file
 
-from dgi.models import ClassNode, MethodNode
-
-from dgi.code2graph import ClassGraphBuilder, MethodGraphBuilder
 # Import our packages
+from dgi.code2graph import ClassGraphBuilder, MethodGraphBuilder
+from dgi.partitioning.partition import recommend_partitions
 from dgi.schema2graph import schema_loader
 from dgi.tx2graph import ClassTransactionLoader, MethodTransactionLoader
 from dgi.utils.logging import Log
@@ -301,9 +297,9 @@ def c2g(ctx, input, abstraction):  # pylint: disable=redefined-builtin
     Log.info("code2graph build complete")
 
 
-########################################################################################################
-#  PARTITION - Runs the CARGO partitioning algorith on the DGI graph to recommend/refine µS partitioning
-########################################################################################################
+#########################################################################################################
+#  PARTITION - Runs the CARGO partitioning algorithm on the DGI graph to recommend/refine µS partitioning
+#########################################################################################################
 @cli.command()
 @click.option(
     "--seed-input",
@@ -311,6 +307,13 @@ def c2g(ctx, input, abstraction):  # pylint: disable=redefined-builtin
     type=click.Path(exists=True, resolve_path=True, file_okay=True),
     default=None,
     help="A file of user desired seed partitions.",
+)
+@click.option(
+    "--partitions-output",
+    "-o",
+    type=click.Path(exists=True, resolve_path=True, file_okay=True),
+    default=Path(os.getcwd()),
+    help="A destination to save the final partitions.",
 )
 @click.option(
     "--partitions",
@@ -322,44 +325,19 @@ def c2g(ctx, input, abstraction):  # pylint: disable=redefined-builtin
     show_default=True,
 )
 @click.pass_context
-def partition(ctx, seed_input, partitions):  # pylint: disable=too-many-function-args,too-many-locals
+def partition(ctx, seed_input, partitions_output, partitions):
     """Partition is a command runs the CARGO algorithm to (re-)partition a monolith into microservices"""
     Log.info("Partitioning the monolith with CARGO")
 
     # Process the bolt url to be used by CARGO
-    bolt_url = ctx.obj["bolt"].strip("neo4j://")  # Strip scheme
+    if "bolt://" in ctx.obj["bolt"]:
+        bolt_url = ctx.obj["bolt"].removeprefix("bolt://")  # Strip scheme (in case it starts with bolt://)
+    elif "neo4j://" in ctx.obj["bolt"]:
+        bolt_url = ctx.obj["bolt"].removeprefix("neo4j://")  # Strip scheme (in case it starts with neo4j://)
+    elif "https://" in ctx.obj["bolt"]:
+        bolt_url = ctx.obj["bolt"].removeprefix("https://")  # Strip scheme (in case it starts with https://)
+
     auth_str, netloc = bolt_url.split("@")
     hostname, hostport = netloc.split(":")
-    cargo = Cargo(
-        use_dgi=True,
-        dgi_neo4j_hostname=hostname,
-        dgi_neo4j_hostport=hostport,
-        dgi_neo4j_auth=auth_str,
-        verbose=ctx.obj["verbose"],
-    )
-
-    if seed_input is None:
-        _, assignments = cargo.run("auto", max_part=partitions)
-    else:
-        _, assignments = cargo.run("file", labels_file=seed_input)
-
-    class_partitions = defaultdict(lambda: list())  # pylint: disable=unnecessary-lambda,use-list-literal
-
-    for method_signature, partition_id in assignments.items():
-        try:
-            dgi_method_node = MethodNode.nodes.get(
-                node_method=method_signature)
-            dgi_method_node.partition_id = partition_id
-            dgi_method_node.save()
-        except DoesNotExist:
-            pass
-        class_name = method_signature.rsplit(".", 1)[0]
-        class_partitions[class_name].append(partition_id)
-
-    for class_name, methods_partitions in class_partitions.items():
-        try:
-            dgi_class_node = ClassNode.nodes.get(node_class=class_name)
-            dgi_class_node.partition_id = mode(methods_partitions)
-            dgi_class_node.save()
-        except DoesNotExist:
-            pass
+    recommend_partitions(hostname, hostport, auth_str,
+                         partitions_output, partitions, seed_input)

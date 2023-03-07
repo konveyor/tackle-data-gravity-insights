@@ -347,7 +347,7 @@ class ConsumeFacts:
 
         if not method_info_file.exists():
             raise FileNotFoundError(
-                errno.ENOENT, os.strerror(errno.ENOENT), method_info_file.__str__()
+                errno.ENOENT, os.strerror(errno.ENOENT), str(method_info_file)
             )
 
         self._process_method_info(method_info_file)
@@ -361,7 +361,7 @@ class ConsumeFacts:
 
         if not heap_facts_file.exists():
             raise FileNotFoundError(
-                errno.ENOENT, os.strerror(errno.ENOENT), heap_facts_file.__str__()
+                errno.ENOENT, os.strerror(errno.ENOENT), str(heap_facts_file)
             )
 
         heap_flows = self._process_heap_carried_dependencies(heap_facts_file)
@@ -375,7 +375,7 @@ class ConsumeFacts:
 
         if not data_dep_facts_file.exists():
             raise FileNotFoundError(
-                errno.ENOENT, os.strerror(errno.ENOENT), data_dep_facts_file.__str__()
+                errno.ENOENT, os.strerror(errno.ENOENT), str(data_dep_facts_file)
             )
 
         data_flows = self._process_data_dependencies(data_dep_facts_file)
@@ -392,12 +392,12 @@ class ConsumeFacts:
 
         if not call_dep_facts_file.exists():
             raise FileNotFoundError(
-                errno.ENOENT, os.strerror(errno.ENOENT), call_dep_facts_file.__str__()
+                errno.ENOENT, os.strerror(errno.ENOENT), str(call_dep_facts_file)
             )
 
         if not return_dep_facts_file.exists():
             raise FileNotFoundError(
-                errno.ENOENT, os.strerror(errno.ENOENT), return_dep_facts_file.__str__()
+                errno.ENOENT, os.strerror(errno.ENOENT), str(return_dep_facts_file)
             )
 
         call_return_flows = self._process_call_return_dependencies(
