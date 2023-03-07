@@ -330,7 +330,13 @@ def partition(ctx, seed_input, partitions_output, partitions):
     Log.info("Partitioning the monolith with CARGO")
 
     # Process the bolt url to be used by CARGO
-    bolt_url = ctx.obj["bolt"].removeprefix("neo4j://")  # Strip scheme
+    if "bolt://" in ctx.obj["bolt"]:
+        bolt_url = ctx.obj["bolt"].strip("bolt://")  # Strip scheme (in case it starts with bolt://)
+    elif "neo4j://" in ctx.obj["bolt"]:
+        bolt_url = ctx.obj["bolt"].strip("neo4j://")  # Strip scheme (in case it starts with neo4j://)
+    elif "https://" in ctx.obj["bolt"]:
+        bolt_url = ctx.obj["bolt"].strip("https://")  # Strip scheme (in case it starts with https://)
+
     auth_str, netloc = bolt_url.split("@")
     hostname, hostport = netloc.split(":")
     recommend_partitions(hostname, hostport, auth_str,
