@@ -331,11 +331,11 @@ def partition(ctx, seed_input, partitions_output, partitions):
 
     # Process the bolt url to be used by CARGO
     if "bolt://" in ctx.obj["bolt"]:
-        bolt_url = ctx.obj["bolt"].strip("bolt://")  # Strip scheme (in case it starts with bolt://)
+        bolt_url = ctx.obj["bolt"].removeprefix("bolt://")  # Strip scheme (in case it starts with bolt://)
     elif "neo4j://" in ctx.obj["bolt"]:
-        bolt_url = ctx.obj["bolt"].strip("neo4j://")  # Strip scheme (in case it starts with neo4j://)
+        bolt_url = ctx.obj["bolt"].removeprefix("neo4j://")  # Strip scheme (in case it starts with neo4j://)
     elif "https://" in ctx.obj["bolt"]:
-        bolt_url = ctx.obj["bolt"].strip("https://")  # Strip scheme (in case it starts with https://)
+        bolt_url = ctx.obj["bolt"].removeprefix("https://")  # Strip scheme (in case it starts with https://)
 
     auth_str, netloc = bolt_url.split("@")
     hostname, hostport = netloc.split(":")
