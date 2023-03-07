@@ -23,7 +23,7 @@ setup(
         "tqdm>=4.63.0",
         "rich>=12.6.0",
         "py2neo",
-        "minerva-cargo",
+        "minerva-cargo==1.1",
         "rich-click",
     ],
     classifiers=[
