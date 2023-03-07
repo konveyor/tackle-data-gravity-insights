@@ -45,7 +45,7 @@ from dgi.utils.logging import Log
     "--neo4j-bolt",
     "-n",
     envvar="NEO4J_BOLT_URL",
-    default="bolt://neo4j:konveyor@localhost:7687",
+    default="neo4j://neo4j:konveyor@localhost:7687",
     help="Neo4j Bolt URL",
 )
 @click.option(
@@ -336,7 +336,7 @@ def partition(ctx, seed_input, partitions_output, partitions):
         bolt_url = ctx.obj["bolt"].strip("neo4j://")  # Strip scheme (in case it starts with neo4j://)
     elif "https://" in ctx.obj["bolt"]:
         bolt_url = ctx.obj["bolt"].strip("https://")  # Strip scheme (in case it starts with https://)
-    
+
     auth_str, netloc = bolt_url.split("@")
     hostname, hostport = netloc.split(":")
     recommend_partitions(hostname, hostport, auth_str,
