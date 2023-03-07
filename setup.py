@@ -24,7 +24,7 @@ setup(
         "rich==13.3.2",
         "rich-click==1.6.1",
         "py2neo==2021.2.3",
-        "minerva-cargo>=1.0",
+        "minerva-cargo==1.1.0",
     ],
     classifiers=[
         "Development Status :: 4 - Beta"
