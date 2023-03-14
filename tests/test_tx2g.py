@@ -21,7 +21,6 @@ import os
 import logging
 import unittest
 from unittest.mock import patch
-from wsgiref import validate
 from click.testing import CliRunner
 from dgi.cli import cli
 from py2neo import Graph

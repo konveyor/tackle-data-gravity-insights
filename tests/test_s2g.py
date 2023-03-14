@@ -60,12 +60,12 @@ class TestS2GCLI(unittest.TestCase):
         self.assertNotEqual(result.exit_code, 0)
         self.assertIn("Missing option '--input' / '-i'.", result.output)
 
-    def test_missing_input(self):
+  def test_missing_input(self):
         """Test --input with no filename"""
         result = self.runner.invoke(cli, ["s2g", "--input"])
         self.assertNotEqual(result.exit_code, 0)
         self.assertIn("Option '--input' requires an argument.", result.output)
-
+        
     def test_not_found_output(self):
         """Test --input with file not found"""
         result = self.runner.invoke(cli, ["s2g", "--input", "foo"])
@@ -104,6 +104,7 @@ class TestS2GCLI(unittest.TestCase):
             ],
         )
         self.assertEqual(result.exit_code, 0)
+
 
     def test_neo_graph_count(self):
         """Test the number of nodes were populated"""
