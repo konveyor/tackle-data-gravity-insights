@@ -124,7 +124,8 @@ reserved_that_can_be_names = [
     "partition",
 ]
 
-what_only_follow_names = [")", ",", "as", "in", "on", "where", "then", "else", "inner"]
+what_only_follow_names = [")", ",", "as", "in",
+                          "on", "where", "then", "else", "inner"]
 
 operator_tokens = [
     "||",
@@ -259,21 +260,26 @@ paren = seq(
 )
 
 # skip until one of strs occurs, ignoring anything inside parenthesis
-until_ignoring_paren = lambda *strs: seq(   # noqa: E731 pylint: disable=unnecessary-lambda-assignment
-    star(seq(until("(", ")", *strs), paren)), until("(", ")", *strs), until(*strs)
+until_ignoring_paren = lambda *strs: seq(   # noqa: E0012,E731
+    star(seq(until("(", ")", *strs), paren)  # noqa: E0012,E731
+         ), until("(", ")", *strs), until(*strs)
 )
 
-comma_sep = lambda e: seq(e, star(seq(op(","), e)))     # noqa: E731 pylint: disable=unnecessary-lambda-assignment
-plus = lambda e: seq(e, star(e))    # noqa: E731 pylint: disable=unnecessary-lambda-assignment
+
+def comma_sep(e): return seq(e, star(seq(op(","), e)))     # noqa: E0012,E731 pylint: disable=unnecessary-lambda-assignment
+def plus(e): return seq(e, star(e))    # noqa: E0012,E731 pylint: disable=unnecessary-lambda-assignment
 
 # [{ s[-1][None] : s[0] }] if len(s) == 2 and seq(qname, option(op('as')), name)(v) == ('', []) else
 
-ascxt = lambda e: match(    # noqa: E731 pylint: disable=unnecessary-lambda-assignment
-    seq(e, option(seq(option(op("as")), match(name, lambda s, v: [{None: v}])))),
+
+def ascxt(e): return match(    # noqa: E0012,E731 pylint: disable=unnecessary-lambda-assignment
+    seq(e, option(seq(option(op("as")), match(
+        name, lambda s, v: [{None: v}])))),
     lambda s, v: [{s[-1][None]: s[0] if len(s) == 2 else s[:-1]}]
     if s and isinstance(s[-1], dict) and None in s[-1]
     else s,
 )
+
 
 func = choice(qname, variable, op("left"), op("right"), op("concat"))
 
@@ -281,7 +287,8 @@ callargs = choice(
     comma_sep(
         seq(
             option(choice(op("distinct"), op("all"))),
-            choice(lambda s: colexp(s), match(op("*"), lambda s, v: s + [(v,)])),
+            choice(lambda s: colexp(s), match(
+                op("*"), lambda s, v: s + [(v,)])),
         )
     ),
     nil,
@@ -310,7 +317,8 @@ caseexp = seq(
     op("case"),
     option(lambda s: colexp(s)),
     plus(
-        seq(op("when"), until_ignoring_paren("then"), op("then"), lambda s: colexp(s))
+        seq(op("when"), until_ignoring_paren(
+            "then"), op("then"), lambda s: colexp(s))
     ),
     option(seq(op("else"), lambda s: colexp(s))),
     op("end"),
@@ -357,7 +365,8 @@ colexp1 = match(
 colsexp = choice(comma_sep(colexp1), match(op("*"), lambda s, v: s + [(v,)]))
 
 jointype = choice(
-    seq(choice(op("left"), op("right"), op("full")), option(op("outer")), op("join")),
+    seq(choice(op("left"), op("right"), op("full")),
+        option(op("outer")), op("join")),
     seq(op("inner"), op("join")),
 )
 
@@ -369,7 +378,9 @@ tblexp = choice(
     seq(op("("), lambda s: tblsexp(s), op(")")),
 )
 
-frmcxt = lambda e: match(e, lambda s, _: [{":from": s}])  # noqa: E731 pylint: disable=unnecessary-lambda-assignment
+
+def frmcxt(e): return match(e, lambda s, _: [{":from": s}])  # noqa: E0012,E731 pylint: disable=unnecessary-lambda-assignment
+
 
 tblsexp = frmcxt(
     seq(
@@ -393,7 +404,8 @@ def unioncxt(e, fix):
             seq(
                 choice(seq(op("union"), option(op("all"))), op("except")),
                 match(
-                    choice(e, seq(op("("), choice(e, fix), op(")"))), lambda s, v: [s]
+                    choice(e, seq(op("("), choice(e, fix), op(")"))
+                           ), lambda s, v: [s]
                 ),
             )
         ),
@@ -450,7 +462,8 @@ condexp = seq(
                     option(op("not")),
                     choice(
                         seq(op("in"), choice(colexp, lambda s: nestedexp(s))),
-                        seq(op("like"), colexp, option(seq(op("escape"), colexp))),
+                        seq(op("like"), colexp, option(
+                            seq(op("escape"), colexp))),
                         seq(op("between"), colexp, op("and"), colexp),
                     ),
                 ),
@@ -491,13 +504,15 @@ havingexp = seq(op("having"), condexp)
 
 grpexp = seq(op("group"), op("by"), comma_sep(choice(qname, variable)))
 orderexp = seq(
-    op("order"), op("by"), comma_sep(seq(colexp, option(choice(op("asc"), op("desc")))))
+    op("order"), op("by"), comma_sep(
+        seq(colexp, option(choice(op("asc"), op("desc")))))
 )
 
 assignexp = seq(
     choice(
         match(qname, lambda s, v: s + [(v,)]),
-        seq(op("("), comma_sep(match(qname, lambda s, v: s + [(v,)])), op(")")),
+        seq(op("("), comma_sep(
+            match(qname, lambda s, v: s + [(v,)])), op(")")),
     ),
     op("="),
     colexp,
@@ -525,7 +540,8 @@ frmspec = seq(
             op("for"),
             op("update"),
             choice(
-                op("nowait"), seq(op("wait"), literal), seq(op("with"), op("rs")), nil
+                op("nowait"), seq(op("wait"), literal), seq(
+                    op("with"), op("rs")), nil
             ),
         )
     ),
@@ -570,7 +586,8 @@ insexp = withcxt(
             )
         ),
         op("values"),
-        choice(lambda s: nestedexp(s), seq(op("("), colsexp, op(")")), colsexp),
+        choice(lambda s: nestedexp(s), seq(
+            op("("), colsexp, op(")")), colsexp),
     )
 )
 delexp = withcxt(
@@ -594,7 +611,8 @@ nestedexp = seq(
     op(")"),
 )
 
-sqlexp = seq(choice(selexp, updexp, insexp, delexp, valuesexp), option(op(";")))
+sqlexp = seq(choice(selexp, updexp, insexp,
+             delexp, valuesexp), option(op(";")))
 
 if __name__ == "__main__":
     print(selexp("select a from b t,c where (a = b)"))
@@ -617,7 +635,8 @@ if __name__ == "__main__":
     print(
         sqlexp(
             "INSERT INTO holdingejb (HOLDINGID, PURCHASEDATE, PURCHASEPRICE, QUANTITY, "
-            "ACCOUNT_ACCOUNTID, QUOTE_SYMBOL) VALUES (?, ?, ?, ?, ?, ?)".lower()
+            "ACCOUNT_ACCOUNTID, QUOTE_SYMBOL) VALUES (?, ?, ?, ?, ?, ?)".lower(
+            )
         )
     )
     print(sqlexp("DELETE FROM orderejb WHERE (ORDERID = ?".lower()))

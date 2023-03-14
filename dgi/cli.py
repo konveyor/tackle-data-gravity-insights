@@ -33,7 +33,6 @@ from dgi.code2graph import ClassGraphBuilder, MethodGraphBuilder
 from dgi.partitioning.partition import recommend_partitions
 
 from dgi.schema2graph import schema_loader
-from dgi.code2graph import ClassGraphBuilder, MethodGraphBuilder
 from dgi.tx2graph import ClassTransactionLoader, MethodTransactionLoader
 from dgi.utils.parse_config import Config
 from dgi.utils.logging import Log
@@ -178,8 +177,7 @@ def tx2g(ctx, input, abstraction, force_clear):  # pylint: disable=redefined-bui
     if abstraction.lower() == "full":
         if ctx.obj["validate"]:
             Log.info(
-                "Validate mode: abstraction level is {}".format(
-                    abstraction.lower()))
+                f"Validate mode: abstraction level is {abstraction.lower()}")
 
             sys.exit()
 
@@ -192,8 +190,7 @@ def tx2g(ctx, input, abstraction, force_clear):  # pylint: disable=redefined-bui
     elif abstraction.lower() == "class":
         if ctx.obj["validate"]:
             Log.info(
-                "Validate mode: abstraction level is {}".format(
-                    abstraction.lower())
+                f"Validate mode: abstraction level is {abstraction.lower()}"
             )
             sys.exit()
         class_transaction_loader.load_transactions(
@@ -203,8 +200,7 @@ def tx2g(ctx, input, abstraction, force_clear):  # pylint: disable=redefined-bui
     elif abstraction.lower() == "method":
         if ctx.obj["validate"]:
             Log.info(
-                "Validate mode: abstraction level is {}".format(
-                    abstraction.lower())
+                f"Validate mode: abstraction level is {abstraction.lower()}"
             )
             sys.exit()
 
@@ -252,8 +248,7 @@ def c2g(ctx, input, abstraction):  # pylint: disable=redefined-builtin
     # Initialize configurations
     # -------------------------
     proj_root = importlib.resources.files("dgi.code2graph")
-    usr_cfg = Config(config_file=proj_root.joinpath(
-        "etc", "config.yml"))  # pylint: disable=E1121
+    usr_cfg = Config(config_file=proj_root.joinpath("etc", "config.yml"))  # pylint: disable=E1121
     usr_cfg.load_config()
 
     # Add the input dir to configuration.
@@ -271,8 +266,7 @@ def c2g(ctx, input, abstraction):  # pylint: disable=redefined-builtin
     if abstraction.lower() == "full":
         if ctx.obj["validate"]:
             Log.info(
-                "Validate mode: abstraction level is {}".format(
-                    abstraction.lower())
+                "Validate mode: abstraction level is {abstraction.lower()}"
             )
             sys.exit()
         Log.info("Full level abstraction adds both Class and Method nodes.")

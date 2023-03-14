@@ -35,6 +35,7 @@ from dgi.utils.parse_config import Config
 
 class ConsumeFacts:
     "Synthesize DOOP facts"
+
     def __init__(self, conf: Config) -> None:
         """Take raw datalog facts and convert them to a comsumable form.
 
@@ -140,7 +141,8 @@ class ConsumeFacts:
                 }
             else:
                 raw_substr = raw_ctx_lst[i].split("/")
-                class_name, method_signature = (*raw_substr[0][1:-1].split(": "),)
+                class_name, method_signature = (
+                    *raw_substr[0][1:-1].split(": "),)
                 try:
                     method_rtype, method_name, _ = (
                         *re.sub("[(:)]", " ", method_signature).split(),
@@ -169,7 +171,8 @@ class ConsumeFacts:
 
         return raw_ctx_lst
 
-    def _jsonify_heap_obj(self, heapobj_str: str) -> str:
+    @staticmethod
+    def _jsonify_heap_obj(heapobj_str: str) -> str:
         """Create a JSON string from raw heap object string from doop
 
         Args:
@@ -250,10 +253,14 @@ class ConsumeFacts:
         """
         heap_flows_df = pd.read_csv(fact_loc, header=None, delimiter="\t")
         heap_flows_df.columns = ["context", "heap_obj", "prev", "next"]
-        heap_flows_df.context = heap_flows_df.context.apply(self._jsonify_context)
-        heap_flows_df.prev = heap_flows_df.prev.apply(self._jsonify_method_string)
-        heap_flows_df.next = heap_flows_df.next.apply(self._jsonify_method_string)
-        heap_flows_df.heap_obj = heap_flows_df.heap_obj.apply(self._jsonify_heap_obj)
+        heap_flows_df.context = heap_flows_df.context.apply(
+            self._jsonify_context)
+        heap_flows_df.prev = heap_flows_df.prev.apply(
+            self._jsonify_method_string)
+        heap_flows_df.next = heap_flows_df.next.apply(
+            self._jsonify_method_string)
+        heap_flows_df.heap_obj = heap_flows_df.heap_obj.apply(
+            self._jsonify_heap_obj)
         return heap_flows_df
 
     def _process_call_return_dependencies(
@@ -268,22 +275,26 @@ class ConsumeFacts:
         Returns:
             pd.DataFrame: The dataframe containing processed call-return dependencies
         """
-        callret_flows_df = pd.read_csv(calls_fact_loc, header=None, delimiter="\t")
+        callret_flows_df = pd.read_csv(
+            calls_fact_loc, header=None, delimiter="\t")
         pd.concat(
             [
                 callret_flows_df,
                 pd.read_csv(returns_fact_loc, header=None, delimiter="\t"),
             ]
         )
-        callret_flows_df.columns = ["prev_context", "prev", "next_context", "next"]
+        callret_flows_df.columns = [
+            "prev_context", "prev", "next_context", "next"]
         callret_flows_df.prev_context = callret_flows_df.prev_context.apply(
             self._jsonify_context
         )
         callret_flows_df.next_context = callret_flows_df.next_context.apply(
             self._jsonify_context
         )
-        callret_flows_df.prev = callret_flows_df.prev.apply(self._jsonify_method_string)
-        callret_flows_df.next = callret_flows_df.next.apply(self._jsonify_method_string)
+        callret_flows_df.prev = callret_flows_df.prev.apply(
+            self._jsonify_method_string)
+        callret_flows_df.next = callret_flows_df.next.apply(
+            self._jsonify_method_string)
         return callret_flows_df
 
     def _process_data_dependencies(self, fact_loc: Path) -> pd.DataFrame:
@@ -297,9 +308,12 @@ class ConsumeFacts:
         """
         data_flows_df = pd.read_csv(fact_loc, header=None, delimiter="\t")
         data_flows_df.columns = ["context", "prev", "next"]
-        data_flows_df.context = data_flows_df.context.apply(self._jsonify_context)
-        data_flows_df.prev = data_flows_df.prev.apply(self._jsonify_method_string)
-        data_flows_df.next = data_flows_df.next.apply(self._jsonify_method_string)
+        data_flows_df.context = data_flows_df.context.apply(
+            self._jsonify_context)
+        data_flows_df.prev = data_flows_df.prev.apply(
+            self._jsonify_method_string)
+        data_flows_df.next = data_flows_df.next.apply(
+            self._jsonify_method_string)
         return data_flows_df
 
     def get_method_info(self) -> Dict:
@@ -375,7 +389,8 @@ class ConsumeFacts:
 
         if not data_dep_facts_file.exists():
             raise FileNotFoundError(
-                errno.ENOENT, os.strerror(errno.ENOENT), str(data_dep_facts_file)
+                errno.ENOENT, os.strerror(
+                    errno.ENOENT), str(data_dep_facts_file)
             )
 
         data_flows = self._process_data_dependencies(data_dep_facts_file)
@@ -392,12 +407,14 @@ class ConsumeFacts:
 
         if not call_dep_facts_file.exists():
             raise FileNotFoundError(
-                errno.ENOENT, os.strerror(errno.ENOENT), str(call_dep_facts_file)
+                errno.ENOENT, os.strerror(
+                    errno.ENOENT), str(call_dep_facts_file)
             )
 
         if not return_dep_facts_file.exists():
             raise FileNotFoundError(
-                errno.ENOENT, os.strerror(errno.ENOENT), str(return_dep_facts_file)
+                errno.ENOENT, os.strerror(
+                    errno.ENOENT), str(return_dep_facts_file)
             )
 
         call_return_flows = self._process_call_return_dependencies(
