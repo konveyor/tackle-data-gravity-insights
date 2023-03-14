@@ -18,26 +18,17 @@ Tackle Data Gravity Insights
 
 Command Line Interface (CLI) for Tackle Data Gravity Insights
 """
-<<<<<<< HEAD
 import importlib.resources
 import json
 import os
 import sys
 from pathlib import Path
 
-=======
-import os
-from pathlib import Path
-import sys
-import json
-import importlib.resources
->>>>>>> 613456c (Move logic within partition to a new package)
 import rich_click as click
 from neomodel import config
 from simple_ddl_parser import parse_from_file
 
 # Import our packages
-<<<<<<< HEAD
 from dgi.code2graph import ClassGraphBuilder, MethodGraphBuilder
 from dgi.partitioning.partition import recommend_partitions
 from dgi.schema2graph import schema_loader
@@ -45,14 +36,6 @@ from dgi.tx2graph import ClassTransactionLoader, MethodTransactionLoader
 from dgi.utils.logging import Log
 from dgi.utils.parse_config import Config
 
-=======
-from dgi.partitioning import recommend_partitions
-from dgi.schema2graph import schema_loader
-from dgi.code2graph import ClassGraphBuilder, MethodGraphBuilder
-from dgi.tx2graph import ClassTransactionLoader, MethodTransactionLoader
-from dgi.utils.parse_config import Config
-from dgi.utils.logging import Log
->>>>>>> 613456c (Move logic within partition to a new package)
 
 ######################################################################
 # cli - Grouping for sub commands
@@ -193,19 +176,10 @@ def tx2g(ctx, input, abstraction, force_clear):  # pylint: disable=redefined-bui
 
     if abstraction.lower() == "full":
         if ctx.obj["validate"]:
-<<<<<<< HEAD
-            click.echo(
-                f"Validate mode: abstraction level is {abstraction.lower()}"
-=======
             Log.info(
-<<<<<<< HEAD
                 "Validate mode: abstraction level is {}".format(
-                    abstraction.lower())
->>>>>>> 613456c (Move logic within partition to a new package)
-=======
-                f"Validate mode: abstraction level is {abstraction.lower()}"
->>>>>>> f9ccb48 (Added a CLI option to dgi partition to save the discovered partitions as a JSON file at a user provided path as 'partitions.json')
-            )
+                    abstraction.lower()))
+
             sys.exit()
 
         class_transaction_loader.load_transactions(
@@ -216,18 +190,9 @@ def tx2g(ctx, input, abstraction, force_clear):  # pylint: disable=redefined-bui
 
     elif abstraction.lower() == "class":
         if ctx.obj["validate"]:
-<<<<<<< HEAD
-            click.echo(
-                f"Validate mode: abstraction level is {abstraction.lower()}"
-=======
             Log.info(
-<<<<<<< HEAD
                 "Validate mode: abstraction level is {}".format(
                     abstraction.lower())
->>>>>>> 613456c (Move logic within partition to a new package)
-=======
-                f"Validate mode: abstraction level is {abstraction.lower()}"
->>>>>>> f9ccb48 (Added a CLI option to dgi partition to save the discovered partitions as a JSON file at a user provided path as 'partitions.json')
             )
             sys.exit()
         class_transaction_loader.load_transactions(
@@ -236,18 +201,9 @@ def tx2g(ctx, input, abstraction, force_clear):  # pylint: disable=redefined-bui
 
     elif abstraction.lower() == "method":
         if ctx.obj["validate"]:
-<<<<<<< HEAD
-            click.echo(
-                f"Validate mode: abstraction level is {abstraction.lower()}"
-=======
             Log.info(
-<<<<<<< HEAD
                 "Validate mode: abstraction level is {}".format(
                     abstraction.lower())
->>>>>>> 613456c (Move logic within partition to a new package)
-=======
-                f"Validate mode: abstraction level is {abstraction.lower()}"
->>>>>>> f9ccb48 (Added a CLI option to dgi partition to save the discovered partitions as a JSON file at a user provided path as 'partitions.json')
             )
             sys.exit()
 
@@ -295,7 +251,8 @@ def c2g(ctx, input, abstraction):  # pylint: disable=redefined-builtin
     # Initialize configurations
     # -------------------------
     proj_root = importlib.resources.files("dgi.code2graph")
-    usr_cfg = Config(config_file=proj_root.joinpath("etc", "config.yml"))  # pylint: disable=E1121
+    usr_cfg = Config(config_file=proj_root.joinpath(
+        "etc", "config.yml"))  # pylint: disable=E1121
     usr_cfg.load_config()
 
     # Add the input dir to configuration.
@@ -312,18 +269,9 @@ def c2g(ctx, input, abstraction):  # pylint: disable=redefined-builtin
 
     if abstraction.lower() == "full":
         if ctx.obj["validate"]:
-<<<<<<< HEAD
-            click.echo(
-                f"Validate mode: abstraction level is {abstraction.lower()}"
-=======
             Log.info(
-<<<<<<< HEAD
                 "Validate mode: abstraction level is {}".format(
                     abstraction.lower())
->>>>>>> 613456c (Move logic within partition to a new package)
-=======
-                f"Validate mode: abstraction level is {abstraction.lower()}"
->>>>>>> f9ccb48 (Added a CLI option to dgi partition to save the discovered partitions as a JSON file at a user provided path as 'partitions.json')
             )
             sys.exit()
         Log.info("Full level abstraction adds both Class and Method nodes.")
@@ -332,18 +280,9 @@ def c2g(ctx, input, abstraction):  # pylint: disable=redefined-builtin
 
     elif abstraction.lower() == "class":
         if ctx.obj["validate"]:
-<<<<<<< HEAD
-            click.echo(
-                f"Validate mode: abstraction level is {abstraction.lower()}"
-=======
             Log.info(
-<<<<<<< HEAD
                 "Validate mode: abstraction level is {}".format(
                     abstraction.lower())
->>>>>>> 613456c (Move logic within partition to a new package)
-=======
-                f"Validate mode: abstraction level is {abstraction.lower()}"
->>>>>>> f9ccb48 (Added a CLI option to dgi partition to save the discovered partitions as a JSON file at a user provided path as 'partitions.json')
             )
             sys.exit()
         Log.info("Class level abstraction.")
@@ -351,18 +290,9 @@ def c2g(ctx, input, abstraction):  # pylint: disable=redefined-builtin
 
     elif abstraction.lower() == "method":
         if ctx.obj["validate"]:
-<<<<<<< HEAD
-            click.echo(
-                f"Validate mode: abstraction level is {abstraction.lower()}"
-=======
             Log.info(
-<<<<<<< HEAD
                 "Validate mode: abstraction level is {}".format(
                     abstraction.lower())
->>>>>>> 613456c (Move logic within partition to a new package)
-=======
-                f"Validate mode: abstraction level is {abstraction.lower()}"
->>>>>>> f9ccb48 (Added a CLI option to dgi partition to save the discovered partitions as a JSON file at a user provided path as 'partitions.json')
             )
             sys.exit()
         Log.info("Method level abstraction.")
@@ -404,37 +334,22 @@ def c2g(ctx, input, abstraction):  # pylint: disable=redefined-builtin
     show_default=True,
 )
 @click.pass_context
-<<<<<<< HEAD
-<<<<<<< HEAD
 def partition(ctx, seed_input, partitions_output, partitions):
-=======
-def partition(ctx, seed_input, output, partitions):
->>>>>>> 613456c (Move logic within partition to a new package)
-=======
-def partition(ctx, seed_input, partitions_output, partitions):
->>>>>>> f9ccb48 (Added a CLI option to dgi partition to save the discovered partitions as a JSON file at a user provided path as 'partitions.json')
     """Partition is a command runs the CARGO algorithm to (re-)partition a monolith into microservices"""
     Log.info("Partitioning the monolith with CARGO")
 
     # Process the bolt url to be used by CARGO
     if "bolt://" in ctx.obj["bolt"]:
-        bolt_url = ctx.obj["bolt"].removeprefix("bolt://")  # Strip scheme (in case it starts with bolt://)
+        # Strip scheme (in case it starts with bolt://)
+        bolt_url = ctx.obj["bolt"].removeprefix("bolt://")
     elif "neo4j://" in ctx.obj["bolt"]:
-        bolt_url = ctx.obj["bolt"].removeprefix("neo4j://")  # Strip scheme (in case it starts with neo4j://)
+        # Strip scheme (in case it starts with neo4j://)
+        bolt_url = ctx.obj["bolt"].removeprefix("neo4j://")
     elif "https://" in ctx.obj["bolt"]:
-        bolt_url = ctx.obj["bolt"].removeprefix("https://")  # Strip scheme (in case it starts with https://)
+        # Strip scheme (in case it starts with https://)
+        bolt_url = ctx.obj["bolt"].removeprefix("https://")
 
     auth_str, netloc = bolt_url.split("@")
     hostname, hostport = netloc.split(":")
-<<<<<<< HEAD
-<<<<<<< HEAD
     recommend_partitions(hostname, hostport, auth_str,
                          partitions_output, partitions, seed_input)
-=======
-    recommend_partitions(hostname, hostport, auth_str, output,
-                         seed_input, partitions, verbosity=ctx.obj["verbose"])
->>>>>>> 613456c (Move logic within partition to a new package)
-=======
-    recommend_partitions(hostname, hostport, auth_str,
-                         partitions_output, partitions, seed_input)
->>>>>>> f9ccb48 (Added a CLI option to dgi partition to save the discovered partitions as a JSON file at a user provided path as 'partitions.json')
