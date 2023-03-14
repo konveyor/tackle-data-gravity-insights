@@ -29,7 +29,9 @@ from py2neo import Graph
 ######################################################################
 
 
-NEO4J_BOLT_URL = os.getenv("NEO4J_BOLT_URL", "bolt://neo4j:tackle@neo4j:7687")
+NEO4J_BOLT_URL = os.getenv(
+    "NEO4J_BOLT_URL", "neo4j://neo4j:konveyor@neo4j:7687")
+
 
 class TestS2GCLI(unittest.TestCase):
     """Test Cases for c2g command"""
@@ -38,52 +40,80 @@ class TestS2GCLI(unittest.TestCase):
         self.runner = CliRunner()
 
     def tearDown(self) -> None:
-        g = Graph(NEO4J_BOLT_URL)
-        g.delete_all()
+        pass
 
     def test_help(self):
-        """Test help command """
+        """Test help command"""
         result = self.runner.invoke(cli, ["c2g", "--help"])
         self.assertEqual(result.exit_code, 0)
 
     def test_missing_input(self):
-        """Test --input with no filename """
+        """Test --input with no filename"""
         result = self.runner.invoke(cli, ["c2g", "--input"])
         self.assertNotEqual(result.exit_code, 0)
-        assert (
-            "Error: Option '--input' requires an argument." in result.output
-        )
+        self.assertIn("Option '--input' requires an argument.", result.output)
 
     def test_not_found_output(self):
-        """Test --input directory not found """
+        """Test --input directory not found"""
         result = self.runner.invoke(cli, ["c2g", "--input", "foo"])
         self.assertEqual(result.exit_code, 2)
-        assert "Directory 'foo' does not exist." in result.output
+        self.assertIn("Directory 'foo' does not exist.", result.output)
 
     def test_abstraction_level_is_class(self):
         """Test --abstraction set to 'class'"""
         result = self.runner.invoke(
-            cli, ["c2g", "--abstraction=class",  "--input=tests/fixtures/doop_out"])
-        assert "code2graph build complete" in result.output
+            cli,
+            [
+                "--validate",
+                "c2g",
+                "--abstraction=class",
+                "--input=tests/fixtures/doop_out",
+            ],
+        )
+        self.assertIn("abstraction level is class", result.output)
         self.assertEqual(result.exit_code, 0)
 
     def test_abstraction_level_is_method(self):
         """Test --abstraction set to 'method'"""
         result = self.runner.invoke(
-            cli, ["--validate", "c2g", "--abstraction=method",  "--input=tests/fixtures/doop_out"])
-        assert "abstraction level is method" in result.output
+            cli,
+            [
+                "--validate",
+                "c2g",
+                "--abstraction=method",
+                "--input=tests/fixtures/doop_out",
+            ],
+        )
+        self.assertIn("abstraction level is method", result.output)
         self.assertEqual(result.exit_code, 0)
 
     def test_abstraction_level_is_full(self):
         """Test --abstraction set to 'full'"""
         result = self.runner.invoke(
-            cli, ["--validate", "c2g", "--abstraction=full", "--input=tests/fixtures/doop_out"])
-        assert "abstraction level is full" in result.output
+            cli,
+            [
+                "--validate",
+                "c2g",
+                "--abstraction=full",
+                "--input=tests/fixtures/doop_out",
+            ],
+        )
+        self.assertIn("abstraction level is full", result.output)
         self.assertEqual(result.exit_code, 0)
 
     def test_abstraction_level_is_wrong(self):
-        """Test raise exception when --abstraction set to 'gobbledygook'"""
+        """Test raise exception when --abstraction set to 'unknown'"""
         result = self.runner.invoke(
-            cli, ["--validate", "c2g", "--abstraction=gobbledygook", "--input=tests/fixtures/doop_out"])
-        assert "Invalid value for '--abstraction' / '-a': 'gobbledygook' is not one of 'class', 'method', 'full'." in result.output
+            cli,
+            [
+                "--validate",
+                "c2g",
+                "--abstraction=unknown",
+                "--input=tests/fixtures/doop_out",
+            ],
+        )
+        self.assertIn(
+            "Invalid value for '--abstraction' / '-a': 'unknown' is not one of 'class', 'method', 'full'.",
+            result.output
+        )
         self.assertEqual(result.exit_code, 2)

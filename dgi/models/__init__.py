@@ -14,6 +14,10 @@
 # limitations under the License.
 ################################################################################
 
+"""
+Neo4J Models
+"""
+
 from .entities import ClassNode, MethodNode, SQLTable, SQLColumn
 
-__all__ = ('ClassNode', 'MethodNode', 'SQLTable', 'SQLColumn')
+__all__ = ["ClassNode", "MethodNode", "SQLTable", "SQLColumn"]

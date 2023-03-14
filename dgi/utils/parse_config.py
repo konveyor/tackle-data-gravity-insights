@@ -42,8 +42,8 @@ False
 
 import os
 import re
-import yaml
 from typing import Any
+import yaml
 
 __author__ = "Rahul Krishna"
 __license__ = "Apache 2.0"
@@ -54,6 +54,8 @@ __status__ = "Research Prototype"
 
 
 class Config:
+    """Holds the configurations
+    """
     def __init__(self, config_file: str = None) -> None:
         self.config_file = config_file
         self._num_attributes = 0
@@ -94,9 +96,9 @@ class Config:
         self._num_attributes += 1
 
         # If the value has environment variables, replace them with the correct values or the defaults
-        reg = re.compile("\${[^\}]*}")  # noqa: W605
+        reg = re.compile("\${[^\}]*}")  # noqa: W601,W605 pylint: disable=W1401
         if isinstance(val, str) and reg.match(val):
-            raw_str = re.sub("[${\ }]", "", val)  # noqa: W605
+            raw_str = re.sub("[${\ }]", "", val)  # noqa: W601,W605 pylint: disable=W1401
             sub_str = raw_str.split("|")
             env_val = sub_str[0]
             default = None
@@ -106,11 +108,9 @@ class Config:
             val = os.getenv(env_val)
 
             if not val:
-                assert (
-                    default
-                ), "Enviroment variable {val} not set, and default value is not set. Please set {val}".format(
-                    val=env_val
-                )
+                assert (default), \
+                    f"Environment variable {val} not set, and default value is not set. Please set {val}".format(
+                        val=env_val)
                 val = default
 
         setattr(self, key, val)
@@ -130,7 +130,7 @@ class Config:
         self: self
             A reference to self
         """
-        with open(self.config_file, "r") as cfg:
+        with open(self.config_file, "r", encoding='utf-8') as cfg:
             yaml_loader = yaml.load(cfg, Loader=yaml.FullLoader)
             for attr_name, attr_val in list(yaml_loader.items()):
                 self.set_config(attr_name, attr_val)

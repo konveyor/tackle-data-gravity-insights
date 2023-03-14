@@ -14,6 +14,9 @@
 # limitations under the License.
 ################################################################################
 
+"""
+Relationships Model
+"""
 from neomodel import (
     StringProperty,
     IntegerProperty,
@@ -35,7 +38,8 @@ class TransactionRead(StructuredRel):
 
     txid = IntegerProperty(required=True)
     tx_meth = StringProperty(required=True)
-    action = StringProperty(required=True)
+    action = StringProperty(required=False)
+    sql_query = StringProperty(required=False)
 
 
 class TransactionWrite(StructuredRel):
@@ -43,7 +47,15 @@ class TransactionWrite(StructuredRel):
 
     txid = IntegerProperty(required=True)
     tx_meth = StringProperty(required=True)
-    action = StringProperty(required=True)
+    action = StringProperty(required=False)
+    sql_query = StringProperty(required=False)
+
+
+class TransactionCallTrace(StructuredRel):
+    """Transaction Write"""
+
+    txid = IntegerProperty(required=True)
+    service_entry = StringProperty(required=True)
 
 
 class HeapCarriedRelationship(StructuredRel):

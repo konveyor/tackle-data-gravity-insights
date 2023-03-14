@@ -1,10 +1,11 @@
-version: "3"
+version: "3.9"
 
 services:
   app:
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile
+      network: host
     hostname: tackle
     container_name: dgi-docker
     # init: true
@@ -14,7 +15,7 @@ services:
     command: "sleep infinity"
     environment:
       FLASK_APP: service:app
-      NEO4J_BOLT_URL: "bolt://neo4j:tackle@neo4j:7687"
+      NEO4J_BOLT_URL: "neo4j://neo4j:konveyor@neo4j:7687"
       GRAPH_FACTS_DIR: /app/doop-data/output
     networks:
       - dev
@@ -23,7 +24,7 @@ services:
 
   # Neo4J UI URL: http://localhost:7474/browser/
   neo4j:
-    image: neo4j
+    image: neo4j:4.4.17
     hostname: neo4j
     container_name: neo4j
     ports:
@@ -31,8 +32,8 @@ services:
       - 7687:7687
     environment:
       NEO4J_USERNAME: neo4j
-      NEO4J_PASSWORD: tackle
-      NEO4J_AUTH: neo4j/tackle
+      NEO4J_PASSWORD: konveyor
+      NEO4J_AUTH: neo4j/konveyor
       NEO4J_apoc_import_file_enabled: "true"
       NEO4J_apoc_export_file_enabled: "true"
       NEO4J_dbms_security_procedures_whitelist: gds.*, apoc.*
@@ -44,6 +45,6 @@ services:
 
 volumes:
   neo4j:
-    
+
 networks:
   dev: null

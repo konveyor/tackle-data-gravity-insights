@@ -1,3 +1,6 @@
-from .sqlparse import sqlexp  # noqa: F401
+"""
+Utilities Package
+"""
+from .sqlparse import sqlexp
 
-__all__ = ('sqlexp')
+__all__ = ['sqlexp']

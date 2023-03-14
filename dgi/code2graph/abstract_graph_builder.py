@@ -14,12 +14,18 @@
 # limitations under the License.
 ################################################################################
 
+"""
+Abstract Graph Builder
+
+This is the abstract base class for all of the graph builders
+"""
 from abc import ABC, abstractmethod
 from typing import Dict
+
 import pandas as pd
-import logging
 
 from dgi.code2graph.process_facts import ConsumeFacts
+from dgi.utils.logging import Log
 
 # Author information
 __author__ = "Rahul Krishna"
@@ -30,14 +36,17 @@ __email__ = "rkrsn@ibm.com"
 __status__ = "Research Prototype"
 
 
+# pylint: disable=too-few-public-methods
 class AbstractGraphBuilder(ABC):
+    """Abstract graph builder is a base class that is implemented by method and class graph builders.
+    """
     def __init__(self, opt):
         self.opt = opt
 
+    @staticmethod
     @abstractmethod
     def _clear_all_nodes():
         """Delete all nodes"""
-        pass
 
     @abstractmethod
     def _create_prev_and_next_nodes(self, prev_meth: Dict, next_meth: Dict):
@@ -47,13 +56,6 @@ class AbstractGraphBuilder(ABC):
             prev_df_entry (Dict): A dictionary of method information for source method
             next_df_entry (Dict): A dictionary of method information for destination method
         """
-        pass
-
-    @abstractmethod
-    def _process_entrypoints(self):
-        """ Annotate nodes with their entrypoint data
-        """
-        pass
 
     @abstractmethod
     def _populate_heap_edges(self, heap_flows: pd.DataFrame) -> None:
@@ -61,7 +63,6 @@ class AbstractGraphBuilder(ABC):
         Args:
             heap_flows (pd.DataFrame): Heap flows as a pandas dataframe
         """
-        pass
 
     @abstractmethod
     def _populate_dataflow_edges(self, data_flows: pd.DataFrame) -> None:
@@ -69,7 +70,6 @@ class AbstractGraphBuilder(ABC):
         Args:
             data_flows (pd.DataFrame): Data flows as a pandas dataframe
         """
-        pass
 
     @abstractmethod
     def _populate_callreturn_edges(self, call_ret_flows: pd.DataFrame) -> None:
@@ -77,7 +77,6 @@ class AbstractGraphBuilder(ABC):
         Args:
             call_ret_flows (pd.DataFrame): Data flows as a pandas dataframe
         """
-        pass
 
     def build_ddg(self, clear: bool = True) -> None:
         """Build the data dependency graph"""
@@ -87,7 +86,6 @@ class AbstractGraphBuilder(ABC):
 
         # Remove all stray nodes in the graph
         if clear:
-            logging.info("Clear flag detected... Deleting pre-existing nodes.")
             self._clear_all_nodes()
 
         # Process heap flows
@@ -99,5 +97,4 @@ class AbstractGraphBuilder(ABC):
         # Process call return flows
         self._populate_callreturn_edges(call_return_flows)
 
-        # Process entrypoints
-        self._process_entrypoints()
+        Log.info("Populating entrypoints")

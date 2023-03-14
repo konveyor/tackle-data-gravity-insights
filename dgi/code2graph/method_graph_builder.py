@@ -1,3 +1,4 @@
+# pylint: disable=duplicate-code
 ################################################################################
 # Copyright IBM Corporation 2021, 2022
 #
@@ -14,17 +15,25 @@
 # limitations under the License.
 ################################################################################
 
-import logging
-import pandas as pd
-from typing import Dict
-from pathlib import Path
-from tqdm import tqdm
+"""
+Method Graph Builder Module
 
+This module builds a method level abstraction graph.
+It is very similar to the class graph builder but with MethodNodes
+"""
+
+import logging
+from typing import Dict
+
+import pandas as pd
+from neomodel import db
 from neomodel.exceptions import DoesNotExist
 
-# Import our packages
-from dgi.models import MethodNode
 from dgi.code2graph.abstract_graph_builder import AbstractGraphBuilder
+# Import local packages
+from dgi.models import MethodNode
+from dgi.utils import ProgressBarFactory
+from dgi.utils.logging import Log
 
 # Author information
 __author__ = "Rahul Krishna"
@@ -35,70 +44,18 @@ __email__ = "rkrsn@ibm.com"
 __status__ = "Research Prototype"
 
 
+# pylint: disable=too-few-public-methods, duplicate-code
 class MethodGraphBuilder(AbstractGraphBuilder):
-    def __init__(self, opt):
-        self.opt = opt
+    """ Build a method level abstraction graph
+    """
 
     @staticmethod
     def _clear_all_nodes():
         """Delete all nodes"""
-        for node in MethodNode.nodes.all():
-            node.delete()
-
-    def _process_servlets(self, facts_dir: Path) -> None:
-        """ Process Servlets
-
-        Args:
-            facts_dir (Path): Directory where the facts are stored.
-        """
-
-        for key, fact_file in self.opt.JEE.SERVLET:
-            if not fact_file or not isinstance(fact_file, str):
-                continue
-            fact_file = facts_dir.joinpath(fact_file)
-            with open(fact_file, 'r') as facts:
-                classes = facts.readlines()
-            for class_name in classes:
-                class_name = class_name.rstrip()
-                all_method_nodes = MethodNode.nodes.all()
-                for graph_node in all_method_nodes:
-                    if graph_node.node_class != class_name:
-                        continue
-                    graph_node.node_is_entrypoint = True
-                    graph_node.node_is_servlet = True
-                    graph_node.servlet_type = key
-                    graph_node.save()
-
-    def _process_beans(self, facts_dir: Path) -> None:
-        """ Annotate Beans
-
-        Args:
-            facts_dir (Path): Directory where the facts are stored.
-        """
-
-        for key, fact_file in self.opt.JEE.BEANS:
-            if not fact_file or not isinstance(fact_file, str):
-                continue
-            fact_file = facts_dir.joinpath(fact_file)
-            with open(fact_file, 'r') as facts:
-                classes = facts.readlines()
-            for class_name in classes:
-                all_method_nodes = MethodNode.nodes.all()
-                for graph_node in all_method_nodes:
-                    if graph_node.node_class != class_name:
-                        continue
-                    graph_node.node_is_entrypoint = True
-                    graph_node.node_is_bean = True
-                    graph_node.bean_type = key
-                    graph_node.save()
-
-    def _process_entrypoints(self):
-        """ Annotate nodes with their entrypoint data
-        """
-
-        facts_dir = Path(self.opt.GRAPH_FACTS_DIR)
-        self._process_servlets(facts_dir)
-        self._process_beans(facts_dir)
+        Log.warn("The option clear is turned ON. Deleting pre-existing nodes.")
+        db.cypher_query("MATCH (n:MethodNode)-[r]-(m) DELETE r")
+        db.cypher_query("MATCH (n)-[r]-(m:MethodNode) DELETE r")
+        db.cypher_query("MATCH (n:MethodNode) DELETE n")
 
     def _create_prev_and_next_nodes(self, prev_meth: Dict, next_meth: Dict):
         """_summary_
@@ -148,34 +105,37 @@ class MethodGraphBuilder(AbstractGraphBuilder):
         logging.info("Populating heap carried dependencies edges")
 
         rel_id = 0
-        for _, row in tqdm(heap_flows.iterrows(), total=heap_flows.shape[0]):
-            prev_meth = row.prev
-            next_meth = row.next
+        with ProgressBarFactory.get_progress_bar() as progress:
+            for (_, row) in progress.track(
+                heap_flows.iterrows(), total=heap_flows.shape[0]
+            ):
+                prev_meth = row.prev
+                next_meth = row.next
 
-            prev_graph_node, next_graph_node = self._create_prev_and_next_nodes(
-                prev_meth, next_meth
-            )
+                prev_graph_node, next_graph_node = self._create_prev_and_next_nodes(
+                    prev_meth, next_meth
+                )
 
-            if prev_graph_node.node_name != next_graph_node.node_name:
-                rel = prev_graph_node.heap_flows.relationship(next_graph_node)
-                rel_id += 1
-                if rel and (rel.context, rel.heap_object) == (
-                    row.context,
-                    row.heap_obj,
-                ):
-                    rel.weight += 1
-                    rel.rel_id = rel_id
-                    rel.save()
-                else:
-                    relationship_property = {
-                        "weight": 1,
-                        "rel_id": rel_id,
-                        "context": row.context,
-                        "heap_object": row.heap_obj,
-                    }
-                    prev_graph_node.heap_flows.connect(
-                        next_graph_node, relationship_property
-                    )
+                if prev_graph_node.node_name != next_graph_node.node_name:
+                    rel = prev_graph_node.heap_flows.relationship(next_graph_node)
+                    rel_id += 1
+                    if rel and (rel.context, rel.heap_object) == (
+                        row.context,
+                        row.heap_obj,
+                    ):
+                        rel.weight += 1
+                        rel.rel_id = rel_id
+                        rel.save()
+                    else:
+                        relationship_property = {
+                            "weight": 1,
+                            "rel_id": rel_id,
+                            "context": row.context,
+                            "heap_object": row.heap_obj,
+                        }
+                        prev_graph_node.heap_flows.connect(
+                            next_graph_node, relationship_property
+                        )
 
     def _populate_dataflow_edges(self, data_flows: pd.DataFrame) -> None:
         """Populate data flow dependencies
@@ -184,24 +144,27 @@ class MethodGraphBuilder(AbstractGraphBuilder):
         """
         logging.info("Populating dataflow edges")
         rel_id = 0
-        for _, row in tqdm(data_flows.iterrows(), total=data_flows.shape[0]):
-            prev_meth = row.prev
-            next_meth = row.next
+        with ProgressBarFactory.get_progress_bar() as progress:
+            for (_, row) in progress.track(
+                data_flows.iterrows(), total=data_flows.shape[0]
+            ):
+                prev_meth = row.prev
+                next_meth = row.next
 
-            prev_graph_node, next_graph_node = self._create_prev_and_next_nodes(
-                prev_meth, next_meth
-            )
+                prev_graph_node, next_graph_node = self._create_prev_and_next_nodes(
+                    prev_meth, next_meth
+                )
 
-            if prev_graph_node.node_name != next_graph_node.node_name:
-                rel = prev_graph_node.data_flows.relationship(next_graph_node)
-                rel_id += 1
-                if rel and rel.context == row.context:
-                    rel.weight += 1
-                    rel.save()
-                else:
-                    next_graph_node.data_flows.connect(
-                        prev_graph_node, {"weight": 1, "context": row.context}
-                    )
+                if prev_graph_node.node_name != next_graph_node.node_name:
+                    rel = prev_graph_node.data_flows.relationship(next_graph_node)
+                    rel_id += 1
+                    if rel and rel.context == row.context:
+                        rel.weight += 1
+                        rel.save()
+                    else:
+                        next_graph_node.data_flows.connect(
+                            prev_graph_node, {"weight": 1, "context": row.context}
+                        )
 
     def _populate_callreturn_edges(self, call_ret_flows: pd.DataFrame) -> None:
         """Populate data flow dependencies
@@ -210,29 +173,32 @@ class MethodGraphBuilder(AbstractGraphBuilder):
         """
         logging.info("Populating call-return dependencies edges")
         rel_id = 0
-        for _, row in tqdm(call_ret_flows.iterrows(), total=call_ret_flows.shape[0]):
-            prev_meth = row.prev
-            next_meth = row.next
+        with ProgressBarFactory.get_progress_bar() as progress:
+            for (_, row) in progress.track(
+                call_ret_flows.iterrows(), total=call_ret_flows.shape[0]
+            ):
+                prev_meth = row.prev
+                next_meth = row.next
 
-            prev_graph_node, next_graph_node = self._create_prev_and_next_nodes(
-                prev_meth, next_meth
-            )
+                prev_graph_node, next_graph_node = self._create_prev_and_next_nodes(
+                    prev_meth, next_meth
+                )
 
-            if prev_graph_node.node_class != next_graph_node.node_class:
-                rel = prev_graph_node.call_ret_flows.relationship(next_graph_node)
-                rel_id += 1
-                if rel and (rel.pcontext, rel.ncontext) == (
-                    row.prev_context,
-                    row.next_context,
-                ):
-                    rel.weight += 1
-                    rel.save()
-                else:
-                    next_graph_node.call_ret_flows.connect(
-                        prev_graph_node,
-                        {
-                            "weight": 1,
-                            "pcontext": row.prev_context,
-                            "ncontext": row.next_context,
-                        },
-                    )
+                if prev_graph_node.node_class != next_graph_node.node_class:
+                    rel = prev_graph_node.call_ret_flows.relationship(next_graph_node)
+                    rel_id += 1
+                    if rel and (rel.pcontext, rel.ncontext) == (
+                        row.prev_context,
+                        row.next_context,
+                    ):
+                        rel.weight += 1
+                        rel.save()
+                    else:
+                        next_graph_node.call_ret_flows.connect(
+                            prev_graph_node,
+                            {
+                                "weight": 1,
+                                "pcontext": row.prev_context,
+                                "ncontext": row.next_context,
+                            },
+                        )

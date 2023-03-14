@@ -40,20 +40,17 @@ You will need an instance of Neo4j to store the graphs that `dgi` creates. You c
 
   ```bash
   docker run -d --name neo4j \
-    -p 7474:7474 \
-    -p 7687:7687 \
-    -e NEO4J_AUTH="neo4j/tackle" \
-    -e NEO4J_apoc_export_file_enabled=true \
-    -e NEO4J_apoc_import_file_enabled=true \
-    -e NEO4J_apoc_import_file_use__neo4j__config=true \
-    -e NEO4JLABS_PLUGINS=\[\"apoc\"\] \    
-  neo4j
+      -p 7474:7474 \
+      -p 7687:7687 \
+      -v neo4j:/data \
+      -e NEO4J_AUTH="neo4j:konveyor" \
+      docker.io/neo4j:4.2.0
   ```
 
 You must set an environment variable to let `dgi` know where to find this neo4j container.
 
 ```bash
-export NEO4J_BOLT_URL="bolt://neo4j:tackle@localhost:7687"    
+export NEO4J_BOLT_URL="neo4j://neo4j:konveyor@localhost:7687"
 ```
 
 ### Installation complete
@@ -149,7 +146,7 @@ Code2graph uses the output from a tool called [DOOP](https://bitbucket.org/yanni
 
     ```sh
     $ dgi c2g
-    
+
     Usage: dgi c2g [OPTIONS]
 
       This command loads Code dependencies into the graph
@@ -167,7 +164,7 @@ Code2graph uses the output from a tool called [DOOP](https://bitbucket.org/yanni
     ```sh
     dgi --clear c2g --abstraction=class --input=doop-output
     ```
-    
+
     Note that we could have passed in [class|method|full] as the abstraction. If you decide to run with the `method` or `full` level of abstraction, make sure you use the same abstraction level when running with `tx2g` as well.
 
     After successful completion, you should see:
@@ -269,6 +266,6 @@ In order to explore the neo4j graph, visit [http://localhost:7474/browser/](http
   
 * Under username, enter: `neo4j`
 
-* Under password, enter: `tackle`
+* Under password, enter: `konveyor`
   
 This should bring you to the browser page where you can explore the DGI graph.

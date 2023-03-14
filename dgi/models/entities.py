@@ -14,26 +14,31 @@
 # limitations under the License.
 ################################################################################
 
+"""
+Entities Model
+"""
+
 from neomodel import (
     StructuredNode,
-    StringProperty,
-    IntegerProperty,
-    ArrayProperty,
     RelationshipTo,
 )
+from neomodel.properties import (
+    ArrayProperty,
+    IntegerProperty,
+    UniqueIdProperty,
+    StringProperty,
+    BooleanProperty,
+)
+from neomodel.relationship_manager import RelationshipFrom
+
 from .relationships import (
     HeapCarriedRelationship,
     DataRelationship,
     CallReturnRelationship,
     TransactionWrite,
     TransactionRead,
+    TransactionCallTrace,
 )
-
-from neomodel.properties import (
-    UniqueIdProperty,
-    BooleanProperty,
-)
-from neomodel.relationship_manager import RelationshipFrom
 
 __author__ = "Rahul Krishna"
 __license__ = "Apache 2.0"
@@ -43,6 +48,7 @@ __email__ = "rkrsn@ibm.com"
 __status__ = "Research Prototype"
 
 
+# pylint: disable=abstract-method
 class MethodNode(StructuredNode):
     """A basic node to be inherited. Every node has 3 relationships:
     1. Heap relationship
@@ -62,6 +68,8 @@ class MethodNode(StructuredNode):
     node_class = StringProperty(required=True)
     node_class_name = StringProperty(required=True)
     node_method = StringProperty(required=True, unique_index=True)
+    node_is_tx_entry = BooleanProperty(default=False)
+    partition_id = IntegerProperty()
 
     # Relationships
     heap_flows = RelationshipTo(
@@ -73,6 +81,9 @@ class MethodNode(StructuredNode):
     call_ret_flows = RelationshipFrom(
         "MethodNode", "CALL_RETURN_DEPENDENCY", model=CallReturnRelationship
     )
+    transaction_method_call = RelationshipTo(
+        "MethodNode", "TRANSACTIONAL_TRACE", model=TransactionCallTrace
+    )
     transaction_read = RelationshipFrom(
         "SQLTable", "TRANSACTION_READ", model=TransactionRead
     )
@@ -81,6 +92,7 @@ class MethodNode(StructuredNode):
     )
 
 
+# pylint: disable=abstract-method
 class ClassNode(StructuredNode):
     """A basic node to be inherited. Every node has 3 relationships:
     1. Heap relationship
@@ -119,6 +131,7 @@ class ClassNode(StructuredNode):
     )
 
 
+# pylint: disable=abstract-method
 class SQLColumn(StructuredNode):
     """Represents a column in an SQL table"""
 
@@ -130,6 +143,7 @@ class SQLColumn(StructuredNode):
     foreign_key = RelationshipTo("SQLColumn", "FOREIGN_KEY")
 
 
+# pylint: disable=abstract-method
 class SQLTable(StructuredNode):
     """Represents a table in an SQL database"""
 

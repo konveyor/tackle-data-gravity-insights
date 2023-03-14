@@ -14,20 +14,30 @@
 # limitations under the License.
 ################################################################################
 
+"""
+Process facts Module
+
+This module processes the facts from the code analysis
+"""
+
+import errno
+import json
 import os
 import re
-import json
-import errno
 from csv import reader
-import pandas as pd
 from pathlib import Path
 from typing import Dict, Tuple
-from .utils.parse_config import Config
+
+import pandas as pd
+
+from dgi.utils.parse_config import Config
 
 
 class ConsumeFacts:
+    "Synthesize DOOP facts"
+
     def __init__(self, conf: Config) -> None:
-        """Take raw datalog facts and convert them to a consumable form.
+        """Take raw datalog facts and convert them to a comsumable form.
 
         Args:
             p_root (str): Path to the project root folder.
@@ -35,13 +45,14 @@ class ConsumeFacts:
             opt_cfg (Config): Other configs
         """
         self.conf = conf
+        self.method_info = {}
         self.__setup()
 
     def __setup(self) -> None:
         """Perform some setup for auxiliary paths, data structures, etc."""
         self.absolute_facts_dir = Path(self.conf.GRAPH_FACTS_DIR)
-        self.method_info = dict()
-        self.contexts = dict()
+        self.method_info = {}
+        self.contexts = {}
 
     def _jsonify_method_string(self, raw: str) -> str:
         """Convert doop style method information to a json formatted string
@@ -84,9 +95,7 @@ class ConsumeFacts:
             str: JSON string representation of the doop context
 
         Notes:
-            Take the context information from:
-            "[class_name_1/method_name_1/obj_name_1/id1, class_name_2/method_name_2/obj_name_2/id2]"
-            And, converts it to the following format:
+            Take the context information and convert it to:
             "{
                 {
                     "class": "class_name_1",
@@ -103,7 +112,7 @@ class ConsumeFacts:
             }"
         """
 
-        raw_str = re.sub("[\[\]]", "", raw)  # noqa:  W605
+        raw_str = re.sub(r"[\[\]]", "", raw)  # noqa: W601
         raw_ctx_lst = raw_str.split(", ")
 
         for i, str_el in enumerate(raw_ctx_lst):
@@ -132,7 +141,8 @@ class ConsumeFacts:
                 }
             else:
                 raw_substr = raw_ctx_lst[i].split("/")
-                class_name, method_signature = (*raw_substr[0][1:-1].split(": "),)
+                class_name, method_signature = (
+                    *raw_substr[0][1:-1].split(": "),)
                 try:
                     method_rtype, method_name, _ = (
                         *re.sub("[(:)]", " ", method_signature).split(),
@@ -155,13 +165,14 @@ class ConsumeFacts:
         ctx_json_str = json.dumps(raw_ctx_lst)
 
         # Add the found context to a dictionary.
-        # NOTE: For now, we keep the values empty.
-        # In a later method (`_update_context_transistions(...)`), we update it lazily.
+        # NOTE: For now, we keep the values empty. In a later method (`_update_context_transistions(...)`),
+        # we update it lazily.
         self.contexts.update({ctx_json_str: {"prev": [], "next": []}})
 
         return raw_ctx_lst
 
-    def _jsonify_heap_obj(self, heapobj_str: str) -> str:
+    @staticmethod
+    def _jsonify_heap_obj(heapobj_str: str) -> str:
         """Create a JSON string from raw heap object string from doop
 
         Args:
@@ -220,8 +231,7 @@ class ConsumeFacts:
         Args:
             method_info_file (Path): Path to doop method information file
         """
-        self.method_info = dict()
-        with open(method_info_file, "r") as file_obj:
+        with open(method_info_file, "r", encoding='utf-8') as file_obj:
             csv_reader = reader(file_obj, delimiter="\t")
             for row in csv_reader:
                 key = "::".join(row[::-1][1:3])
@@ -243,10 +253,14 @@ class ConsumeFacts:
         """
         heap_flows_df = pd.read_csv(fact_loc, header=None, delimiter="\t")
         heap_flows_df.columns = ["context", "heap_obj", "prev", "next"]
-        heap_flows_df.context = heap_flows_df.context.apply(self._jsonify_context)
-        heap_flows_df.prev = heap_flows_df.prev.apply(self._jsonify_method_string)
-        heap_flows_df.next = heap_flows_df.next.apply(self._jsonify_method_string)
-        heap_flows_df.heap_obj = heap_flows_df.heap_obj.apply(self._jsonify_heap_obj)
+        heap_flows_df.context = heap_flows_df.context.apply(
+            self._jsonify_context)
+        heap_flows_df.prev = heap_flows_df.prev.apply(
+            self._jsonify_method_string)
+        heap_flows_df.next = heap_flows_df.next.apply(
+            self._jsonify_method_string)
+        heap_flows_df.heap_obj = heap_flows_df.heap_obj.apply(
+            self._jsonify_heap_obj)
         return heap_flows_df
 
     def _process_call_return_dependencies(
@@ -261,22 +275,26 @@ class ConsumeFacts:
         Returns:
             pd.DataFrame: The dataframe containing processed call-return dependencies
         """
-        callret_flows_df = pd.read_csv(calls_fact_loc, header=None, delimiter="\t")
+        callret_flows_df = pd.read_csv(
+            calls_fact_loc, header=None, delimiter="\t")
         pd.concat(
             [
                 callret_flows_df,
                 pd.read_csv(returns_fact_loc, header=None, delimiter="\t"),
             ]
         )
-        callret_flows_df.columns = ["prev_context", "prev", "next_context", "next"]
+        callret_flows_df.columns = [
+            "prev_context", "prev", "next_context", "next"]
         callret_flows_df.prev_context = callret_flows_df.prev_context.apply(
             self._jsonify_context
         )
         callret_flows_df.next_context = callret_flows_df.next_context.apply(
             self._jsonify_context
         )
-        callret_flows_df.prev = callret_flows_df.prev.apply(self._jsonify_method_string)
-        callret_flows_df.next = callret_flows_df.next.apply(self._jsonify_method_string)
+        callret_flows_df.prev = callret_flows_df.prev.apply(
+            self._jsonify_method_string)
+        callret_flows_df.next = callret_flows_df.next.apply(
+            self._jsonify_method_string)
         return callret_flows_df
 
     def _process_data_dependencies(self, fact_loc: Path) -> pd.DataFrame:
@@ -290,9 +308,12 @@ class ConsumeFacts:
         """
         data_flows_df = pd.read_csv(fact_loc, header=None, delimiter="\t")
         data_flows_df.columns = ["context", "prev", "next"]
-        data_flows_df.context = data_flows_df.context.apply(self._jsonify_context)
-        data_flows_df.prev = data_flows_df.prev.apply(self._jsonify_method_string)
-        data_flows_df.next = data_flows_df.next.apply(self._jsonify_method_string)
+        data_flows_df.context = data_flows_df.context.apply(
+            self._jsonify_context)
+        data_flows_df.prev = data_flows_df.prev.apply(
+            self._jsonify_method_string)
+        data_flows_df.next = data_flows_df.next.apply(
+            self._jsonify_method_string)
         return data_flows_df
 
     def get_method_info(self) -> Dict:
@@ -340,7 +361,7 @@ class ConsumeFacts:
 
         if not method_info_file.exists():
             raise FileNotFoundError(
-                errno.ENOENT, os.strerror(errno.ENOENT), method_info_file.__str__()
+                errno.ENOENT, os.strerror(errno.ENOENT), str(method_info_file)
             )
 
         self._process_method_info(method_info_file)
@@ -354,7 +375,7 @@ class ConsumeFacts:
 
         if not heap_facts_file.exists():
             raise FileNotFoundError(
-                errno.ENOENT, os.strerror(errno.ENOENT), heap_facts_file.__str__()
+                errno.ENOENT, os.strerror(errno.ENOENT), str(heap_facts_file)
             )
 
         heap_flows = self._process_heap_carried_dependencies(heap_facts_file)
@@ -368,7 +389,8 @@ class ConsumeFacts:
 
         if not data_dep_facts_file.exists():
             raise FileNotFoundError(
-                errno.ENOENT, os.strerror(errno.ENOENT), data_dep_facts_file.__str__()
+                errno.ENOENT, os.strerror(
+                    errno.ENOENT), str(data_dep_facts_file)
             )
 
         data_flows = self._process_data_dependencies(data_dep_facts_file)
@@ -385,12 +407,14 @@ class ConsumeFacts:
 
         if not call_dep_facts_file.exists():
             raise FileNotFoundError(
-                errno.ENOENT, os.strerror(errno.ENOENT), call_dep_facts_file.__str__()
+                errno.ENOENT, os.strerror(
+                    errno.ENOENT), str(call_dep_facts_file)
             )
 
         if not return_dep_facts_file.exists():
             raise FileNotFoundError(
-                errno.ENOENT, os.strerror(errno.ENOENT), return_dep_facts_file.__str__()
+                errno.ENOENT, os.strerror(
+                    errno.ENOENT), str(return_dep_facts_file)
             )
 
         call_return_flows = self._process_call_return_dependencies(
