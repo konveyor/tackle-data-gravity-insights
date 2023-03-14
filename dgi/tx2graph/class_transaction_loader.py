@@ -30,9 +30,6 @@ from dgi.models import ClassNode, SQLTable
 class ClassTransactionLoader(AbstractTransactionLoader):
     """Transaction edges between classes and DBTables
     """
-    def __init__(self) -> None:
-        super().__init__()
-
     def find_or_create_program_node(self, method_signature):
         class_short_name = method_signature.split(".")[-2]
         class_name = ".".join(method_signature.split(".")[:-1])
@@ -87,7 +84,7 @@ class ClassTransactionLoader(AbstractTransactionLoader):
             )
 
     def populate_transaction_callgraph(
-        self, label: dict, txid: int, table: str
+        self, callstack: dict, tx_id: int, entrypoint: str
     ) -> None:
         """Add transaction write edges to the database
 
@@ -97,7 +94,7 @@ class ClassTransactionLoader(AbstractTransactionLoader):
             txid (int):   This is the ID assigned to the transaction.
             table (str):  The is the name of the table.
         """
-        pass
+        return
 
     def populate_transaction(
         self,

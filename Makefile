@@ -18,7 +18,7 @@ lint: ## Run the linter
 	$(info Running linting...)
 	flake8 dgi --count --select=E9,F63,F7,F82 --show-source --statistics
 	flake8 dgi --count --max-complexity=10 --max-line-length=127 --statistics
-	pylint dgi --disable=R0801,R0913,R0914 --max-line-length=127
+	pylint dgi --disable=R0801,R0913,R0914 --max-line-length=127 --max-args=6
 
 test: ## Run the unit tests
 	$(info Running tests...)

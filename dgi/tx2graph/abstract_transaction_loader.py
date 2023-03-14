@@ -145,7 +145,7 @@ class AbstractTransactionLoader(ABC):
         """
 
     @abstractmethod
-    def populate_transaction_read(self, label: dict, txid: int, table: str) -> None:
+    def populate_transaction_read(self, method_signature, txid, table, action, the_sql_query) -> None:  # noqa: R0913
         """Add transaction read edges to the database
 
         Args:
@@ -156,7 +156,7 @@ class AbstractTransactionLoader(ABC):
         """
 
     @abstractmethod
-    def populate_transaction_write(self, label: dict, txid: int, table: str) -> None:
+    def populate_transaction_write(self, method_signature, txid, table, action, the_sql_query) -> None:
         """Add transaction write edges to the database
 
         Args:
@@ -174,7 +174,7 @@ class AbstractTransactionLoader(ABC):
         txid: int,
         read: str,
         write: str,
-        transactions: list,
+        transaction: list,
         action: str,
     ):
         """Add transaction write edges to the database

@@ -93,8 +93,7 @@ class MethodTransactionLoader(AbstractTransactionLoader):
             )
 
     def populate_transaction_callgraph(
-        self, callstack: dict, tx_id: int, entrypoint: str
-    ) -> None:
+            self, callstack: dict, tx_id: int, entrypoint: str) -> None:
         """Add transaction write edges to the database
 
         Args:
