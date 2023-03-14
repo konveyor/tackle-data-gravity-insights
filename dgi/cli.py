@@ -31,11 +31,12 @@ from simple_ddl_parser import parse_from_file
 # Import our packages
 from dgi.code2graph import ClassGraphBuilder, MethodGraphBuilder
 from dgi.partitioning.partition import recommend_partitions
-from dgi.schema2graph import schema_loader
-from dgi.tx2graph import ClassTransactionLoader, MethodTransactionLoader
-from dgi.utils.logging import Log
-from dgi.utils.parse_config import Config
 
+from dgi.schema2graph import schema_loader
+from dgi.code2graph import ClassGraphBuilder, MethodGraphBuilder
+from dgi.tx2graph import ClassTransactionLoader, MethodTransactionLoader
+from dgi.utils.parse_config import Config
+from dgi.utils.logging import Log
 
 ######################################################################
 # cli - Grouping for sub commands
@@ -281,8 +282,7 @@ def c2g(ctx, input, abstraction):  # pylint: disable=redefined-builtin
     elif abstraction.lower() == "class":
         if ctx.obj["validate"]:
             Log.info(
-                "Validate mode: abstraction level is {}".format(
-                    abstraction.lower())
+                f"Validate mode: abstraction level is {abstraction.lower()}"
             )
             sys.exit()
         Log.info("Class level abstraction.")
@@ -291,8 +291,7 @@ def c2g(ctx, input, abstraction):  # pylint: disable=redefined-builtin
     elif abstraction.lower() == "method":
         if ctx.obj["validate"]:
             Log.info(
-                "Validate mode: abstraction level is {}".format(
-                    abstraction.lower())
+                f"Validate mode: abstraction level is {abstraction.lower()}"
             )
             sys.exit()
         Log.info("Method level abstraction.")
