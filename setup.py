@@ -27,7 +27,7 @@ setup(
         "minerva-cargo==1.1.0",
     ],
     classifiers=[
-        "Development Status :: 4 - Beta"
+        "Development Status :: 4 - Beta",
         "Environment :: Console",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: Apache Software License",
