@@ -1,5 +1,6 @@
-# Ignore idea auxiliary files
+# Ignore vscode and idea auxiliary files
 .idea
+.vscode
 
 # Ignore DB auxiliary files
 demo/**/*.dump
