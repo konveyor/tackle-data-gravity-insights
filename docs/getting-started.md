@@ -8,9 +8,37 @@ If this is your first time using Tackle Data Gravity Insights you must first ins
 
 ## Step 1. Install Data Gravity Insights CLI
 
+You can use the Docker image of `dgi` (_preferred_) or you can install it locally.
+
+### Use the Docker Image
+
+We provide a Docker image with DGI installed for users that don't have a Python 3.9 environment in which to run DGI. Using the Docker image will allow you to run DGI anywhere you have Docker. Since you will need Docker to run Neo4j, this is gives you a clean "containerized" installation.
+
+You can pull down the latest image from Docker Hub with the following command:
+
+```bash
+docker pull rofrano/dgi:latest
+```
+
+This will load the image into your local Docker image cache so that it is ready for any time you want to run it.
+
+#### Create an Alias
+
+In order to have the Docker version behave like the local version you should create the following `alias` in your `.bashrc` or `.zshrc` file (or what ever shell you are using).
+
+```bash
+alias dgi="docker run --rm -it --link neo4j -v $(pwd):/data rofrano/dgi:latest"
+```
+
+This command will remove the container once the command completes with: `--rm`, create an interactive terminal with: `-it`, link to the Neo4j container with: `--link neo4j`, share your current working folder as `/data` inside of the container with: `-v $(pwd):/data`, and start the DGI container with: `rofrano/dgi:latest`. The default is to return the help unless you specify parameters.
+
+**Note:** The entry point for this image is the `dgi` command so you only need to add parameters to run it.
+
+### Local Installation
+
 There are two ways to install the `dgi` command line interface:
 
-### Install DGI CLI system wide
+#### Install DGI CLI system wide
 
 You can install `dgi` globally into your system packages as root with:
 
@@ -20,7 +48,7 @@ sudo pip install -U tackle-dgi
 
 This will make the `dgi` command globally available. You can then run it from anywhere on your computer.
 
-### Install DGI CLI locally
+#### Install DGI CLI locally
 
 If you do not want to install it system wide you can install `dgi` locally with:
 
@@ -36,15 +64,15 @@ export PATH=$PATH:$HOME/.local/bin
 
 ### Run Neo4J Community Edition container
 
-You will need an instance of Neo4j to store the graphs that `dgi` creates. You can start one up in a container using `docker` or `podman` (to use `podman` just substitute `podman` for `docker` in the command below).
+Regardless of how you installed `dgi` (using either the Docker image or installing locally) you will need an instance of Neo4j to store the graphs that `dgi` creates. You can start one up in a container using `docker` or `podman` (to use `podman` just substitute `podman` for `docker` in the command below).
 
   ```bash
   docker run -d --name neo4j \
       -p 7474:7474 \
       -p 7687:7687 \
       -v neo4j:/data \
-      -e NEO4J_AUTH="neo4j:konveyor" \
-      docker.io/neo4j:4.2.0
+      -e NEO4J_AUTH="neo4j/konveyor" \
+      docker.io/neo4j:4.4.14
   ```
 
 You must set an environment variable to let `dgi` know where to find this neo4j container.
