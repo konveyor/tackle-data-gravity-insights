@@ -27,6 +27,7 @@ import re
 from csv import reader
 from pathlib import Path
 from typing import Dict, Tuple
+from ipdb import set_trace
 
 import pandas as pd
 
@@ -212,9 +213,12 @@ class ConsumeFacts:
             except ValueError:
                 method_name = method_signature.split()[0]
                 method_rtype = (None,)
-
-            object_name = raw_substr[1].split()[1]
-            instance_id = raw_substr[2]
+            try:
+                object_name = raw_substr[1].split()[1]
+                instance_id = raw_substr[2]
+            except IndexError:
+                object_name = raw_substr[0].split()[0]
+                instance_id = None
             heap_obj_dict = {
                 "class": class_name,
                 "method": method_name,
