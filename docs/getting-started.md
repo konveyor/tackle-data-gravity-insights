@@ -12,12 +12,12 @@ You can use the Docker image of `dgi` (_preferred_) or you can install it locall
 
 ### Use the Docker Image
 
-We provide a Docker image with DGI installed for users that don't have a Python 3.9 environment in which to run DGI. Using the Docker image will allow you to run DGI anywhere you have Docker. Since you will need Docker to run Neo4j, this is gives you a clean "containerized" installation.
+We provide a Docker image with DGI installed for users that don't have a Python 3.9 environment in which to run DGI. Using the Docker image will allow you to run DGI anywhere you have Docker. Since you will need Docker to run Neo4j, this is gives you a compete "containerized" installation.
 
-You can pull down the latest image from Docker Hub with the following command:
+You can pull down the latest image from the GitHub Container Registry with the following command:
 
 ```bash
-docker pull rofrano/dgi:latest
+docker pull quay.io/konveyor/data-gravity-insights:latest
 ```
 
 This will load the image into your local Docker image cache so that it is ready for any time you want to run it.
@@ -27,10 +27,10 @@ This will load the image into your local Docker image cache so that it is ready 
 In order to have the Docker version behave like the local version you should create the following `alias` in your `.bashrc` or `.zshrc` file (or what ever shell you are using).
 
 ```bash
-alias dgi="docker run --rm -it --link neo4j -v $(pwd):/data rofrano/dgi:latest"
+alias dgi="docker run --rm -it --link neo4j -v $(pwd):/data quay.io/konveyor/data-gravity-insights:latest"
 ```
 
-This command will remove the container once the command completes with: `--rm`, create an interactive terminal with: `-it`, link to the Neo4j container with: `--link neo4j`, share your current working folder as `/data` inside of the container with: `-v $(pwd):/data`, and start the DGI container with: `rofrano/dgi:latest`. The default is to return the help unless you specify parameters.
+This command will remove the container once the command completes with: `--rm`, create an interactive terminal with: `-it`, link to the Neo4j container with: `--link neo4j`, share your current working folder as `/data` inside of the container with: `-v $(pwd):/data`, and start the DGI container with: `quay.io/konveyor/data-gravity-insights:latest`. The default is to return the help unless you specify parameters.
 
 **Note:** The entry point for this image is the `dgi` command so you only need to add parameters to run it.
 

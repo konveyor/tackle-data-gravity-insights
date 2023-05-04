@@ -1,7 +1,7 @@
 # These can be overidden with env vars.
-REGISTRY ?= konveyor
-IMAGE_NAME ?= dgi
-IMAGE_TAG ?= 1.0.0
+REGISTRY ?= quay.io/konveyor
+IMAGE_NAME ?= data-gravity-insights
+IMAGE_TAG ?= v1.0.0
 IMAGE ?= $(REGISTRY)/$(IMAGE_NAME):$(IMAGE_TAG)
 LATEST ?= $(REGISTRY)/$(IMAGE_NAME):latest
 PLATFORM ?= "linux/amd64,linux/arm64"
