@@ -25,7 +25,7 @@ from cargo import Cargo
 from dgi.models.entities import ClassNode, MethodNode
 
 
-def recommend_partitions(    # noqa:  R0913,R0914
+def recommend_partitions(    # noqa:  R0913,R0914 pylint: disable=too-many-locals
         hostname: str, hostport, auth_str: str, output: str, partitions: int,
         seed_input: Union[Path, None] = None, verbosity: bool = True) -> None:
     """Recommend partitions with CARGO.

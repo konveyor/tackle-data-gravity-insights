@@ -27,7 +27,6 @@ import re
 from csv import reader
 from pathlib import Path
 from typing import Dict, Tuple
-from ipdb import set_trace
 
 import pandas as pd
 
@@ -38,7 +37,7 @@ class ConsumeFacts:
     "Synthesize DOOP facts"
 
     def __init__(self, conf: Config) -> None:
-        """Take raw datalog facts and convert them to a comsumable form.
+        """Take raw datalog facts and convert them to a consumable form.
 
         Args:
             p_root (str): Path to the project root folder.
