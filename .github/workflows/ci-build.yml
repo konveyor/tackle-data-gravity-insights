@@ -48,6 +48,8 @@ jobs:
           flake8 dgi --count --select=E9,F63,F7,F82 --show-source --statistics
           # The GitHub editor is 127 chars wide
           flake8 dgi --count --max-complexity=10 --max-line-length=127 --statistics
+          # Have Pylint catch things Flake8 does not.
+          pylint dgi --disable=R0801 --max-line-length=127 --max-args=7
 
       - name: Run unit tests with nose
         run: nosetests
