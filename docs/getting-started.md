@@ -13,24 +13,52 @@ If this is your first time using Tackle Data Gravity Insights you must first ins
 
 ## Step 1. Install Data Gravity Insights CLI
 
+You can use the Docker image of `dgi` (_preferred_) or you can install it locally.
+
+### Use the Docker Image
+
+We provide a Docker image with DGI installed for users that don't have a Python 3.9 environment in which to run DGI. Using the Docker image will allow you to run DGI anywhere you have Docker. Since you will need Docker to run Neo4j, this is gives you a compete "containerized" installation.
+
+You can pull down the latest image from the GitHub Container Registry with the following command:
+
+```bash
+docker pull quay.io/konveyor/data-gravity-insights:latest
+```
+
+This will load the image into your local Docker image cache so that it is ready for any time you want to run it.
+
+#### Create an Alias
+
+In order to have the Docker version behave like the local version you should create the following `alias` in your `.bashrc` or `.zshrc` file (or what ever shell you are using).
+
+```bash
+alias dgi="docker run --rm -it --link neo4j -v $(pwd):/data quay.io/konveyor/data-gravity-insights:latest"
+```
+
+This command will remove the container once the command completes with: `--rm`, create an interactive terminal with: `-it`, link to the Neo4j container with: `--link neo4j`, share your current working folder as `/data` inside of the container with: `-v $(pwd):/data`, and start the DGI container with: `quay.io/konveyor/data-gravity-insights:latest`. The default is to return the help unless you specify parameters.
+
+**Note:** The entry point for this image is the `dgi` command so you only need to add parameters to run it.
+
+### Local Installation
+
 There are two ways to install the `dgi` command line interface:
 
-### Install DGI CLI system wide
+#### Install DGI CLI system wide
 
 You can install `dgi` globally into your system packages as root with:
 
 ```bash
-sudo pip install tackle-dgi
+sudo pip install -U tackle-dgi
 ```
 
 This will make the `dgi` command globally available. You can then run it from anywhere on your computer.
 
-### Install DGI CLI locally
+#### Install DGI CLI locally
 
 If you do not want to install it system wide you can install `dgi` locally with:
 
 ```bash
-pip install tackle-dgi
+pip install -U tackle-dgi
 ```
 
 This will install the `dgi` command locally under your home folder in a hidden folder called: `~/.local/bin`. If you choose this approach, you must add this folder to your `PATH` with:
@@ -41,21 +69,21 @@ export PATH=$PATH:$HOME/.local/bin
 
 ### Run Neo4J Community Edition container
 
-You will need an instance of Neo4j to store the graphs that `dgi` creates. You can start one up in a container using `docker` or `podman` (to use `podman` just substitute `podman` for `docker` in the command below).
+Regardless of how you installed `dgi` (using either the Docker image or installing locally) you will need an instance of Neo4j to store the graphs that `dgi` creates. You can start one up in a container using `docker` or `podman` (to use `podman` just substitute `podman` for `docker` in the command below).
 
   ```bash
   docker run -d --name neo4j \
       -p 7474:7474 \
       -p 7687:7687 \
       -v neo4j:/data \
-      -e NEO4J_AUTH="neo4j/tackle" \
-      docker.io/neo4j:latest
+      -e NEO4J_AUTH="neo4j/konveyor" \
+      docker.io/neo4j:4.4.14
   ```
 
 You must set an environment variable to let `dgi` know where to find this neo4j container.
 
 ```bash
-export NEO4J_BOLT_URL="bolt://neo4j:tackle@localhost:7687"    
+export NEO4J_BOLT_URL="neo4j://neo4j:konveyor@localhost:7687"
 ```
 
 ### Installation complete
@@ -151,7 +179,7 @@ Code2graph uses the output from a tool called [DOOP](https://bitbucket.org/yanni
 
     ```sh
     $ dgi c2g
-    
+
     Usage: dgi c2g [OPTIONS]
 
       This command loads Code dependencies into the graph
@@ -169,7 +197,7 @@ Code2graph uses the output from a tool called [DOOP](https://bitbucket.org/yanni
     ```sh
     dgi --clear c2g --abstraction=class --input=doop-output
     ```
-    
+
     Note that we could have passed in [class|method|full] as the abstraction. If you decide to run with the `method` or `full` level of abstraction, make sure you use the same abstraction level when running with `tx2g` as well.
 
     After successful completion, you should see:
@@ -271,8 +299,6 @@ In order to explore the neo4j graph, visit [http://localhost:7474/browser/](http
   
 * Under username, enter: `neo4j`
 
-* Under password, enter: `tackle`
+* Under password, enter: `konveyor`
   
 This should bring you to the browser page where you can explore the DGI graph.
-
-![full_graph](../../assets/images/full_graph.png)
