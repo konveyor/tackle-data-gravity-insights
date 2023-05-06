@@ -1,6 +1,15 @@
 # Contributing to Tackle Data Gravity Insights
 
-//Table of Content goes here
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [Contributing to Tackle Data Gravity Insights](#contributing-to-tackle-data-gravity-insights)
+  - [Types of contributions we’re looking for](#types-of-contributions-were-looking-for)
+  - [Ground rules \& expectations](#ground-rules--expectations)
+  - [Getting set up for local development](#getting-set-up-for-local-development)
+  - [Contributing Content](#contributing-content)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Types of contributions we’re looking for
 
