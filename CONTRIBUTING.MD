@@ -1,6 +1,15 @@
 # Contributing to Tackle Data Gravity Insights
 
-//Table of Content goes here
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [Contributing to Tackle Data Gravity Insights](#contributing-to-tackle-data-gravity-insights)
+  - [Types of contributions we’re looking for](#types-of-contributions-were-looking-for)
+  - [Ground rules \& expectations](#ground-rules--expectations)
+  - [Getting set up for local development](#getting-set-up-for-local-development)
+  - [Contributing Content](#contributing-content)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Types of contributions we’re looking for
 
@@ -40,7 +49,8 @@ If you’d like to contribute, start by searching through the GitHub
 whether someone else has raised a similar idea or question.
 
 If you don’t see your idea listed, and you think it fits into the goals
-of this guide, do one of the following: **If your contribution is
-minor,** such as a typo fix, open a pull request. **If your contribution
-is major,** start by opening an issue first. That way, other people can weigh in on the discussion before you
-do any work.
+of this guide, do one of the following:
+
+* **If your contribution is minor,** such as a typo fix, open a pull request.
+  * Before opening your pull request, ensure that you run the linter with `make lint` or else the CI build will fail
+* **If your contribution is major,** start by opening an issue first. That way, other people can weigh in on the discussion before you do any work.
