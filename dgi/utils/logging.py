@@ -18,18 +18,16 @@ Logging functions
 """
 
 import logging
-from rich.logging import RichHandler
 
-FORMAT = "%(message)s"
 logging.basicConfig(
-    level="INFO", format=FORMAT, datefmt="[%X]", handlers=[RichHandler(show_path=False)]
+    level="INFO", format="%(asctime)s %(message)s", datefmt="%d%m%y::%H%M"
 )
 
 
 class Log:
-    """Common Logger that uses Rich"""
+    """Common Logger"""
 
-    log = logging.getLogger("rich")
+    log = logging.getLogger()
 
     @staticmethod
     def info(msg: str):
