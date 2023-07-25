@@ -37,7 +37,6 @@ from dgi.partitioning.partition import recommend_partitions
 from dgi.schema2graph import schema_loader
 from dgi.tx2graph import ClassTransactionLoader, MethodTransactionLoader
 from dgi.utils.parse_config import Config
-from dgi.utils.logging import Log
 
 ######################################################################
 # cli - Grouping for sub commands
