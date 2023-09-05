@@ -30,11 +30,13 @@ import pandas as pd
 from neomodel import db
 from neomodel.exceptions import DoesNotExist
 
-from dgi.code2graph.abstract_graph_builder import AbstractGraphBuilder
+
+from tqdm import tqdm
+
 # Import local packages
 from dgi.models import ClassNode
-from dgi.utils import ProgressBarFactory
 from dgi.utils.logging import Log
+from dgi.code2graph.abstract_graph_builder import AbstractGraphBuilder
 
 # Author information
 __author__ = "Rahul Krishna"
@@ -47,8 +49,7 @@ __status__ = "Research Prototype"
 
 # pylint: disable=too-few-public-methods, duplicate-code
 class ClassGraphBuilder(AbstractGraphBuilder):
-    """ Build a class level abstraction graph
-    """
+    """Build a class level abstraction graph"""
 
     @staticmethod
     def _clear_all_nodes():
@@ -95,46 +96,44 @@ class ClassGraphBuilder(AbstractGraphBuilder):
         """
         Log.info("Populating heap carried dependencies edges")
         rel_id = 0
-        with ProgressBarFactory.get_progress_bar() as progress:
-            for (_, row) in progress.track(
-                heap_flows.iterrows(), total=heap_flows.shape[0]
-            ):
-                prev_meth = row.prev
-                next_meth = row.next
 
-                prev_graph_node, next_graph_node = self._create_prev_and_next_nodes(
-                    prev_meth, next_meth
-                )
+        for _, row in tqdm(heap_flows.iterrows(), total=heap_flows.shape[0]):
+            prev_meth = row.prev
+            next_meth = row.next
 
-                if prev_graph_node != next_graph_node:
-                    rel = prev_graph_node.heap_flows.relationship(next_graph_node)
-                    rel_id += 1
-                    if rel and (
-                        rel.pmethod,
-                        rel.nmethod,
-                        rel.context,
-                        rel.heap_object,
-                    ) == (
-                        prev_meth["name"],
-                        next_meth["name"],
-                        row.context,
-                        row.heap_obj,
-                    ):
-                        rel.weight += 1
-                        rel.rel_id = rel_id
-                        rel.save()
-                    else:
-                        relationship_property = {
-                            "weight": 1,
-                            "rel_id": rel_id,
-                            "pmethod": prev_meth["name"],
-                            "nmethod": next_meth["name"],
-                            "context": row.context,
-                            "heap_object": row.heap_obj,
-                        }
-                        prev_graph_node.heap_flows.connect(
-                            next_graph_node, relationship_property
-                        )
+            prev_graph_node, next_graph_node = self._create_prev_and_next_nodes(
+                prev_meth, next_meth
+            )
+
+            if prev_graph_node != next_graph_node:
+                rel = prev_graph_node.heap_flows.relationship(next_graph_node)
+                rel_id += 1
+                if rel and (
+                    rel.pmethod,
+                    rel.nmethod,
+                    rel.context,
+                    rel.heap_object,
+                ) == (
+                    prev_meth["name"],
+                    next_meth["name"],
+                    row.context,
+                    row.heap_obj,
+                ):
+                    rel.weight += 1
+                    rel.rel_id = rel_id
+                    rel.save()
+                else:
+                    relationship_property = {
+                        "weight": 1,
+                        "rel_id": rel_id,
+                        "pmethod": prev_meth["name"],
+                        "nmethod": next_meth["name"],
+                        "context": row.context,
+                        "heap_object": row.heap_obj,
+                    }
+                    prev_graph_node.heap_flows.connect(
+                        next_graph_node, relationship_property
+                    )
 
     def _populate_dataflow_edges(self, data_flows: pd.DataFrame) -> None:
         """Populate data flow dependencies
@@ -143,39 +142,37 @@ class ClassGraphBuilder(AbstractGraphBuilder):
         """
         Log.info("Populating dataflow edges")
         rel_id = 0
-        with ProgressBarFactory.get_progress_bar() as progress:
-            for (_, row) in progress.track(
-                data_flows.iterrows(), total=data_flows.shape[0]
-            ):
-                prev_meth = row.prev
-                next_meth = row.next
 
-                prev_graph_node, next_graph_node = self._create_prev_and_next_nodes(
-                    prev_meth, next_meth
-                )
+        for _, row in tqdm(data_flows.iterrows(), total=data_flows.shape[0]):
+            prev_meth = row.prev
+            next_meth = row.next
 
-                if prev_graph_node != next_graph_node:
-                    rel = prev_graph_node.data_flows.relationship(next_graph_node)
-                    rel_id += 1
-                    if rel and (rel.pmethod, rel.nmethod, rel.context) == (
-                        prev_meth["name"],
-                        next_meth["name"],
-                        row.context,
-                    ):
-                        rel.rel_id = rel_id
-                        rel.weight += 1
-                        rel.save()
-                    else:
-                        next_graph_node.data_flows.connect(
-                            prev_graph_node,
-                            {
-                                "weight": 1,
-                                "rel_id": rel_id,
-                                "pmethod": prev_meth["name"],
-                                "nmethod": next_meth["name"],
-                                "context": row.context,
-                            },
-                        )
+            prev_graph_node, next_graph_node = self._create_prev_and_next_nodes(
+                prev_meth, next_meth
+            )
+
+            if prev_graph_node != next_graph_node:
+                rel = prev_graph_node.data_flows.relationship(next_graph_node)
+                rel_id += 1
+                if rel and (rel.pmethod, rel.nmethod, rel.context) == (
+                    prev_meth["name"],
+                    next_meth["name"],
+                    row.context,
+                ):
+                    rel.rel_id = rel_id
+                    rel.weight += 1
+                    rel.save()
+                else:
+                    next_graph_node.data_flows.connect(
+                        prev_graph_node,
+                        {
+                            "weight": 1,
+                            "rel_id": rel_id,
+                            "pmethod": prev_meth["name"],
+                            "nmethod": next_meth["name"],
+                            "context": row.context,
+                        },
+                    )
 
     def _populate_callreturn_edges(self, call_ret_flows: pd.DataFrame) -> None:
         """Populate data flow dependencies
@@ -184,43 +181,40 @@ class ClassGraphBuilder(AbstractGraphBuilder):
         """
         logging.info("Populating call-return dependencies edges")
         rel_id = 0
-        with ProgressBarFactory.get_progress_bar() as progress:
-            for (_, row) in progress.track(
-                call_ret_flows.iterrows(), total=call_ret_flows.shape[0]
-            ):
-                prev_meth = row.prev
-                next_meth = row.next
+        for _, row in tqdm(call_ret_flows.iterrows(), total=call_ret_flows.shape[0]):
+            prev_meth = row.prev
+            next_meth = row.next
 
-                prev_graph_node, next_graph_node = self._create_prev_and_next_nodes(
-                    prev_meth, next_meth
-                )
+            prev_graph_node, next_graph_node = self._create_prev_and_next_nodes(
+                prev_meth, next_meth
+            )
 
-                if prev_graph_node.node_class != next_graph_node.node_class:
-                    rel = prev_graph_node.call_ret_flows.relationship(next_graph_node)
-                    rel_id += 1
-                    if rel and (
-                        rel.pmethod,
-                        rel.nmethod,
-                        rel.pcontext,
-                        rel.ncontext,
-                    ) == (
-                        prev_meth["name"],
-                        next_meth["name"],
-                        row.prev_context,
-                        row.next_context,
-                    ):
-                        rel.rel_id = rel_id
-                        rel.weight += 1
-                        rel.save()
-                    else:
-                        next_graph_node.call_ret_flows.connect(
-                            prev_graph_node,
-                            {
-                                "weight": 1,
-                                "rel_id": rel_id,
-                                "pmethod": prev_meth["name"],
-                                "nmethod": next_meth["name"],
-                                "pcontext": row.prev_context,
-                                "ncontext": row.next_context,
-                            },
-                        )
+            if prev_graph_node.node_class != next_graph_node.node_class:
+                rel = prev_graph_node.call_ret_flows.relationship(next_graph_node)
+                rel_id += 1
+                if rel and (
+                    rel.pmethod,
+                    rel.nmethod,
+                    rel.pcontext,
+                    rel.ncontext,
+                ) == (
+                    prev_meth["name"],
+                    next_meth["name"],
+                    row.prev_context,
+                    row.next_context,
+                ):
+                    rel.rel_id = rel_id
+                    rel.weight += 1
+                    rel.save()
+                else:
+                    next_graph_node.call_ret_flows.connect(
+                        prev_graph_node,
+                        {
+                            "weight": 1,
+                            "rel_id": rel_id,
+                            "pmethod": prev_meth["name"],
+                            "nmethod": next_meth["name"],
+                            "pcontext": row.prev_context,
+                            "ncontext": row.next_context,
+                        },
+                    )

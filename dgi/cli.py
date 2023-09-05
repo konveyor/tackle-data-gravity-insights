@@ -23,19 +23,20 @@ import json
 import os
 import sys
 from pathlib import Path
+from py2neo import Graph
 
-import rich_click as click
+import click
 from neomodel import config
 from simple_ddl_parser import parse_from_file
 
 # Import our packages
 from dgi.code2graph import ClassGraphBuilder, MethodGraphBuilder
+from dgi.code2graph.json_to_neo4j_graph import to_neo4j
 from dgi.partitioning.partition import recommend_partitions
 
 from dgi.schema2graph import schema_loader
 from dgi.tx2graph import ClassTransactionLoader, MethodTransactionLoader
 from dgi.utils.parse_config import Config
-from dgi.utils.logging import Log
 
 ######################################################################
 # cli - Grouping for sub commands
@@ -108,7 +109,7 @@ def s2g(ctx, input, output):  # pylint: disable=redefined-builtin
 
     # Read the DDL file
     input = Path(input)
-    Log.info(f"Reading: {input.absolute()}")
+    click.echo(f"Reading: {input.absolute()}")
     result = None
     try:
         result = parse_from_file(input, group_by_type=True)
@@ -117,22 +118,22 @@ def s2g(ctx, input, output):  # pylint: disable=redefined-builtin
 
     # Optionally write it output to json
     if output:
-        Log.info(f"Writing: {output}")
-        with open(output, "w", encoding='utf-8') as file:
+        click.echo(f"Writing: {output}")
+        with open(output, "w", encoding="utf-8") as file:
             contents = json.dumps(result, indent=4)
             file.write(contents)
 
     if ctx.obj["validate"]:
-        Log.info(f"File [{input}] validated.")
+        click.echo(f"File [{input}] validated.")
         sys.exit(0)
 
     if ctx.obj["clear"]:
-        Log.warn("Clear flag is turned ON. Clearing graph.")
+        click.echo("Clear flag is turned ON. Clearing graph.")
         schema_loader.remove_all_nodes()
 
-    Log.info("Building Graph..")
+    click.echo("Building Graph..")
     schema_loader.load_graph(result)
-    Log.info("Graph build complete")
+    click.echo("Graph build complete")
 
 
 ######################################################################
@@ -169,29 +170,25 @@ def tx2g(ctx, input, abstraction, force_clear):  # pylint: disable=redefined-bui
     """Transaction2Graph add edges denoting CRUD operations to the graph."""
 
     if ctx.obj["verbose"]:
-        Log.info("Verbose mode: ON")
+        click.echo("Verbose mode: ON")
 
     class_transaction_loader = ClassTransactionLoader()
     method_transaction_loader = MethodTransactionLoader()
 
     if abstraction.lower() == "full":
         if ctx.obj["validate"]:
-            Log.info(
-                f"Validate mode: abstraction level is {abstraction.lower()}")
+            click.echo(f"Validate mode: abstraction level is {abstraction.lower()}")
 
             sys.exit()
 
-        class_transaction_loader.load_transactions(
-            input, clear=ctx.obj["clear"])
+        class_transaction_loader.load_transactions(input, clear=ctx.obj["clear"])
         # We don't want to clear the table node twice.
         # Otherwise, we'll lose the table nodes created above
         method_transaction_loader.load_transactions(input, clear=False)
 
     elif abstraction.lower() == "class":
         if ctx.obj["validate"]:
-            Log.info(
-                f"Validate mode: abstraction level is {abstraction.lower()}"
-            )
+            click.echo(f"Validate mode: abstraction level is {abstraction.lower()}")
             sys.exit()
         class_transaction_loader.load_transactions(
             input, clear=ctx.obj["clear"], force_clear=force_clear
@@ -199,9 +196,7 @@ def tx2g(ctx, input, abstraction, force_clear):  # pylint: disable=redefined-bui
 
     elif abstraction.lower() == "method":
         if ctx.obj["validate"]:
-            Log.info(
-                f"Validate mode: abstraction level is {abstraction.lower()}"
-            )
+            click.echo(f"Validate mode: abstraction level is {abstraction.lower()}")
             sys.exit()
 
         method_transaction_loader.load_transactions(
@@ -213,7 +208,7 @@ def tx2g(ctx, input, abstraction, force_clear):  # pylint: disable=redefined-bui
             "Not a valid abstraction level. Valid options are 'class', 'method', 'full'."
         )
 
-    Log.info("Transactions populated")
+    click.echo("Transactions populated")
 
 
 ######################################################################
@@ -222,9 +217,18 @@ def tx2g(ctx, input, abstraction, force_clear):  # pylint: disable=redefined-bui
 @cli.command()
 @click.option(
     "--input",
-    "-i",
+    type=click.Path(exists=True, resolve_path=True, file_okay=True, dir_okay=False),
+    required=False,
+    help="Process facts from code analyzer.",
+)
+@click.option(
+    "--doop", type=bool, default=False, help="Process facts from DOOP instead."
+)
+@click.option(
+    "--doop-input",
+    "-d",
     type=click.Path(exists=True, resolve_path=True, file_okay=False),
-    required=True,
+    required=False,
     help="DOOP output facts directory.",
 )
 @click.option(
@@ -236,67 +240,71 @@ def tx2g(ctx, input, abstraction, force_clear):  # pylint: disable=redefined-bui
     show_default=True,
 )
 @click.pass_context
-def c2g(ctx, input, abstraction):  # pylint: disable=redefined-builtin
+def c2g(ctx, input, doop, doop_input, abstraction):  # pylint: disable=redefined-builtin
     """Code2Graph add various program dependencies (i.e., call return, heap, and data) into the graph"""
-
-    Log.info("code2graph generator started.")
-
-    if ctx.obj["verbose"]:
-        Log.info("Verbose mode: ON")
-
-    # -------------------------
-    # Initialize configurations
-    # -------------------------
-    proj_root = importlib.resources.files("dgi.code2graph")
-    usr_cfg = Config(config_file=proj_root.joinpath("etc", "config.yml"))  # pylint: disable=E1121
-    usr_cfg.load_config()
-
-    # Add the input dir to configuration.
-    usr_cfg.set_config(key="GRAPH_FACTS_DIR", val=input)
-
-    # ---------------
-    # Build the graph
-    # ---------------
-
-    Log.info("Building Graph.")
-
-    class_g_builder = ClassGraphBuilder(usr_cfg)
-    method_g_builder = MethodGraphBuilder(usr_cfg)
 
     if abstraction.lower() == "full":
         if ctx.obj["validate"]:
-            Log.info(
-                "Validate mode: abstraction level is {abstraction.lower()}"
-            )
+            click.echo(f"Validate mode: abstraction level is {abstraction.lower()}")
             sys.exit()
-        Log.info("Full level abstraction adds both Class and Method nodes.")
-        class_g_builder.build_ddg(clear=ctx.obj["clear"])
-        method_g_builder.build_ddg(clear=ctx.obj["clear"])
-
-    elif abstraction.lower() == "class":
+    if abstraction.lower() == "class":
         if ctx.obj["validate"]:
-            Log.info(
-                f"Validate mode: abstraction level is {abstraction.lower()}"
-            )
+            click.echo(f"Validate mode: abstraction level is {abstraction.lower()}")
             sys.exit()
-        Log.info("Class level abstraction.")
-        class_g_builder.build_ddg(clear=ctx.obj["clear"])
-
-    elif abstraction.lower() == "method":
+    if abstraction.lower() == "method":
         if ctx.obj["validate"]:
-            Log.info(
-                f"Validate mode: abstraction level is {abstraction.lower()}"
-            )
+            click.echo(f"Validate mode: abstraction level is {abstraction.lower()}")
             sys.exit()
-        Log.info("Method level abstraction.")
-        method_g_builder.build_ddg(clear=ctx.obj["clear"])
 
+    if not doop:
+        with open(input, "r", encoding="utf-8") as partitions_file:
+            partitions = json.load(partitions_file)
+        auth_str, uri = ctx["bolt"].split("@")
+        auth_tuple = tuple(auth_str.split(":"))
+        neo4j_graph = Graph("http://" + uri, auth=auth_tuple)
+        neo4j_graph.delete_all()
+        to_neo4j(partitions, graph=neo4j_graph)
     else:
-        raise click.BadArgumentUsage(
-            "Not a valid abstraction level. Valid options are 'class', 'method', 'full'."
-        )
+        # -------------------------
+        # Initialize configurations
+        # -------------------------
+        proj_root = importlib.resources.files("dgi.code2graph")
+        usr_cfg = Config(  # pylint: disable=E1121
+            config_file=proj_root.joinpath("etc", "config.yml")  # pylint: disable=E1121
+        )  # pylint: disable=E1121
+        usr_cfg.load_config()
 
-    Log.info("code2graph build complete")
+        # Add the input dir to configuration.
+        usr_cfg.set_config(key="GRAPH_FACTS_DIR", val=doop_input)
+
+        # -----------------
+        #  Build the graph
+        # -----------------
+
+        click.echo("Building Graph.")
+
+        class_g_builder = ClassGraphBuilder(usr_cfg)
+        method_g_builder = MethodGraphBuilder(usr_cfg)
+
+        if abstraction.lower() == "full":
+            click.echo("Full level abstraction adds both Class and Method nodes.")
+            class_g_builder.build_ddg(clear=ctx.obj["clear"])
+            method_g_builder.build_ddg(clear=ctx.obj["clear"])
+
+        elif abstraction.lower() == "class":
+            click.echo("Class level abstraction.")
+            class_g_builder.build_ddg(clear=ctx.obj["clear"])
+
+        elif abstraction.lower() == "method":
+            click.echo("Method level abstraction.")
+            method_g_builder.build_ddg(clear=ctx.obj["clear"])
+
+        else:
+            raise click.BadArgumentUsage(
+                "Not a valid abstraction level. Valid options are 'class', 'method', 'full'."
+            )
+
+    click.echo("code2graph build complete")
 
 
 #########################################################################################################
@@ -329,7 +337,7 @@ def c2g(ctx, input, abstraction):  # pylint: disable=redefined-builtin
 @click.pass_context
 def partition(ctx, seed_input, partitions_output, partitions):
     """Partition is a command runs the CARGO algorithm to (re-)partition a monolith into microservices"""
-    Log.info("Partitioning the monolith with CARGO")
+    click.echo("Partitioning the monolith with CARGO")
 
     # Process the bolt url to be used by CARGO
     if "bolt://" in ctx.obj["bolt"]:
@@ -345,5 +353,6 @@ def partition(ctx, seed_input, partitions_output, partitions):
     bolt_url = ctx.obj["bolt"].removeprefix("neo4j://")  # Strip scheme
     auth_str, netloc = bolt_url.split("@")
     hostname, hostport = netloc.split(":")
-    recommend_partitions(hostname, hostport, auth_str,
-                         partitions_output, partitions, seed_input)
+    recommend_partitions(
+        hostname, hostport, auth_str, partitions_output, partitions, seed_input
+    )

@@ -25,9 +25,15 @@ from cargo import Cargo
 from dgi.models.entities import ClassNode, MethodNode
 
 
-def recommend_partitions(    # noqa:  R0913,R0914 pylint: disable=too-many-locals
-        hostname: str, hostport, auth_str: str, output: str, partitions: int,
-        seed_input: Union[Path, None] = None, verbosity: bool = True) -> None:
+def recommend_partitions(  # noqa:  R0913,R0914 pylint: disable=too-many-locals
+    hostname: str,
+    hostport,
+    auth_str: str,
+    output: str,
+    partitions: int,
+    seed_input: Union[Path, None] = None,
+    verbosity: bool = True,
+) -> None:
     """Recommend partitions with CARGO.
 
     Args:
@@ -43,16 +49,15 @@ def recommend_partitions(    # noqa:  R0913,R0914 pylint: disable=too-many-local
     )
 
     if seed_input is None:
-        _, assignments = cargo.run("auto", max_part=partitions)
+        assignments = cargo.run("auto", max_part=partitions)
     else:
-        _, assignments = cargo.run("file", labels_file=seed_input)
+        assignments = cargo.run("file", labels_file=seed_input)
 
     class_partitions = defaultdict(lambda: [])
 
     for method_signature, partition in assignments.items():
         try:
-            dgi_method_node = MethodNode.nodes.get(
-                node_method=method_signature)
+            dgi_method_node = MethodNode.nodes.get(node_method=method_signature)
             dgi_method_node.partition_id = partition
             dgi_method_node.save()
         except DoesNotExist:
@@ -71,5 +76,7 @@ def recommend_partitions(    # noqa:  R0913,R0914 pylint: disable=too-many-local
     # for class_name, methods_partitions in class_partitions.items():
     #     class_partitions[class_name] = mode(methods_partitions)
 
-    with open(Path(output).joinpath('partitions.json'), 'w+', encoding='utf-8') as partitions_file:
+    with open(
+        Path(output).joinpath("partitions.json"), "w+", encoding="utf-8"
+    ) as partitions_file:
         json.dump(assignments, partitions_file, indent=4, sort_keys=True)

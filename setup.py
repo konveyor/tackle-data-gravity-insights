@@ -1,11 +1,11 @@
 from setuptools import setup, find_packages
 
-with open("README.md", "r", encoding='utf-8') as fh:
+with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
     name="tackle-dgi",
-    version="1.0.0",
+    version="1.0.1",
     url="https://github.com/konveyor/tackle-data-gravity-insights",
     author="IBM",
     description="Konveyor Tackle Data Gravity Insights",
@@ -21,8 +21,6 @@ setup(
         "ipdb==0.13.11",
         "pandas==1.5.3",
         "tqdm==4.65.0",
-        "rich==13.3.2",
-        "rich-click==1.6.1",
         "py2neo==2021.2.3",
         "minerva-cargo==1.1.0",
     ],

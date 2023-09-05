@@ -25,16 +25,16 @@ from collections import OrderedDict
 from abc import ABC, abstractmethod
 from typing import Dict
 import yaml
+from tqdm import tqdm
 from neomodel import db
 from neomodel import StructuredNode
 from dgi.utils.logging import Log
-from dgi.utils.progress_bar_factory import ProgressBarFactory
 from dgi.tx2graph.utils import sqlexp
 
 
 class AbstractTransactionLoader(ABC):
-    """ABC for tx2graph
-    """
+    """ABC for tx2graph"""
+
     @staticmethod
     def _consume_and_process_label(label: str) -> Dict:
         """Format label into a proper JSON string
@@ -145,7 +145,9 @@ class AbstractTransactionLoader(ABC):
         """
 
     @abstractmethod
-    def populate_transaction_read(self, method_signature, txid, table, action, the_sql_query) -> None:  # noqa: R0913
+    def populate_transaction_read(
+        self, method_signature, txid, table, action, the_sql_query
+    ) -> None:  # noqa: R0913
         """Add transaction read edges to the database
 
         Args:
@@ -156,7 +158,9 @@ class AbstractTransactionLoader(ABC):
         """
 
     @abstractmethod
-    def populate_transaction_write(self, method_signature, txid, table, action, the_sql_query) -> None:
+    def populate_transaction_write(
+        self, method_signature, txid, table, action, the_sql_query
+    ) -> None:
         """Add transaction write edges to the database
 
         Args:
@@ -247,9 +251,8 @@ class AbstractTransactionLoader(ABC):
 
         Log.info(f"{type(self).__name__}: Populating transactions")
 
-        with ProgressBarFactory.get_progress_bar() as prog_bar:
-            for (_, entry) in prog_bar.track(enumerate(data), total=len(data)):
-                txn_set = self.analyze(entry["transactions"])
-                del entry["transactions"]
-                label = yaml.dump(entry, default_flow_style=True).strip()
-                self.tx2neo4j(txn_set, label)
+        for _, entry in tqdm(enumerate(data), total=len(data)):
+            txn_set = self.analyze(entry["transactions"])
+            del entry["transactions"]
+            label = yaml.dump(entry, default_flow_style=True).strip()
+            self.tx2neo4j(txn_set, label)
