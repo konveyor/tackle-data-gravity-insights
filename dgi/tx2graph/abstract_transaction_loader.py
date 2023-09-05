@@ -25,10 +25,10 @@ from collections import OrderedDict
 from abc import ABC, abstractmethod
 from typing import Dict
 import yaml
+from tqdm import tqdm
 from neomodel import db
 from neomodel import StructuredNode
 from dgi.utils.logging import Log
-from tqdm import tqdm
 from dgi.tx2graph.utils import sqlexp
 
 

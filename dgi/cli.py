@@ -249,7 +249,7 @@ def c2g(ctx, input, doop, doop_input, abstraction):  # pylint: disable=redefined
         click.echo("Verbose mode: ON")
 
     if not doop:
-        with open(input, "r") as partitions_file:
+        with open(input, "r", encoding="utf-8") as partitions_file:
             partitions = json.load(partitions_file)
         auth_str, uri = ctx["bolt"].split("@")
         auth_tuple = tuple(auth_str.split(":"))
@@ -261,8 +261,8 @@ def c2g(ctx, input, doop, doop_input, abstraction):  # pylint: disable=redefined
         # Initialize configurations
         # -------------------------
         proj_root = importlib.resources.files("dgi.code2graph")
-        usr_cfg = Config(
-            config_file=proj_root.joinpath("etc", "config.yml")
+        usr_cfg = Config(  # pylint: disable=E1121
+            config_file=proj_root.joinpath("etc", "config.yml")  # pylint: disable=E1121
         )  # pylint: disable=E1121
         usr_cfg.load_config()
 

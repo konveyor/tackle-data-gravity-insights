@@ -13,10 +13,17 @@
 # limitations under the License.
 ################################################################################
 
+"""Persisit dictionary in Neo4J"""
 from py2neo import Graph, Node, Relationship
 
 
 def to_neo4j(data: dict, graph: Graph):
+    """Persisit dictionary in Neo4J
+
+    Args:
+        data (dict): Graph as a dictionary
+        graph (Graph): A neo4j graph
+    """
     # Parse the dict and add the nodes and edges
     for node in data["nodes"]:
         if node["type"] == "SQLTable":

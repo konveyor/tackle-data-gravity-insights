@@ -26,15 +26,17 @@ import logging
 from typing import Dict
 
 import pandas as pd
+from tqdm import tqdm
+
+# Neomodel
 from neomodel import db
 from neomodel.exceptions import DoesNotExist
 
-from dgi.code2graph.abstract_graph_builder import AbstractGraphBuilder
-
 # Import local packages
+
 from dgi.models import MethodNode
-from tqdm import tqdm
 from dgi.utils.logging import Log
+from dgi.code2graph.abstract_graph_builder import AbstractGraphBuilder
 
 # Author information
 __author__ = "Rahul Krishna"

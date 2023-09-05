@@ -21,9 +21,9 @@ Schema Loader
 This module is responsible for loading the schema into the GraphDB
 """
 
+from tqdm import tqdm
 from dgi.models import SQLColumn, SQLTable
 from dgi.utils.logging import Log
-from tqdm import tqdm
 
 
 def remove_all_nodes():

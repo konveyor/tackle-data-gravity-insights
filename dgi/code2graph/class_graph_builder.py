@@ -30,12 +30,13 @@ import pandas as pd
 from neomodel import db
 from neomodel.exceptions import DoesNotExist
 
-from dgi.code2graph.abstract_graph_builder import AbstractGraphBuilder
+
+from tqdm import tqdm
 
 # Import local packages
 from dgi.models import ClassNode
-from tqdm import tqdm
 from dgi.utils.logging import Log
+from dgi.code2graph.abstract_graph_builder import AbstractGraphBuilder
 
 # Author information
 __author__ = "Rahul Krishna"
