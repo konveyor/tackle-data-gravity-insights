@@ -243,12 +243,6 @@ def tx2g(ctx, input, abstraction, force_clear):  # pylint: disable=redefined-bui
 def c2g(ctx, input, doop, doop_input, abstraction):  # pylint: disable=redefined-builtin
     """Code2Graph add various program dependencies (i.e., call return, heap, and data) into the graph"""
 
-    if not ctx.obj["validate"]:
-        click.echo("code2graph generator started.")
-
-    if ctx.obj["verbose"] and not ctx.obj["validate"]:
-        click.echo("Verbose mode: ON")
-
     if abstraction.lower() == "full":
         if ctx.obj["validate"]:
             click.echo(f"Validate mode: abstraction level is {abstraction.lower()}")
@@ -293,24 +287,15 @@ def c2g(ctx, input, doop, doop_input, abstraction):  # pylint: disable=redefined
         method_g_builder = MethodGraphBuilder(usr_cfg)
 
         if abstraction.lower() == "full":
-            if ctx.obj["validate"]:
-                click.echo("Validate mode: abstraction level is {abstraction.lower()}")
-                sys.exit()
             click.echo("Full level abstraction adds both Class and Method nodes.")
             class_g_builder.build_ddg(clear=ctx.obj["clear"])
             method_g_builder.build_ddg(clear=ctx.obj["clear"])
 
         elif abstraction.lower() == "class":
-            if ctx.obj["validate"]:
-                click.echo(f"Validate mode: abstraction level is {abstraction.lower()}")
-                sys.exit()
             click.echo("Class level abstraction.")
             class_g_builder.build_ddg(clear=ctx.obj["clear"])
 
         elif abstraction.lower() == "method":
-            if ctx.obj["validate"]:
-                click.echo(f"Validate mode: abstraction level is {abstraction.lower()}")
-                sys.exit()
             click.echo("Method level abstraction.")
             method_g_builder.build_ddg(clear=ctx.obj["clear"])
 

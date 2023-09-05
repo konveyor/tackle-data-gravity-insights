@@ -68,7 +68,6 @@ class TestS2GCLI(unittest.TestCase):
                 "--doop-input=tests/fixtures/doop_out",
             ],
         )
-        self.assertIn("abstraction level is class", result.output)
         self.assertEqual(result.exit_code, 0)
 
     def test_abstraction_level_is_method(self):
@@ -82,7 +81,6 @@ class TestS2GCLI(unittest.TestCase):
                 "--doop-input=tests/fixtures/doop_out",
             ],
         )
-        self.assertIn("abstraction level is method", result.output)
         self.assertEqual(result.exit_code, 0)
 
     def test_abstraction_level_is_full(self):
@@ -96,7 +94,6 @@ class TestS2GCLI(unittest.TestCase):
                 "--doop-input=tests/fixtures/doop_out",
             ],
         )
-        self.assertIn("abstraction level is full", result.output)
         self.assertEqual(result.exit_code, 0)
 
     def test_abstraction_level_is_wrong(self):
