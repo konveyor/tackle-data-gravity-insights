@@ -218,7 +218,7 @@ def tx2g(ctx, input, abstraction, force_clear):  # pylint: disable=redefined-bui
 @click.option(
     "--input",
     type=click.Path(exists=True, resolve_path=True, file_okay=True, dir_okay=False),
-    required=True,
+    required=False,
     help="Process facts from code analyzer.",
 )
 @click.option(
@@ -243,10 +243,24 @@ def tx2g(ctx, input, abstraction, force_clear):  # pylint: disable=redefined-bui
 def c2g(ctx, input, doop, doop_input, abstraction):  # pylint: disable=redefined-builtin
     """Code2Graph add various program dependencies (i.e., call return, heap, and data) into the graph"""
 
-    click.echo("code2graph generator started.")
+    if not ctx.obj["validate"]:
+        click.echo("code2graph generator started.")
 
-    if ctx.obj["verbose"]:
+    if ctx.obj["verbose"] and not ctx.obj["validate"]:
         click.echo("Verbose mode: ON")
+
+    if abstraction.lower() == "full":
+        if ctx.obj["validate"]:
+            click.echo(f"Validate mode: abstraction level is {abstraction.lower()}")
+            sys.exit()
+    if abstraction.lower() == "class":
+        if ctx.obj["validate"]:
+            click.echo(f"Validate mode: abstraction level is {abstraction.lower()}")
+            sys.exit()
+    if abstraction.lower() == "method":
+        if ctx.obj["validate"]:
+            click.echo(f"Validate mode: abstraction level is {abstraction.lower()}")
+            sys.exit()
 
     if not doop:
         with open(input, "r", encoding="utf-8") as partitions_file:
@@ -269,9 +283,9 @@ def c2g(ctx, input, doop, doop_input, abstraction):  # pylint: disable=redefined
         # Add the input dir to configuration.
         usr_cfg.set_config(key="GRAPH_FACTS_DIR", val=doop_input)
 
-        # ---------------
-        # Build the graph
-        # ---------------
+        # -----------------
+        #  Build the graph
+        # -----------------
 
         click.echo("Building Graph.")
 

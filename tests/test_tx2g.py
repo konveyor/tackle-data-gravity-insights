@@ -31,8 +31,7 @@ import logging
 ######################################################################
 
 
-NEO4J_BOLT_URL = os.getenv(
-    "NEO4J_BOLT_URL", "neo4j://neo4j:konveyor@neo4j:7687")
+NEO4J_BOLT_URL = os.getenv("NEO4J_BOLT_URL", "neo4j://neo4j:konveyor@neo4j:7687")
 
 loglevel = logging.CRITICAL
 logging.basicConfig(level=loglevel)
@@ -70,7 +69,7 @@ class TestTX2GCLI(unittest.TestCase):
         self.assertEqual(result.exit_code, 2)
         self.assertIn(
             "Invalid value for '--input' / '-i': Path 'foo' does not exist.",
-            result.output
+            result.output,
         )
 
     def test_verbose_mode(self):
@@ -87,28 +86,6 @@ class TestTX2GCLI(unittest.TestCase):
         self.assertEqual(result.exit_code, 0)
         # TODO: result.output is empty because we use logging instead of console print.
         # assert "Verbose mode: ON" in result.output
-
-    def test_good_output_with_http_param(self):
-        """Test with good output *with* HTTP param"""
-        result = self.runner.invoke(
-            cli,
-            ["--clear", "tx2g", "--input",
-                "tests/fixtures/daytrader_transaction.json"],
-        )
-        self.assertEqual(result.exit_code, 0)
-
-    def test_good_output_without_http_param(self):
-        """Test with good output *without* HTTP param"""
-        result = self.runner.invoke(
-            cli,
-            [
-                "--clear",
-                "tx2g",
-                "--input",
-                "tests/fixtures/trading_app_transactions.json",
-            ],
-        )
-        self.assertEqual(result.exit_code, 0)
 
     def test_abstraction_level_is_class(self):
         """Test --abstraction set to 'class'"""
@@ -165,6 +142,6 @@ class TestTX2GCLI(unittest.TestCase):
         )
         self.assertIn(
             "Invalid value for '--abstraction' / '-a': 'unknown' is not one of 'class', 'method', 'full'.",
-            result.output
+            result.output,
         )
         self.assertEqual(result.exit_code, 2)

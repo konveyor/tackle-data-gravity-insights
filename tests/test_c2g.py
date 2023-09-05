@@ -18,19 +18,17 @@
 Test cases for C2G CLI
 """
 import os
-import logging
 import unittest
 from click.testing import CliRunner
 from dgi.cli import cli
-from py2neo import Graph
+
 
 ######################################################################
 #  C 2 G   C L I   T E S T   C A S E S
 ######################################################################
 
 
-NEO4J_BOLT_URL = os.getenv(
-    "NEO4J_BOLT_URL", "neo4j://neo4j:konveyor@neo4j:7687")
+NEO4J_BOLT_URL = os.getenv("NEO4J_BOLT_URL", "neo4j://neo4j:konveyor@neo4j:7687")
 
 
 class TestS2GCLI(unittest.TestCase):
@@ -48,14 +46,14 @@ class TestS2GCLI(unittest.TestCase):
         self.assertEqual(result.exit_code, 0)
 
     def test_missing_input(self):
-        """Test --input with no filename"""
-        result = self.runner.invoke(cli, ["c2g", "--input"])
+        """Test --doop-input with no filename"""
+        result = self.runner.invoke(cli, ["c2g", "--doop-input"])
         self.assertNotEqual(result.exit_code, 0)
-        self.assertIn("Option '--input' requires an argument.", result.output)
+        self.assertIn("Option '--doop-input' requires an argument.", result.output)
 
     def test_not_found_output(self):
-        """Test --input directory not found"""
-        result = self.runner.invoke(cli, ["c2g", "--input", "foo"])
+        """Test --doop-input directory not found"""
+        result = self.runner.invoke(cli, ["c2g", "--doop-input", "foo"])
         self.assertEqual(result.exit_code, 2)
         self.assertIn("Directory 'foo' does not exist.", result.output)
 
@@ -67,7 +65,7 @@ class TestS2GCLI(unittest.TestCase):
                 "--validate",
                 "c2g",
                 "--abstraction=class",
-                "--input=tests/fixtures/doop_out",
+                "--doop-input=tests/fixtures/doop_out",
             ],
         )
         self.assertIn("abstraction level is class", result.output)
@@ -81,7 +79,7 @@ class TestS2GCLI(unittest.TestCase):
                 "--validate",
                 "c2g",
                 "--abstraction=method",
-                "--input=tests/fixtures/doop_out",
+                "--doop-input=tests/fixtures/doop_out",
             ],
         )
         self.assertIn("abstraction level is method", result.output)
@@ -95,7 +93,7 @@ class TestS2GCLI(unittest.TestCase):
                 "--validate",
                 "c2g",
                 "--abstraction=full",
-                "--input=tests/fixtures/doop_out",
+                "--doop-input=tests/fixtures/doop_out",
             ],
         )
         self.assertIn("abstraction level is full", result.output)
@@ -109,11 +107,11 @@ class TestS2GCLI(unittest.TestCase):
                 "--validate",
                 "c2g",
                 "--abstraction=unknown",
-                "--input=tests/fixtures/doop_out",
+                "--doop-input=tests/fixtures/doop_out",
             ],
         )
         self.assertIn(
             "Invalid value for '--abstraction' / '-a': 'unknown' is not one of 'class', 'method', 'full'.",
-            result.output
+            result.output,
         )
         self.assertEqual(result.exit_code, 2)
